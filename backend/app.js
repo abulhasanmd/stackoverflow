@@ -1,42 +1,44 @@
-const express = require('express');
-const logger = require('morgan');
-require('dotenv').config();
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import {
+    initRestApis
+} from './Rest/index.js'
+import {
+    AuthTokenMiddleWare
+} from './Middlewares/AuthTokenMiddleWare.js'
+import kafka from './kafka/client.js';
+import initMongoDB from './db.mongo/index.js'
+import {
+    readFileSync
+} from 'fs';
 
-const corsOptions = {
-  origin: true,
 
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-
-  credentials: true,
-
-  optionsSuccessStatus: 204, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-const usersRouter = require('./routes/userRouter');
-const adminRouter = require('./routes/adminRouter');
-const messagesRouter = require('./routes/messagesRouter')
-
-const app = express();
-
-app.use(logger('dev'));
-app.use(cors(corsOptions));
+const PORT = process.env.PORT || 3001
+global.myrequests = {}
+process.on('unhandledRejection', (err) => {
+    console.log("unhandledRejection : ", err);
+})
+process.on('uncaughtException', (err) => {
+    console.log("uncaughtException : ", err);
+})
+var app = express({
+    mergeParams: true
+});
+app.use(express.static('../Frontend/etsy/build'))
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use('/users', usersRouter);
-app.use('/admin', adminRouter);
-app.use('/messages', messagesRouter);
-
-app.use((err, req, res, next) => {
-  console.error('in error handler');
-  // set locals, only providing error in development
-
-  res.locals.message = err.message;
-
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 400).json({ error: { message: err.message } });
+app.use(express.urlencoded({
+    extended: false
+}));
+app.use(cors())
+const config = JSON.parse(readFileSync(new URL('./config.json', import.meta.url)));
+global.config = config
+console.log("####", config)
+global.ModelFactory = await initMongoDB()
+global.kafka = kafka
+await AuthTokenMiddleWare(app)
+await initRestApis(app)
+app.listen(PORT, function() {
+    console.log("Server listening on port 3001");
 });
 
-module.exports = app;
+export default app;
