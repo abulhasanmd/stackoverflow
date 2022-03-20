@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const mongooseConnection = require('./mongooseConnection');
+import mongoose from "mongoose";
+const { model, Schema } = mongoose;
 
-const questionSchema = new mongoose.Schema({
+const questionSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -16,7 +16,7 @@ const questionSchema = new mongoose.Schema({
     default: 0,
   },
   tags: [{
-    type: mongoose.Schema.Types.ObjectId, ref: 'Tag',
+    type: mongoose.Schema.Types.ObjectId, ref: 'tags',
   }],
   createdBy: {
     type: String,
@@ -24,7 +24,7 @@ const questionSchema = new mongoose.Schema({
   },
   createdOn: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   upVotes: {
     type: Number,
@@ -43,6 +43,5 @@ const questionSchema = new mongoose.Schema({
   ],
 });
 
-const Question = mongooseConnection.model('Question', questionSchema);
+export default model("questions", questionSchema);
 
-module.exports = Question;
