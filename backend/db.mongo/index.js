@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import models from './ModelFactory/index.js'
+import dotenv from 'dotenv';
+dotenv.config()
 
 const options = {
     useNewUrlParser: true,
