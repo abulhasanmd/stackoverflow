@@ -1,8 +1,5 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { auth } from "../../Middlewares/AuthTokenMiddleWare.js";
-
-auth();
 
 async function login(req, res) {
     var data = {body: req.body}
