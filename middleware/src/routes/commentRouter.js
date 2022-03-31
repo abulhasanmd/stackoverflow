@@ -20,7 +20,7 @@ router.post('/post-comment', async (req, res) => {
 	);
 });
 
-router.post('/get-comment-by-resourceid', async (req, res) => {
+router.get('/get-comment-by-resourceid', async (req, res) => {
 	sendMessage(
 		process.env.COMMENT_TOPIC,
 		req.body,

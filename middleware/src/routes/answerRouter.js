@@ -20,7 +20,7 @@ router.post('/post-answer', async (req, res) => {
 	);
 });
 
-router.post('/get-answer-by-questionid', async (req, res) => {
+router.get('/get-answer-by-questionid', async (req, res) => {
 	sendMessage(
 		process.env.ANSWER_TOPIC,
 		req.body,
@@ -35,7 +35,7 @@ router.post('/get-answer-by-questionid', async (req, res) => {
 	);
 });
 
-router.post('/update-answer', async (req, res) => {
+router.put('/update-answer', async (req, res) => {
 	sendMessage(
 		process.env.ANSWER_TOPIC,
 		req.body,
