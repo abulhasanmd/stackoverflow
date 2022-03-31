@@ -7,6 +7,9 @@ const usersRouter = require('./routes/userRouter');
 const adminRouter = require('./routes/adminRouter');
 const messagesRouter = require('./routes/messagesRouter');
 const questionRouter = require('./routes/questionRouter');
+const commentRouter = require('./routes/commentRouter');
+const answerRouter = require('./routes/answerRouter');
+const voteRouter = require('./routes/voteRouter');
 
 const corsOptions = {
 	origin: true,
@@ -30,6 +33,9 @@ app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/messages', messagesRouter);
 app.use('/questions', questionRouter);
+app.use('/comment', commentRouter);
+app.use('/answer', answerRouter);
+app.use('/vote', voteRouter);
 
 // error handler
 
