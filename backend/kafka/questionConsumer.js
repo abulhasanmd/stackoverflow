@@ -30,6 +30,9 @@ const actionHandler = async (message) => {
       case 'POST-QUESTION':
         response = await questionService.postQuestion(messageJSON);
         break;
+      case 'GET-ALQUESTION':
+          response = await questionService.getAllQuestions(messageJSON);
+          break;
       default:
         break;
     }
