@@ -10,6 +10,7 @@ const questionRouter = require('./routes/questionRouter');
 const commentRouter = require('./routes/commentRouter');
 const answerRouter = require('./routes/answerRouter');
 const voteRouter = require('./routes/voteRouter');
+const tagRouter = require('./routes/tagRouter');
 
 const corsOptions = {
 	origin: true,
@@ -36,6 +37,7 @@ app.use('/questions', questionRouter);
 app.use('/comment', commentRouter);
 app.use('/answer', answerRouter);
 app.use('/vote', voteRouter);
+app.use('/tag', tagRouter);
 
 // error handler
 
