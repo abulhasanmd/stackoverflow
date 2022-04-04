@@ -1,6 +1,4 @@
 const Comment = require('../models/Comment');
-const uuid = require('uuidv4');
-
 
 const getCommentsByResourceId = async (body) => {
   console.log('Entering commentService.getCommentsByResourceId');
@@ -17,12 +15,11 @@ const getCommentsByResourceId = async (body) => {
 const addComment = async (body) => {
   console.log(`Entering commentService.addComment,payload is ${body}`);
   try {
-    const newCommentId = `c-${uuid()}`
-    const comment = {_id: newCommentId, ...body }
+    const comment = {...body }
     const commentResponse = await Comment.create(comment);
     console.log(`add comment respoinse :${commentResponse}`);
     if (commentResponse) {
-      return { data: { message: `Comment ${newCommentId} created Successfully` } };
+      return { data: { message: `Comment created Successfully` } };
     }
     return { error: { message: 'Some error occured while creating comment' } };
   } catch (e) {

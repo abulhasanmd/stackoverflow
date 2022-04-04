@@ -26,11 +26,7 @@ const questionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  upVotes: {
-    type: Number,
-    default: 0,
-  },
-  downVotes: {
+  score: {
     type: Number,
     default: 0,
   },

@@ -1,5 +1,4 @@
 const Answer = require('../models/Answer');
-const uuid = require('uuidv4');
 
 
 const getAnswersByQuestionId = async (body) => {
@@ -17,12 +16,11 @@ const getAnswersByQuestionId = async (body) => {
 const addAnswer = async (body) => {
   console.log(`Entering answerService.addAnswer,payload is ${body}`);
   try {
-    const newAnswerId = `a-${uuid()}`
-    const answer = {_id: newAnswerId, ...body }
+    const answer = {...body }
     const answerResponse = await Answer.create(answer);
     console.log(`add answer respoinse :${answerResponse}`);
     if (answerResponse) {
-      return { data: { message: `Answer ${newAnswerId} created Successfully` } };
+      return { data: { message: `Answer created Successfully` } };
     }
     return { error: { message: 'Some error occured while creating answer' } };
   } catch (e) {

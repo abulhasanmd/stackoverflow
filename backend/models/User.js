@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  _id: { type: String },
   name: { type: String, maxLength: 20 },
   emailId: { type: String, maxLength: 20 },
   role: { type: String, enum: ['admin', 'user'] },

@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const mongooseConnection = require('./mongooseConnection');
 
 const commentSchema = new mongoose.Schema({
-    _id: { type: String, required: true },
     createdBy: {
         _id: { type: String, required: true },
         imageUrl: { type: String, maxLength: 100, required: true },

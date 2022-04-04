@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const mongooseConnection = require('./mongooseConnection');
 
 const answerSchema = new mongoose.Schema({
-    _id: { type: String },
     questionId: { type: String, required: true },
     createdBy: {
         _id: { type: String, required: true },
