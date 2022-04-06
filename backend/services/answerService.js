@@ -5,7 +5,7 @@ const getAnswersByQuestionId = async (body) => {
   console.log('Entering answerService.getAnswersByResourceId');
   try {
     const answersResponse = await Answer.find({ questionId: body.questionId }).exec();
-    console.log(`get answer respoinse :${answerResponse}`);
+    console.log(`get answer response :${answerResponse}`);
     return { data: answersResponse };
   } catch (e) {
     console.error('Exception occurred while getting answers', e);
@@ -18,7 +18,7 @@ const addAnswer = async (body) => {
   try {
     const answer = {...body }
     const answerResponse = await Answer.create(answer);
-    console.log(`add answer respoinse :${answerResponse}`);
+    console.log(`add answer response :${answerResponse}`);
     if (answerResponse) {
       return { data: { message: `Answer created Successfully` } };
     }
@@ -33,10 +33,10 @@ const updateAnswer = async ({params, body}) => {
     console.log(`Entering answerService.updateAnswer with params: ${params} && payload:${body}`);
     try {
       const answerResponse = await Answer.updateOne(
-        { _id: params.questionId },
+        { _id: params.answerId },
         { $set: body },
       ).exec();
-      console.log(`update answer respoinse :${answerResponse}`);
+      console.log(`update answer response :${answerResponse}`);
       if (answerResponse) {
         return { data: { message: `Answer updated Successfully` } };
       }

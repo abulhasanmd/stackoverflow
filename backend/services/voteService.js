@@ -16,7 +16,7 @@ const addVote = async (body) => {
         });
         if (!voteRecord.length) {
             const voteResponse = await Vote.create(vote);
-            console.log(`add vote respoinse :${voteResponse}`);
+            console.log(`add vote response :${voteResponse}`);
             const questionResponse = await Question.updateOne({
                 _id: body.resourceId
             }, {
@@ -24,7 +24,7 @@ const addVote = async (body) => {
                     score: vote.score
                 }
             });
-            console.log(`update question respoinse :${questionResponse}`);
+            console.log(`update question response :${questionResponse}`);
             if (voteResponse) {
                 return {
                     data: {
@@ -41,7 +41,7 @@ const addVote = async (body) => {
                         score: vote.score
                     }
                 });
-                console.log(`update vote respoinse :${voteResponse}`);
+                console.log(`update vote response :${voteResponse}`);
                 const questionResponse = await Question.updateOne({
                     _id: body.resourceId
                 }, {
@@ -49,7 +49,7 @@ const addVote = async (body) => {
                         score: vote.score * 2
                     }
                 });
-                console.log(`update question respoinse :${questionResponse}`);
+                console.log(`update question response :${questionResponse}`);
                 if (voteResponse) {
                     return {
                         data: {
