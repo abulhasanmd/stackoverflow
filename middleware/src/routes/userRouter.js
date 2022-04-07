@@ -25,7 +25,7 @@ router.get('/get-all-users', (req, res, next) => {
 	});
 }, async (req, res, next) => {
 	sendMessage(
-		process.env.USER_TOPIC, {},
+		process.env.USER_TOPIC, req.query,
 		'GET-ALL-USERS',
 		(error, data) => {
 			if (data) {

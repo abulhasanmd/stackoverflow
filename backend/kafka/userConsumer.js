@@ -48,7 +48,7 @@ const actionHandler = async (message) => {
 			response = await userService.getReputationActivity(messageJSON.userId);
 			break;
 		case 'GET-ALL-USERS':
-			response = await userService.getAllUsers();
+			response = await userService.getAllUsers(messageJSON);
 			break;
 		default:
 			break;

@@ -5,9 +5,14 @@ const Event = require('../models/Event');
 
 const questionConstants = require('../constants/questionConstants');
 
-const getAllUsers = async () => {
+const getAllUsers = async (query) => {
 	try {
-		const users = await User.find();
+		let users;
+		if (query.search) {
+            users = await User.find({name: { "$regex": query.search, "$options": "i" } });
+        } else {
+			users = await User.find();
+        }
 		return {
 			data: users,
 		};
