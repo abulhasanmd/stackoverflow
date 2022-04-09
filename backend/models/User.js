@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
       level: { type: String, maxLength: 10 },
     },
   },
-  bookmarks: { type: Array },
+  bookmarks: { type: Array, default : [] },
 });
 
 const User = mongoose.model('User', userSchema);

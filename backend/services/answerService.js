@@ -112,7 +112,7 @@ const updateAnswer = async ({params, body}) => {
         if (answerResponse && markBestAnswerResponse) {
           return { data: { message: `Updated new Best Answer Successfully` } };
         }
-        return { error: { message: 'Some error occured while updating answer' } };
+        return { error: { message: 'Some error occured while marking best answer' } };
       }
       return { error: { message: 'Some error occured while marking best answer' } };
     } catch (e) {

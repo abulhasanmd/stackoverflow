@@ -30,6 +30,10 @@ const questionSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  votes: {
+    type: Number,
+    default: 0,
+  },
   reviewStatus: {
     type: String,
     required: true,

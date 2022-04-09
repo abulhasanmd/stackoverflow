@@ -10,6 +10,7 @@ const answerSchema = new mongoose.Schema({
     createdOn: { type: Date, default: Date.now },
     answer: { type: String, required: true },
     score: { type: Number, default: 0 },
+    vote: { type: Number, default: 0 },
     isBestAnswer: { type: Boolean, default: false }, 
 });
 

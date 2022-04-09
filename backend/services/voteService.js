@@ -1,5 +1,6 @@
 const Vote = require('../models/Vote');
 const Question = require('../models/Question');
+const Answer = require('../models/Answer');
 const User = require('../models/User');
 
 const addVote = async (body) => {
@@ -18,14 +19,27 @@ const addVote = async (body) => {
         if (!voteRecord.length) {
             const voteResponse = await Vote.create(vote);
             console.log(`add vote response :${voteResponse}`);
-            const questionResponse = await Question.updateOne({
-                _id: body.resourceId
-            }, {
-                $inc: {
-                    score: vote.score
-                }
-            });
-            console.log(`update question response :${questionResponse}`);
+            if (vote.resourceType === "ques") {
+                const questionResponse = await Question.updateOne({
+                    _id: body.resourceId
+                }, {
+                    $inc: {
+                        score: vote.score,
+                        votes: vote.votes
+                    }
+                });
+                console.log(`update question response :${questionResponse}`);
+            } else if (vote.resourceType === "ans") {
+                const answerResponse = await Answer.updateOne({
+                    _id: body.resourceId
+                }, {
+                    $inc: {
+                        score: vote.score,
+                        votes: vote.votes
+                    }
+                });
+                console.log(`update answer response :${answerResponse}`);
+            }
             const userResponse = await User.updateOne({
                 _id: body.createdBy
             }, {
@@ -46,18 +60,32 @@ const addVote = async (body) => {
                     _id: voteRecord[0]._id
                 }, {
                     $set: {
-                        score: vote.score
+                        score: vote.score,
+                        votes: vote.votes
                     }
                 });
                 console.log(`update vote response :${voteResponse}`);
-                const questionResponse = await Question.updateOne({
-                    _id: body.resourceId
-                }, {
-                    $inc: {
-                        score: vote.score * 2
-                    }
-                });
-                console.log(`update question response :${questionResponse}`);
+                if (vote.resourceType === "ques") {
+                    const questionResponse = await Question.updateOne({
+                        _id: body.resourceId
+                    }, {
+                        $inc: {
+                            score: vote.score * 2,
+                            votes: vote.votes * 2
+                        }
+                    });
+                    console.log(`update question response :${questionResponse}`);
+                } else if (vote.resourceType === "ans") {
+                    const answerResponse = await Answer.updateOne({
+                        _id: body.resourceId
+                    }, {
+                        $inc: {
+                            score: vote.score * 2,
+                            votes: vote.votes * 2
+                        }
+                    });
+                    console.log(`update answer response :${answerResponse}`);
+                }
                 const userResponse = await User.updateOne({
                     _id: body.createdBy
                 }, {
