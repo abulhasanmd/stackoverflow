@@ -36,6 +36,8 @@ const actionHandler = async (message) => {
       case 'UPDATE-ANSWER':
         response = await answerService.updateAnswer(messageJSON);
         break;
+      case 'BEST-ANSWER':
+        response = await answerService.bestAnswer(messageJSON);
       default:
         break;
     }

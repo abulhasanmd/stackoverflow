@@ -1,4 +1,5 @@
 const Answer = require('../models/Answer');
+const Question = require('../models/Question');
 
 
 const getAnswersByQuestionId = async (body) => {
@@ -42,11 +43,63 @@ const updateAnswer = async ({params, body}) => {
       }
       return { error: { message: 'Some error occured while updating answer' } };
     } catch (e) {
-      console.error('Exception occurred while updating updating answer', e);
+      console.error('Exception occurred while updating answer', e);
+      return { error: { message: e.message } };
+    }
+};
+
+  const bestAnswer = async ({params, body}) => {
+    console.log(`Entering answerService.bestAnswer with params: ${params} && payload:${body}`);
+    try {
+      const bestAnswerObj = await Answer.findOne({questionId: body.questionId, isBestAnswer: true}).exec();  
+      if(!bestAnswerObj){
+        const answerResponse = await Answer.updateOne(
+          { _id: params.answerId },
+          { $set: {isBestAnswer: true} },
+          {
+            $inc: {
+                score: 15
+            }
+        }
+        ).exec();
+        console.log(`best answer response :${answerResponse}`); 
+        if (answerResponse) {
+          return { data: { message: `Best Answer marked Successfully` } };
+        }
+      }else{
+        const answerResponse = await Answer.updateOne(
+          { _id: bestAnswerObj._id },
+          { $set: {isBestAnswer: false} },
+          {
+            $inc: {
+                score: -15
+            }
+          }
+        ).exec();
+        console.log(`removed best answer response :${answerResponse}`); 
+        const markBestAnswerResponse = await Answer.updateOne(
+          { _id: params.answerId },
+          { $set: {isBestAnswer: true} },
+          {
+            $inc: {
+                score: 15
+            }
+          }
+        ).exec();
+        console.log(`marked best answer response :${markBestAnswerResponse}`); 
+        if (answerResponse && markBestAnswerResponse) {
+          return { data: { message: `Updated new Best Answer Successfully` } };
+        }
+        return { error: { message: 'Some error occured while updating answer' } };
+      }
+      return { error: { message: 'Some error occured while marking best answer' } };
+    } catch (e) {
+      console.error('Exception occurred while marking best answer', e);
       return { error: { message: e.message } };
     }
   };
 
-module.exports = {
-    getAnswersByQuestionId, addAnswer, updateAnswer
+
+  module.exports = {
+    getAnswersByQuestionId, addAnswer, updateAnswer, bestAnswer
 };

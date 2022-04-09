@@ -38,7 +38,7 @@ router.get('/get-answer-by-questionid', async (req, res) => {
 router.put('/update-answer', async (req, res) => {
 	sendMessage(
 		process.env.ANSWER_TOPIC,
-		req.body,
+		{params : req.params , body : req.body},
 		'UPDATE-ANSWER',
 		(error, data) => {
 			if (data) {
@@ -50,5 +50,19 @@ router.put('/update-answer', async (req, res) => {
 	);
 });
 
+router.put('/best-answer', async (req, res) => {
+	sendMessage(
+		process.env.ANSWER_TOPIC,
+		{params : req.params , body : req.body},
+		'BEST-ANSWER',
+		(error, data) => {
+			if (data) {
+				res.status(200).json(data);
+			} else {
+				res.status(400).json(error);
+			}
+		}
+	);
+});
 
 module.exports = router;
