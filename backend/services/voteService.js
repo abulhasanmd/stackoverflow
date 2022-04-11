@@ -1,5 +1,6 @@
 const Vote = require('../models/Vote');
 const Question = require('../models/Question');
+const User = require('../models/User');
 
 const addVote = async (body) => {
     console.log(`Entering voteService.addVote,payload is ${body}`);
@@ -25,6 +26,13 @@ const addVote = async (body) => {
                 }
             });
             console.log(`update question response :${questionResponse}`);
+            const userResponse = await User.updateOne({
+                _id: body.createdBy
+            }, {
+                $inc: {
+                    reputation: vote.score
+                }
+            });
             if (voteResponse) {
                 return {
                     data: {
@@ -50,6 +58,13 @@ const addVote = async (body) => {
                     }
                 });
                 console.log(`update question response :${questionResponse}`);
+                const userResponse = await User.updateOne({
+                    _id: body.createdBy
+                }, {
+                    $inc: {
+                        reputation: vote.score * 2
+                    }
+                });
                 if (voteResponse) {
                     return {
                         data: {

@@ -1,6 +1,7 @@
 const Answer = require('../models/Answer');
-const Question = require('../models/Question');
+const User = require('../models/User');
 
+const bestAnswerScore = 15;
 
 const getAnswersByQuestionId = async (body) => {
   console.log('Entering answerService.getAnswersByResourceId');
@@ -58,11 +59,18 @@ const updateAnswer = async ({params, body}) => {
           { $set: {isBestAnswer: true} },
           {
             $inc: {
-                score: 15
+                score: bestAnswerScore
             }
         }
         ).exec();
         console.log(`best answer response :${answerResponse}`); 
+        const userResponse = await User.updateOne({
+            _id: body.createdBy
+        }, {
+            $inc: {
+                reputation: bestAnswerScore
+            }
+        });
         if (answerResponse) {
           return { data: { message: `Best Answer marked Successfully` } };
         }
@@ -72,21 +80,35 @@ const updateAnswer = async ({params, body}) => {
           { $set: {isBestAnswer: false} },
           {
             $inc: {
-                score: -15
+                score: bestAnswerScore * -1
             }
           }
         ).exec();
         console.log(`removed best answer response :${answerResponse}`); 
+        const oldUserResponse = await User.updateOne({
+          _id: bestAnswerObj.createdBy
+        }, {
+            $inc: {
+                reputation: bestAnswerScore * -1
+            }
+        });
         const markBestAnswerResponse = await Answer.updateOne(
           { _id: params.answerId },
           { $set: {isBestAnswer: true} },
           {
             $inc: {
-                score: 15
+                score: bestAnswerScore
             }
           }
         ).exec();
         console.log(`marked best answer response :${markBestAnswerResponse}`); 
+        const userResponse = await User.updateOne({
+          _id: body.createdBy
+        }, {
+            $inc: {
+                reputation: bestAnswerScore
+            }
+        });
         if (answerResponse && markBestAnswerResponse) {
           return { data: { message: `Updated new Best Answer Successfully` } };
         }
