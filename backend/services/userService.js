@@ -9,9 +9,9 @@ const getAllUsers = async (query) => {
 	try {
 		let users;
 		if (query.search) {
-            users = await User.find({name: { "$regex": query.search, "$options": "i" } });
+            users = await User.find({name: { "$regex": query.search, "$options": "i" } }).limit(5).sort( { reputation: -1 }).exec();
         } else {
-			users = await User.find();
+			users = await User.find().sort( { reputation: -1 }).exec();
         }
 		return {
 			data: users,
