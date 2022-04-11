@@ -35,4 +35,19 @@ router.get('/get-allquestion', async (req, res) => {
 	);
 });
 
+router.get('/add-bookmark', async (req, res) => {
+	sendMessage(
+		process.env.QUESTION_TOPIC,
+		req.body,
+		'ADD-BOOKMARK',
+		(error, data) => {
+			if (data) {
+				res.status(200).json(data);
+			} else {
+				res.status(400).json(error);
+			}
+		}
+	);
+});
+
 module.exports = router;

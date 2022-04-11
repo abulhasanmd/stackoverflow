@@ -56,7 +56,39 @@ const getAllQuestions = async (body) => {
 	}
 };
 
+const addBookmark = async (body) => {
+    try {
+        const userResponse = await User.updateOne({
+            _id: body.createdBy
+        }, {
+            $push: {
+                bookmarks: body.questionId
+            }
+        }).exec();
+        if (userResponse) {
+            return {
+                data: {
+                    message: `Bookmark created Successfully`
+                }
+            };
+        }
+        return {
+            error: {
+                message: 'Some error occured while creating Bookmark'
+            }
+        };
+    } catch (e) {
+        console.error('Exception occurred while creating Bookmark', e);
+        return {
+            error: {
+                message: e.message
+            }
+        };
+    }
+};
+
 module.exports = {
 	postQuestion,
-	getAllQuestions
+	getAllQuestions,
+	addBookmark
 };
