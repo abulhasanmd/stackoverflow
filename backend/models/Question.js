@@ -18,10 +18,16 @@ const questionSchema = new mongoose.Schema({
   tags: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Tag',
   }],
+  answers: [{
+    type: mongoose.Schema.Types.ObjectId, ref: 'Answer',
+  }],
   createdBy: {
-    type: String,
-    required: true,
-  },
+    _id: { 
+        type: mongoose.Schema.Types.ObjectId, ref: 'User', 
+        required: true 
+    },
+    imageUrl: { type: String, maxLength: 100, required: true },
+ },
   createdOn: {
     type: Date,
     default: Date.now(),

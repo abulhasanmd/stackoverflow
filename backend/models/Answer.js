@@ -2,9 +2,14 @@ const mongoose = require('mongoose');
 const mongooseConnection = require('./mongooseConnection');
 
 const answerSchema = new mongoose.Schema({
-    questionId: { type: String, required: true },
+    questionId: { 
+        type: mongoose.Schema.Types.ObjectId, ref: 'Question', 
+        required: true },
     createdBy: {
-        _id: { type: String, required: true },
+        _id: { 
+            type: mongoose.Schema.Types.ObjectId, ref: 'User', 
+            required: true 
+        },
         imageUrl: { type: String, maxLength: 100, required: true },
     },
     createdOn: { type: Date, default: Date.now },

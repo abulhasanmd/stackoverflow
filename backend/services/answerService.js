@@ -1,4 +1,5 @@
 const Answer = require('../models/Answer');
+const Question = require('../models/Question');
 const User = require('../models/User');
 
 const bestAnswerScore = 15;
@@ -15,13 +16,18 @@ const getAnswersByQuestionId = async (body) => {
   }
 };
 
-const addAnswer = async (body) => {
+const addAnswer = async (body) => 
+{
   console.log(`Entering answerService.addAnswer,payload is ${body}`);
   try {
     const answer = {...body }
     const answerResponse = await Answer.create(answer);
     console.log(`add answer response :${answerResponse}`);
-    if (answerResponse) {
+    const question = await Question.findById(body.questionId).lean();
+    question.answers.push(answerResponse._id);
+    const questionResponse = await Question.updateOne({ _id: body.questionId }, { $set: body }).exec();
+    if (answerResponse && questionResponse) 
+    {
       return { data: { message: `Answer created Successfully` } };
     }
     return { error: { message: 'Some error occured while creating answer' } };

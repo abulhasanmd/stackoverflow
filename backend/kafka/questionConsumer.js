@@ -30,7 +30,7 @@ const actionHandler = async (message) => {
       case 'POST-QUESTION':
         response = await questionService.postQuestion(messageJSON);
         break;
-      case 'GET-ALQUESTION':
+      case 'GET-ALLQUESTION':
           response = await questionService.getAllQuestions(messageJSON);
           break;
       case 'ADD-BOOKMARK':

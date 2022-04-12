@@ -19,7 +19,7 @@ const postQuestion = async (body) => {
 
 const getAllQuestions = async (body) => {
 	try {
-		const que = await QuestionsModel.find({ }).lean();
+		const que = await Question.find({ }).lean();
 		if(que)
         {
             for(let i=0;i<que.length;i++)
@@ -30,7 +30,7 @@ const getAllQuestions = async (body) => {
                 for(let i=0;i<tags.length;i++)
                 {
                     let k = tags[i].toString();
-                    const tag = await TagsModel.findById(k)
+                    const tag = await Tag.findById(k)
                     tagNames.push(tag?.name);
                 }
                 que[i].tags = Array.from(tagNames);

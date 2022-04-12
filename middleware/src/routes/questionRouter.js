@@ -21,6 +21,7 @@ router.post('/post-question', async (req, res) => {
 });
 
 router.get('/get-allquestion', async (req, res) => {
+	
 	sendMessage(
 		process.env.QUESTION_TOPIC,
 		req.body,
