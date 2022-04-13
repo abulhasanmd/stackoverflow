@@ -36,6 +36,21 @@ router.get('/get-allquestion', async (req, res) => {
 	);
 });
 
+router.put('/update-question', async (req, res) => {
+	sendMessage(
+		process.env.QUESTION_TOPIC,
+		{...req.params, ...req.body},
+		'UPDATE-QUESTION',
+		(error, data) => {
+			if (data) {
+				res.status(200).json(data);
+			} else {
+				res.status(400).json(error);
+			}
+		}
+	);
+});
+
 router.get('/add-bookmark', async (req, res) => {
 	sendMessage(
 		process.env.QUESTION_TOPIC,

@@ -56,6 +56,24 @@ const getAllQuestions = async (body) => {
 	}
 };
 
+const updateQuestion = async ({params, body}) => {
+    console.log(`Entering questionService.updateQuestion with params: ${params} && payload:${body}`);
+    try {
+      const questionResponse = await Question.updateOne(
+        { _id: params.questionId },
+        { $set: body },
+      ).exec();
+      console.log(`update question response :${questionResponse}`);
+      if (questionResponse) {
+        return { data: { message: `Question updated Successfully` } };
+      }
+      return { error: { message: 'Some error occured while updating question' } };
+    } catch (e) {
+      console.error('Exception occurred while updating question', e);
+      return { error: { message: e.message } };
+    }
+};
+
 const addBookmark = async (body) => {
     try {
         const userResponse = await User.updateOne({
@@ -89,6 +107,7 @@ const addBookmark = async (body) => {
 
 module.exports = {
 	postQuestion,
+    updateQuestion,
 	getAllQuestions,
 	addBookmark
 };
