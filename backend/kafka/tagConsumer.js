@@ -28,7 +28,7 @@ const actionHandler = async (message) => {
     let response;
     switch (action) {
       case 'GET-TAGS':
-          response = await tagService.getAllQuestions(messageJSON);
+          response = await tagService.getTags(messageJSON);
           break;
       default:
         break;

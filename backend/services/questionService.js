@@ -1,3 +1,4 @@
+const { log } = require('console');
 const Question = require('../models/Question');
 const Tag = require('../models/Tag');
 
@@ -24,19 +25,21 @@ const getAllQuestions = async (body) => {
         {
             for(let i=0;i<que.length;i++)
             {
-                const tags = Array.from(que[i].tags);
-                que[i].tags=[];
-                let tagNames=[];
-                for(let i=0;i<tags.length;i++)
-                {
-                    let k = tags[i].toString();
-                    const tag = await Tag.findById(k)
-                    tagNames.push(tag?.name);
-                }
-                que[i].tags = Array.from(tagNames);
+                var tagArray = await Tag.find({_id: {$in: que[i].tags}});
+                que[i].tags = tagArray;
+                // const tags = Array.from(que[i].tags);
+                // que[i].tags=[];
+                // let tagNames=[];
+                // for(let i=0;i<tags.length;i++)
+                // {
+                //     let k = tags[i].toString();
+                //     const tag = await Tag.findById(k)
+                //     tagNames.push(tag?.name);
+                // }
+                // que[i].tags = Array.from(tagNames);
             }
             return {
-				data: que,
+				data: que
 			};
         }else
         {

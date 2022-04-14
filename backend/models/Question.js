@@ -21,9 +21,11 @@ const questionSchema = new mongoose.Schema({
   },
   tags: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Tag',
+    default: []
   }],
   answers: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Answer',
+    default: []
   }],
   createdBy: {
     _id: { 
