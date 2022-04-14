@@ -158,11 +158,41 @@ const getUserPosts = async (data) => {
 	}
 };
 
+const updateUserProfile = async (data) => {
+	let {body, params, query} = data;
+	try 
+	{
+		let imageUrl = body.imageUrl;
+		let about = body.about;
+		let location = body.location;
+		let userId = body.userId;
+		let userDetails = await User.updateOne({ _id: userId },  { $set: {"imageUrl":imageUrl, "about": about, "location": location} } ).exec();
+		
+		if(userDetails) 
+		{
+			return { data: { message: `UserProfile updated Successfully` } };
+		}else
+		{
+		  return { error: { message: 'Some error occured while updating User Profile' } };
+		}
+
+	} 
+	catch (e) {
+		console.error('Error while fetching getUserPosts', e);
+		return {
+			error: {
+				message: e.message,
+			},
+		};
+	}
+};
+
 module.exports = {
 	getTagsUsedInQuestions,
 	getBookmarks,
 	getReputationActivity,
 	getAllUsers,
 	getUserProfile,
-	getUserPosts
+	getUserPosts,
+	updateUserProfile
 };

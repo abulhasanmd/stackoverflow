@@ -54,6 +54,8 @@ const actionHandler = async (message) => {
 			response = await userService.getUserProfile(messageJSON.userId); break;
 		case 'GET-USER-POSTS':
 			response = await userService.getUserPosts(messageJSON); break;
+		case 'UPDATE-USER-PROFILE':
+			response = await userService.updateUserProfile(messageJSON); break;
 		default:
 			break;
 		}
