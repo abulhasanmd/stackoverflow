@@ -71,4 +71,24 @@ router.get('/add-bookmark', async (req, res) => {
 	);
 });
 
+router.get('/get-questionbyid/:questionId', async (req, res) => {
+	let msg = {
+		body: req.body,
+		params: req.params,
+		query: req.query
+	}
+	sendMessage(
+		process.env.QUESTION_TOPIC,
+		msg,
+		'GET-QUESTIONBYID',
+		(error, data) => {
+			if (data) {
+				res.status(200).json(data);
+			} else {
+				res.status(400).json(error);
+			}
+		}
+	);
+});
+
 module.exports = router;

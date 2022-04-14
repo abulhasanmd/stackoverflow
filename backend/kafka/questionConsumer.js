@@ -36,6 +36,9 @@ const actionHandler = async (message) => {
       case 'GET-ALLQUESTION':
           response = await questionService.getAllQuestions(messageJSON);
           break;
+      case 'GET-QUESTIONBYID':
+          response = await questionService.getQuestionById(messageJSON);
+          break;
       case 'ADD-BOOKMARK':
         response = await questionService.addBookmark(messageJSON);
         break;

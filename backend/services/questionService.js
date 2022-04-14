@@ -1,6 +1,7 @@
 const { log } = require('console');
 const Question = require('../models/Question');
 const Tag = require('../models/Tag');
+const User = require('../models/User');
 
 const postQuestion = async (body) => {
 	try {
@@ -103,6 +104,37 @@ const updateQuestion = async ({params, body}) => {
     }
 };
 
+const getQuestionById = async (msg) => 
+{
+    let body = msg.body;
+    let query = msg.query;
+    let params = msg.params;
+    console.log(`Entering questionService get Question By ID with params: ${params} && payload:${body}`);
+    try {
+     
+      const questionResponse = await Question.findById(params.questionId).lean();
+      console.log(`update question response :${questionResponse}`);
+      if (questionResponse) 
+      {
+        const viewUpdateResponse = await Question.updateOne(
+            { _id: params.questionId },
+            { $set: {"views": questionResponse.views+1} },
+          ).exec();
+          questionResponse.views = questionResponse.views + 1;
+          let userId = questionResponse.createdBy._id.toString();
+          const userResponse = await User.findById(userId).lean();
+
+          questionResponse.user = userResponse;
+
+        return { data:  questionResponse};
+      }
+      return { error: { message: 'Some error occured while getting question by ID' } };
+    } catch (e) {
+      console.error('Exception occurred while while getting question by ID', e);
+      return { error: { message: e.message } };
+    }
+};
+
 const addBookmark = async (body) => {
     try {
         const userResponse = await User.updateOne({
@@ -138,5 +170,6 @@ module.exports = {
 	postQuestion,
     updateQuestion,
 	getAllQuestions,
-	addBookmark
+	addBookmark,
+    getQuestionById
 };
