@@ -50,6 +50,8 @@ const actionHandler = async (message) => {
 		case 'GET-ALL-USERS':
 			response = await userService.getAllUsers(messageJSON);
 			break;
+		case 'GET-USER-PROFILE':
+			response = await userService.getUserProfile(messageJSON.userId); break
 		default:
 			break;
 		}

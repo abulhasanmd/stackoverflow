@@ -96,4 +96,23 @@ router.get('/get-reputation-activity/:userId', async (req, res, next) => {
 	);
 });
 
+router.get('/profile/:userId', async (req, res, next) => {
+	const {
+		userId,
+	} = req.params;
+	sendMessage(
+		process.env.USER_TOPIC, {
+			userId,
+		},
+		'GET-USER-PROFILE',
+		(error, data) => {
+			if (data) {
+				res.status(200).json(data);
+			} else {
+				res.status(400).json(error);
+			}
+		},
+	);
+});
+
 module.exports = router;
