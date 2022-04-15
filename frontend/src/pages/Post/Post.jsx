@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, {useEffect, Fragment} from 'react';
-// import moment from 'moment';
+import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,30 +8,31 @@ import {getPost} from '../../redux/posts/posts.actions';
 
 import PageTitle from '../../components/PageTitle/PageTitle.component';
 import LinkButton from '../../components/link-button/LinkButton';
-// import Spinner from '../../components/spinner/Spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import AnswerSection from './AnswerSection/AnswerSection';
 import QuestionSection from './QuestionSection/QuestionSection';
 
 import './Post.styles.css';
 
 //{getPost, post: {post, loading}, match}
-const Post = () => {
+const Post = ({getPost, post: {post, loading}}) => {
   const { id } = useParams();
   useEffect(() => {
     getPost(id);
     // eslint-disable-next-line
   }, [getPost]);
 
-  const post = {
-    title: "How to use React Router in React Native?",
-  }
+  // const post = {
+  //   title: "How to use React Router in React Native?",
+  // }
 
 
-  //loading || post === null ? (
-  //   <Spinner type='page' width='75px' height='200px' />
-  // ) :
+  
 
   return  (
+    loading || post === null ? (
+      <Spinner type='page' width='75px' height='200px' />
+    ) :
     <Fragment>
       <PageTitle title={`${post.title} - CLONE Stack Overflow`} />
       <div id='mainbar' className='post'>
@@ -48,9 +49,15 @@ const Post = () => {
         <div className='question-date fc-black-800 pl24'>
           <div className='grid-cell'>
             <span className='fc-light'>Asked</span>
-            {/* <time dateTime={moment(post.created_at).fromNow(true)}>
+            <time dateTime={moment(post.created_at).fromNow(true)}>
               {moment(post.created_at).fromNow(true)} ago
-            </time> */}
+            </time> &nbsp;
+            <span className='fc-light'>Modified</span>
+            <time dateTime={moment(post.created_at).fromNow(true)}>
+              {moment(post.created_at).fromNow(true)} ago
+            </time> &nbsp;
+            <span className='fc-light'>Viewed </span>
+            <span>10 times</span>
           </div>
         </div>
         <div className='question-main pl24 pt16'>
