@@ -17,7 +17,7 @@ import './QuestionSection.styles.css';
 // }
 
 
-const QuestionSection = () => {
+const QuestionSection = ({post: {post}}) => {
   
   console.log("Testing 1");
 
@@ -52,7 +52,7 @@ const QuestionSection = () => {
             >
               <UpVote className='icon' />
             </button>
-            <div className='vote-count fc-black-500'>{questionInfo?.data?.votes}</div>
+            <div className='vote-count fc-black-500'>{post?.data?.votes}</div>
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
