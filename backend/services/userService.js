@@ -88,7 +88,7 @@ const getReputationActivity = async (userId) => {
 
 async function tagsUsedByUser(userId) {
 	let questions = await Question.find({createdBy: userId}, {tags: 1, votes: 1}).exec();
-	let tagIds = _.uniq(_.concat(..._.map(a, 'tags')))
+	let tagIds = _.uniq(_.concat(..._.map(questions, 'tags')))
 	let tags = Tag.find({_id: {$in: tagIds}}).exec()
 	let tagsScore = {}
 	_.forEach(tagIds, (tagId) => { tagsScore[tagId] =_.sumBy(questions, (question) => _.includes(question.tags, tagId) && question.votes || 0) })
@@ -109,7 +109,47 @@ const getUserProfile = async (userId) => {
 		let response = {...userDetails, questionsAnswered, questionsAsked, tags: tagsUsed}
 		return {data: response}
 	} catch (e) {
-		console.error('Error while fetching reputation activity', e);
+		console.error('Error while fetching getUserProfile', e);
+		return {
+			error: {
+				message: e.message,
+			},
+		};
+	}
+};
+
+async function getPosts(userId, body) {
+	let getPostsP;
+	body.filter = body.filter || 'ALL';
+	body.sortBy = body.sortBy || 'SCORE'
+	switch(body.filter) {
+		case 'ALL':
+			getPostsP = [Question.find({createdBy: userId}).limit(10), Answer.find({createdBy: userId}).limit(10)]
+		case 'QUESTIONS':
+			getPostsP =  [Question.find({createdBy: userId}).limit(10)]; break;
+		case 'ANSWERS':
+			getPostsP =  [Answer.find({createdBy: userId}).limit(10)]; break;
+	}
+	switch (body.sortBy) {
+		case 'SCORE':
+			getPostsP = _.map(getPostsP, (getpost) => getpost.sort({score: 1})); break;
+		case 'NEWEST':
+			getPostsP = _.map(getPostsP, (getpost) => getpost.sort({createdOn: 1})); break;
+	}
+	let posts = [];
+	_.forEach(getPostsP, async (postsP) => posts.push(...await postsP))
+	posts = _.slice(_.sortBy(posts, (post) => post.score), 0, 10)
+	return posts;
+}
+
+const getUserPosts = async (data) => {
+	let {body, params, query} = data;
+	let userId = params.userId;
+	try {
+		let response = await getPosts(userId, body)
+		return {data: {posts: response}}
+	} catch (e) {
+		console.error('Error while fetching getUserPosts', e);
 		return {
 			error: {
 				message: e.message,
@@ -123,5 +163,6 @@ module.exports = {
 	getBookmarks,
 	getReputationActivity,
 	getAllUsers,
-	getUserProfile
+	getUserProfile,
+	getUserPosts
 };

@@ -115,4 +115,22 @@ router.get('/profile/:userId', async (req, res, next) => {
 	);
 });
 
+router.get('/:userId/posts', async (req, res, next) => {
+	let {body, params, query} = req;
+	let data = {body, params, query}
+	const {
+		userId,
+	} = req.params;
+	sendMessage(
+		process.env.USER_TOPIC, data, 'GET-USER-POSTS',
+		(error, data) => {
+			if (data) {
+				res.status(200).json(data);
+			} else {
+				res.status(400).json(error);
+			}
+		},
+	);
+});
+
 module.exports = router;
