@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
+
 // import {useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,7 +8,7 @@ import handleSorting from '../../services/handleSorting';
 
 import LinkButton from '../../components/link-button/LinkButton';
 import PostItem from '../../components/PostItem/PostItem.component';
-import Spinner from '../../components/spinner/Spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import ButtonGroup from '../../components/ButtonGroup/ButtonGroup.component';
 import SearchBox from '../../components/SearchBox/SearchBox.component';
 import PageTitle from '../../components/PageTitle/PageTitle.component';
@@ -20,7 +21,9 @@ const itemsPerPage = 10;
 const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
   
 // const [searchQuery, setSearchQuery] = useState('');
-  
+
+
+
   useEffect(() => {
     // const params = new URLSearchParams(window.location.search)
     // let search = params.get('search')

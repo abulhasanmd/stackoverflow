@@ -35,7 +35,7 @@ const AnswerSection = () => {
         <div className='answer-header fc-black-800'>
           <div className='answer-sub-header'>
             <div className='answer-headline'>
-              <h2>Answers</h2>
+              <h2>1 Answers</h2>
             </div>
             <ButtonGroup
               buttons={['Newest', 'Oldest']}
