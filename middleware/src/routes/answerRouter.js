@@ -20,10 +20,10 @@ router.post('/post-answer', async (req, res) => {
 	);
 });
 
-router.get('/get-answer-by-questionid', async (req, res) => {
+router.get('/get-answer-by-questionid/:questionId', async (req, res) => {
 	sendMessage(
 		process.env.ANSWER_TOPIC,
-		req.body,
+		req.params,
 		'GET-ANSWER-BY-QUESTIONID',
 		(error, data) => {
 			if (data) {

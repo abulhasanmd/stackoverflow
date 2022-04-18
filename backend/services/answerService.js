@@ -1,15 +1,17 @@
 const Answer = require('../models/Answer');
 const Question = require('../models/Question');
+const Event = require('../models/Event');
 const User = require('../models/User');
 
 const bestAnswerScore = 15;
 
-const getAnswersByQuestionId = async (body) => {
+const getAnswersByQuestionId = async (params) => {
   console.log('Entering answerService.getAnswersByResourceId');
   try {
-    const answersResponse = await Answer.find({ questionId: body.questionId }).exec();
-    console.log(`get answer response :${answerResponse}`);
-    return { data: answersResponse };
+    console.log("questionId is: ", params.questionId);
+    const answersResponse = await Answer.find({ questionId: params.questionId }).exec();
+    console.log(`get answer response :${answersResponse}`);
+    return answersResponse ;
   } catch (e) {
     console.error('Exception occurred while getting answers', e);
     return { error: { message: e.message } };
@@ -23,6 +25,15 @@ const addAnswer = async (body) =>
     const answer = {...body }
     const answerResponse = await Answer.create(answer);
     console.log(`add answer response :${answerResponse}`);
+    // let event = {
+    //   type: upvote/downvote/marked-as-best,
+    //   outcome: 10, 
+    //   createdBy: "User who upvotes or downvotes",
+    //   affectedUser: "Questioner or the one who answered",
+    //   articleType: "answer",
+    //   articleId: "Id of the question/answer"
+    //   }
+    // const eventResponse = await Event.create(event);
     const question = await Question.findById(body.questionId).lean();
     question.answers.push(answerResponse._id);
     const questionResponse = await Question.updateOne({ _id: body.questionId }, { $set: body }).exec();

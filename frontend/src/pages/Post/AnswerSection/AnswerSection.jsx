@@ -1,4 +1,5 @@
-import React, {Fragment, useState} from 'react';
+// import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getAnswers} from '../../../redux/answers/answers.actions';
@@ -13,11 +14,13 @@ import './AnswerSection.styles.css';
 
 
 // {getAnswers, answer, post: {post}}
-const AnswerSection = () => {
-  // useEffect(() => {
-  //   getAnswers(post.id);
-  //   // eslint-disable-next-line
-  // }, [getAnswers]);
+const AnswerSection = ({getAnswers, answer, post: {post}}) => {
+  useEffect(() => {
+    getAnswers(post._id);
+    // eslint-disable-next-line
+  }, [getAnswers]);
+
+console.log("Answer section is", answer, "post id is",post._id);
 
   // const answer = {
   //   answers: [
@@ -53,6 +56,7 @@ const AnswerSection = () => {
             </div>
           ))
         )} */}
+        {console.log("Answers are ", answer)}
         <AnswerItem />
         {/* <div className='add-answer'>
           <AnswerForm/>
@@ -69,7 +73,7 @@ AnswerSection.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  answer: state.answer,
+  answer: state.answers,
   post: state.post,
 });
 

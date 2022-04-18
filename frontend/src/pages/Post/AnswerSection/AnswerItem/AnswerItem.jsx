@@ -17,9 +17,9 @@ import './AnswerItem.styles.css';
 //   auth,
 // }
 
-const AnswerItem = () => {
-
-  const answer = {
+const AnswerItem =({post: {post}, answer}) => {
+console.log("answer is", answer, "posts is ",post);
+  const answer1 = {
     body: 'This is body',
     user_id: 'asdfasdf',
     gravatar: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
@@ -28,7 +28,7 @@ const AnswerItem = () => {
     username: 'johndoe',
   }
 
-  const {body, user_id, gravatar, created_at, username} = answer;
+  const {body, user_id, gravatar, created_at, username} = answer1;
 
   return (
     <Fragment>
