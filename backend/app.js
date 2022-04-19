@@ -9,6 +9,7 @@ require('./kafka/questionConsumer');
 require('./kafka/tagConsumer');
 require('./kafka/userConsumer');
 require('./kafka/voteConsumer');
+require('./kafka/postConsumer');
 require('./kafka/producer');
 
 const app = express();

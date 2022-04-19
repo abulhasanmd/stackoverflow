@@ -19,11 +19,9 @@ const postQuestion = async (body) => {
 	}
 };
 
-const getAllQuestions = async (msg) => {
-    let body = msg.body;
-    let query = msg.query;
-    let params = msg.params;
-    let filter = query.filter;
+const getAllQuestions = async (data) => {
+    let {body, query, params} = data
+    let filter = body.filter;
 	try {
 		const que = await Question.find({ }).lean();
 		if(que)

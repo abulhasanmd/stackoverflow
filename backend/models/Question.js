@@ -52,6 +52,7 @@ const questionSchema = new mongoose.Schema({
   },
   reviewStatus: {
     type: String,
+    enum: ['pending', 'approved', 'rejected'],
     required: true,
   },
   imageUrls: [
