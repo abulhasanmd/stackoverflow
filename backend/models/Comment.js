@@ -8,7 +8,7 @@ const commentSchema = new mongoose.Schema({
     },
     createdOn: { type: Date, default: Date.now },
     resourceType: { type: String, enum: ["ques", "ans"] },
-    resourceId: { type: String, required: true },
+    resourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Question', required: true},
     comment: { type: String, maxLength: 500, required: true }
 });
 

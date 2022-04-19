@@ -57,7 +57,7 @@ const Post = ({getPost, post: {post, loading}}) => {
               {moment(post.created_at).fromNow(true)} ago
             </time> &nbsp;
             <span className='fc-light'>Viewed </span>
-            <span>10 times</span>
+            <span>{post?.views} times</span>
           </div>
         </div>
         <div className='question-main pl24 pt16'>

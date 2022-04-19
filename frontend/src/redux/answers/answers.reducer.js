@@ -16,7 +16,7 @@ export default function answers(state = initialState, action) {
     case GET_ANSWERS:
       return {
         ...state,
-        answers: action.payload.data,
+        answers: action.payload,
         loading: false,
       };
     case ADD_ANSWER:

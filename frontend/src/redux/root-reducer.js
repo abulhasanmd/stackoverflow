@@ -4,9 +4,11 @@ import { combineReducers } from "redux"
 import post from "./posts/posts.reducer"
 // import user from './users/users.reducer';
 // import tag from './tags/tags.reducer';
-// import answer from './answers/answers.reducer';
-// import comment from './comments/comments.reducer';
+import answer from './answers/answers.reducer';
+import comment from './comments/comments.reducer';
 
 export default combineReducers({
   post,
+  answer,
+  comment
 })

@@ -11,7 +11,7 @@ import {
 
 export const getComments = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(config.BASE_URL + `/api/posts/comments/${id}`);
+    const res = await axios.get(config.BASE_URL + `/get-comment-by-resourceid/${id}`);
 
     dispatch({
       type: GET_COMMENTS,

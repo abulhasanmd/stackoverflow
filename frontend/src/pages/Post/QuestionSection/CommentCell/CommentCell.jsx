@@ -55,6 +55,14 @@ const CommentCell = () => {
       name: '',
       avatar: '',
     },
+    comments: [
+      {
+        body: 'comment1',
+        created_at: '2020-11-11',
+        username: 'user1',
+
+      }
+    ]
   }
 
   return (
@@ -107,6 +115,19 @@ const CommentCell = () => {
           </ul>
         </div>
         <div className='add-comment'>
+          <Fragment>
+          <div>
+                  <input
+                    className='title-input s-input'
+                    type='text'
+                    name='body'
+                    // value={body}
+                    // onChange={(e) => handleChange(e)}
+                    id='title'
+                    placeholder='Leave a comment'
+                  />
+                </div>
+          </Fragment>
           {/* {!auth.loading && auth.isAuthenticated ? (
             <Fragment>
               <form className='comment-form' onSubmit={(e) => handleSubmit(e)}>

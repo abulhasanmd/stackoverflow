@@ -1,10 +1,10 @@
 const Comment = require('../models/Comment');
 
-const getCommentsByResourceId = async (body) => {
+const getCommentsByResourceId = async (params) => {
   console.log('Entering commentService.getCommentsByResourceId');
   try {
-    const commentsResponse = await Comment.find({ resourceId: body.resourceId }).exec();
-    console.log(`get comment response :${commentResponse}`);
+    const commentsResponse = await Comment.find({ resourceId: params.resourceId }).exec();
+    console.log(`get comment response :${commentsResponse}`);
     return { data: commentsResponse };
   } catch (e) {
     console.error('Exception occurred while getting comments', e);

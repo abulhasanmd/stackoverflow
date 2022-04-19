@@ -16,7 +16,7 @@ export const getAnswers = (questionId) => async (dispatch) => {
     console.log("Get Answers res is", res.data.data);
     dispatch({
       type: GET_ANSWERS,
-      payload: res.data,
+      payload: res.data.data,
     });
   } catch (err) {
     dispatch({

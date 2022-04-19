@@ -4,7 +4,7 @@ import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import CommentCell from './CommentCell/CommentCell';
+import CommentCell from './CommentCell/CommentCell';
 // import VoteCell from './VoteCell/VoteCell';
 import PostCell from './PostCell/PostCell';
 import {ReactComponent as UpVote} from '../../../assets/ArrowUpLg.svg';
@@ -52,7 +52,7 @@ const QuestionSection = ({post: {post}}) => {
             >
               <UpVote className='icon' />
             </button>
-            <div className='vote-count fc-black-500'>{post?.data?.votes}</div>
+            <div className='vote-count fc-black-500'>{post?.votes}</div>
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
@@ -83,7 +83,7 @@ const QuestionSection = ({post: {post}}) => {
             tagCount={tags ? tags.length : 0}
           /> */}
           <PostCell/>
-          {/* <CommentCell/> */}
+          <CommentCell/>
         </div>
       </div>
     </Fragment>

@@ -3,10 +3,10 @@ import React, {Fragment, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getAnswers} from '../../../redux/answers/answers.actions';
-// import handleSorting from '../../../services/handleSorting';
+import handleSorting from '../../../services/handleSorting';
 
 import AnswerItem from './AnswerItem/AnswerItem';
-// import Spinner from '../../../components/spinner/Spinner';
+import Spinner from '../../../components/Spinner/Spinner';
 // import AnswerForm from './AnswerForm/AnswerForm';
 import ButtonGroup from '../../../components/ButtonGroup/ButtonGroup.component';
 
@@ -47,17 +47,17 @@ console.log("Answer section is", answer, "post id is",post._id);
             />
           </div>
         </div>
-        {/* {answer.loading === null ? (
+        {answer?.loading === null ? (
           <Spinner width='25px' height='25px' />
         ) : (
-          answer.answers?.sort(handleSorting(sortType)).map((answer, index) => (
+          answer?.answers?.sort(handleSorting(sortType)).map((answer, index) => (
             <div key={index} className='answers'>
               <AnswerItem answer={answer}/>
             </div>
           ))
-        )} */}
+        )}
         {console.log("Answers are ", answer)}
-        <AnswerItem />
+        {/* <AnswerItem /> */}
         {/* <div className='add-answer'>
           <AnswerForm/>
         </div> */}

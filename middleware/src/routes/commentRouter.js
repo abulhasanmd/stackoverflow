@@ -20,10 +20,10 @@ router.post('/post-comment', async (req, res) => {
 	);
 });
 
-router.get('/get-comment-by-resourceid', async (req, res) => {
+router.get('/get-comment-by-resourceid/:resourceId', async (req, res) => {
 	sendMessage(
 		process.env.COMMENT_TOPIC,
-		req.body,
+		req.params,
 		'GET-COMMENT-BY-RESOURCEID',
 		(error, data) => {
 			if (data) {
