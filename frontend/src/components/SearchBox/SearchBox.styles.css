@@ -1,0 +1,9 @@
+.search-frame {
+  width: 220px;
+}
+.search-box:focus {
+  border-color: #2b5f8a;
+  box-shadow: 0 0 0 4px #378ad3 26;
+  color: #fff;
+  outline: 0;
+}
