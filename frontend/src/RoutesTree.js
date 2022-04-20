@@ -6,6 +6,8 @@ import NotFoundPage from "./pages/NotFound/NotFoundPage"
 
 import RegisterPage from "./pages/Register/RegisterPage"
 import AllTagsPage from "./pages/AllTagsPage/AllTagsPage"
+import QuestionsPage from "./pages/QuestionsPage/QuestionsPage"
+
 
 // const Register = withPageTitle({
 //   component: RegisterPage,
@@ -15,6 +17,7 @@ import AllTagsPage from "./pages/AllTagsPage/AllTagsPage"
 const RoutesTree = () => {
   return (
     <Routes>
+      <Route exact path='/questions' element={<QuestionsPage />} />
       <Route exact path='/tags' element={<AllTagsPage />} />
       <Route exact path='/register' element={<RegisterPage />} />
       <Route exact path='/login' element={<LoginPage />} />
