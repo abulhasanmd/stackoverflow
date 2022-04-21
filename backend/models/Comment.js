@@ -2,10 +2,18 @@ const mongoose = require('mongoose');
 const mongooseConnection = require('./mongooseConnection');
 
 const commentSchema = new mongoose.Schema({
-    createdBy: {
-        _id: { type: String, required: true },
-        imageUrl: { type: String, maxLength: 100, required: true },
-    },
+    createdBy:{
+		_id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+			required: true,
+		},
+		imageUrl: {
+			type: String,
+			maxLength: 100,
+			required: true,
+		},
+	},
     createdOn: { type: Date, default: Date.now },
     resourceType: { type: String, enum: ["ques", "ans"] },
     resourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Question', required: true},
