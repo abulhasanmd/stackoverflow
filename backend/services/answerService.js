@@ -2,6 +2,7 @@ const Answer = require('../models/Answer');
 const Question = require('../models/Question');
 const Event = require('../models/Event');
 const User = require('../models/User');
+var _ = require('lodash');
 
 const bestAnswerScore = 15;
 
@@ -9,7 +10,15 @@ const getAnswersByQuestionId = async (params) => {
   console.log('Entering answerService.getAnswersByResourceId');
   try {
     console.log("questionId is: ", params.questionId);
-    const answersResponse = await Answer.find({ questionId: params.questionId }).exec();
+    var answersResponse = await Answer.find({ questionId: params.questionId }).lean();
+    var uniqUserIds = _.uniq(_.map(answersResponse, 'createdBy._id'));
+    let userInfo = await User.find({$in: uniqUserIds}).lean();
+    let usersHashMap = _.keyBy(userInfo, '_id');
+    answersResponse = _.map(answersResponse, (answer) => {
+      let userId = answer.createdBy._id.toString();
+      answer.createdBy = usersHashMap[userId];
+      return answer;
+    });
     console.log(`get answer response :${answersResponse}`);
     return answersResponse ;
   } catch (e) {
