@@ -26,21 +26,20 @@ import './CommentCell.styles.css';
 // }
 
 // const PostCell = ({post: {post}}) => {
-  const CommentCell = ({
+  const AnswerCommentCell = ({
     getComments,
     comment,
-    post: {post},
+    answerId,
   }) => {
 // const CommentCell = ({ comment: {comment} ,post: {post}}) => {
     // console.log("post id is",post._id);
+    console.log("Answer id is",answerId);
 
-    
       useEffect(() => {
-        getComments(post._id);
+        getComments(answerId);
         // eslint-disable-next-line
       }, [getComments]);
-    
-  console.log("comment is",comment);
+   ("comment is",comment);
 
   // const [formData, setFormData] = useState({
   //   body: '',
@@ -170,7 +169,7 @@ import './CommentCell.styles.css';
 };
 
 
-CommentCell.propTypes = {
+AnswerCommentCell.propTypes = {
   auth: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   addComment: PropTypes.func.isRequired,
@@ -189,4 +188,4 @@ export default connect(mapStateToProps, {
   // deleteComment,
   getComments,
   // addComment,
-})(CommentCell);
+})(AnswerCommentCell);

@@ -6,7 +6,7 @@ import {deleteAnswer} from '../../../../redux/answers/answers.actions';
 import { FcCheckmark } from 'react-icons/fc'
 import {ReactComponent as UpVote} from '../../../../assets/ArrowUpLg.svg';
 import {ReactComponent as DownVote} from '../../../../assets/ArrowDownLg.svg';
-// import UserCard from '../../../../components/UserCard/UserCard.component';
+import UserCard from '../../../../components/UserCard/UserCard.component';
 
 import './AnswerItem.styles.css';
 
@@ -19,7 +19,7 @@ const AnswerItem =({
   // post: {post},
   // auth,
 }) => {
-// console.log("answer is", , "posts is ",post);
+console.log("answer is");
   // const answer1 = {
   //   body: 'This is body',
   //   user_id: 'asdfasdf',
@@ -92,14 +92,14 @@ const AnswerItem =({
                   )} */}
               </div>
             </div>
-            {/* <UserCard
-              created_at={answer?.createdBy}
-              user_id={user_id}
-              gravatar={gravatar}
-              username={username}
-              dateType={'answered'}
+            <UserCard
+              created_at={answer?.createdOn}
+              user_id={answer.createdBy._id}
+              gravatar="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+              username={answer?.createdBy?.name}
+              float={'right'}
               backgroundColor={'transparent'}
-            /> */}
+            />
           </div>
         </div>
       </div>
