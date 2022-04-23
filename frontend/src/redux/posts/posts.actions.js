@@ -11,8 +11,12 @@ import {
   DELETE_POST,
   ADD_POST,
   ADD_POST_TO_BOOKMARK,
-  ADD_POST_TO_BOOKMARK_ERROR
+  ADD_POST_TO_BOOKMARK_ERROR,
+  ADD_VOTE_TO_POST,
+  ADD_VOTE_TO_POST_ERROR
 } from "./posts.types"
+
+
 
 // Get posts
 export const getPosts =
@@ -55,6 +59,28 @@ export const addPostToBookmark = (body) => async (dispatch) => {
     })
   }
 }
+
+
+export const addVoteToPost = (body) => async (dispatch) => {
+  try {
+    console.log("vote body is", body);
+    const res = await axios.post(
+      config.BASE_URL + "/vote/create-vote",
+      body,
+    )
+    console.log("vote response", res);
+    dispatch({
+      type: ADD_VOTE_TO_POST,
+      payload: res.data.data,
+    })
+  } catch (err) {
+    dispatch({
+      type:  ADD_VOTE_TO_POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    })
+  }
+}
+
 
 
 // Get post
