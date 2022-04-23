@@ -7,16 +7,25 @@ import {
   COMMENT_ERROR,
   ADD_COMMENT,
   DELETE_COMMENT,
+  GET_ANSWER_COMMENTS
 } from './comments.types';
 
-export const getComments = (id) => async (dispatch) => {
+export const getComments = (id, type="question") => async (dispatch) => {
   try {
     const res = await axios.get(config.BASE_URL + `/comment/get-comment-by-resourceid/${id}`);
     console.log("comments data",res);
-    dispatch({
-      type: GET_COMMENTS,
-      payload: res.data.data,
-    });
+    if(type === "answer"){
+      dispatch({
+        type: GET_ANSWER_COMMENTS,
+        payload: res.data.data,
+      });
+    }else{
+      dispatch({
+        type: GET_COMMENTS,
+        payload: res.data.data,
+      });
+    }
+    
   } catch (err) {
     dispatch({
       type: COMMENT_ERROR,

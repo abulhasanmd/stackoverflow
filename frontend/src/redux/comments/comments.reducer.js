@@ -3,10 +3,12 @@ import {
   COMMENT_ERROR,
   ADD_COMMENT,
   DELETE_COMMENT,
+  GET_ANSWER_COMMENTS
 } from './comments.types';
 
 const initialState = {
   comments: [],
+  answerComments: [],
   loading: true,
   error: {},
 };
@@ -17,6 +19,12 @@ export default function comments(state = initialState, action) {
       return {
         ...state,
         comments: action.payload,
+        loading: false,
+      };
+    case GET_ANSWER_COMMENTS:
+      return {
+        ...state,
+        answerComments: action.payload,
         loading: false,
       };
     case ADD_COMMENT:
