@@ -1,18 +1,18 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 // useEffect, useState
 import moment from 'moment';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {
   getComments,
-  // deleteComment,
+  deleteComment,
   // addComment,
 } from '../../../../redux/comments/comments.actions';
 
-// import Spinner from '../../../../components/spinner/Spinner';
+import Spinner from '../../../../components/Spinner/Spinner';
 import TagBadge from '../../../../components/TagBadge/TagBadge.component';
-// import LinkButton from '../../../../components/link-button/LinkButton';
+import LinkButton from '../../../../components/link-button/LinkButton';
 
 import './CommentCell.styles.css';
 
@@ -30,6 +30,8 @@ import './CommentCell.styles.css';
     getComments,
     comment,
     answerId,
+    auth,
+    post: {post},
   }) => {
 // const CommentCell = ({ comment: {comment} ,post: {post}}) => {
     // console.log("post id is",post._id);
@@ -41,22 +43,22 @@ import './CommentCell.styles.css';
       }, [getComments]);
    ("comment is",comment);
 
-  // const [formData, setFormData] = useState({
-  //   body: '',
-  // });
+  const [formData, setFormData] = useState({
+    body: '',
+  });
 
-  // const {body} = formData;
+  const {body} = formData;
 
-  // const handleChange = (e) =>
-  //   setFormData({...formData, [e.target.name]: e.target.value});
+  const handleChange = (e) =>
+    setFormData({...formData, [e.target.name]: e.target.value});
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // addComment(post.id, {body});
-  //   setFormData({
-  //     body: '',
-  //   });
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // addComment(post.id, {body});
+    setFormData({
+      body: '',
+    });
+  };
 
   // const comment1 = {
   //   body: '',
@@ -81,9 +83,9 @@ import './CommentCell.styles.css';
         <div className='comments'>
           <ul className='comments-list'>
             {
-              // comment.loading === null ? (
-              // <Spinner width='25px' height='25px' />
-              // ) :
+              comment.loading === null ? (
+              <Spinner width='25px' height='25px' />
+              ) :
                 (
               comment?.answerComments?.data?.map((comment, index) => (
                 <li key={index} className='comments-item'>
@@ -105,9 +107,9 @@ import './CommentCell.styles.css';
                         {moment(comment?.created_at).fromNow(true)} ago
                       </span>
                     </div>
-                    {/* {!auth.loading &&
+                    {!auth.loading &&
                       auth.isAuthenticated &&
-                      comment.user_id === auth.user.id && (
+                      comment.user_id === auth.user.userId && (
                         <Link
                           className='s-tag s-tag__moderator'
                           style={{marginTop: '4px'}}
@@ -117,7 +119,7 @@ import './CommentCell.styles.css';
                         >
                           delete
                         </Link>
-                      )} */}
+                      )}
                   </div>
                 </li>
               ))
@@ -125,7 +127,7 @@ import './CommentCell.styles.css';
           </ul>
         </div>
         <div className='add-comment'>
-          <Fragment>
+          {/* <Fragment>
           <div>
                   <input
                     className='title-input s-input'
@@ -137,8 +139,8 @@ import './CommentCell.styles.css';
                     placeholder='Leave a comment'
                   />
                 </div>
-          </Fragment>
-          {/* {!auth.loading && auth.isAuthenticated ? (
+          </Fragment> */}
+          {!auth.loading && auth.isAuthenticated ? (
             <Fragment>
               <form className='comment-form' onSubmit={(e) => handleSubmit(e)}>
                 <div>
@@ -161,7 +163,7 @@ import './CommentCell.styles.css';
                 link={'/login'}
               />
             </Fragment>
-          )} */}
+          )}
         </div>
       </div>
     </Fragment>

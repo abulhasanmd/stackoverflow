@@ -5,7 +5,7 @@ import './QuestionActivity.styles.css'
 const QuestionActivity = () => {
   return (
     <div style={{ marginLeft: "30px" }}>
-      <h1>Timeline for <Link to={`/questions/:id`}> Error in layer of Discriminator Model while making a GAN model</Link></h1>
+      <h1>Activity for <Link to={`/questions/:id`}> </Link></h1>
       <h2><b> 6 events</b></h2>
           <table className="table table-bordered table-striped table-sm">
   <thead>

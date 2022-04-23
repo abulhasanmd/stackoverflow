@@ -14,6 +14,7 @@ import { BsBookmarkStar } from 'react-icons/bs'
 import {MdOutlineHistory} from 'react-icons/md';
 import { useParams } from 'react-router';
 import {Link} from 'react-router-dom'
+import {addPostToBookmark} from '../../../redux/posts/posts.actions';
 //   {
 //   post: {
 //     post: {answer_count, comment_count, tags},
@@ -21,7 +22,7 @@ import {Link} from 'react-router-dom'
 // }
 
 
-const QuestionSection = ({post: {post}}) => {
+const QuestionSection = ({addPostToBookmark, post: {post}, auth}) => {
   
   let {id} = useParams();
 
@@ -38,6 +39,17 @@ const QuestionSection = ({post: {post}}) => {
     //     created_at: "2020-01-01",
     //     updated_at: "2020-01-01",
     //   });
+    console.log("auth is",auth)
+    const handleVote = ((type) => {
+      console.log("type is",type);
+      console.log("vote clicked");
+      });
+
+      const handleBookmark = ((questionId, userId) => {
+        console.log("questionId is",questionId);
+        console.log("userId is",userId);
+        addPostToBookmark({questionId, userId});
+        }); 
 
     // const post = {
     //   // answer_count: 2,
@@ -53,10 +65,12 @@ const QuestionSection = ({post: {post}}) => {
         <div className='post-layout'>
         <div className='vote-cell' style={{marginRight: "30px"}}>
           <div className='vote-container'>
+         
             <button
               className='vote-up'
               title='This answer is useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
+              onClick = {() => { (!auth.loading && auth.isAuthenticated) ? (handleVote("up")) : alert("You need to login")}}
             >
               <UpVote className='icon' />
             </button>
@@ -65,11 +79,12 @@ const QuestionSection = ({post: {post}}) => {
               className='vote-down'
               title='This answer is not useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
+              onClick = {() => { !auth.loading && auth.isAuthenticated ? (handleVote("down")) : alert("You need to login")}}
             >
               <DownVote className='icon' />
             </button>
               <div className='vote-count fc-black-500' style={{marginLeft: "10px"}}>
-              <BsBookmarkStar style={{fontSize: "20px", cursor: "pointer"}} />
+              <BsBookmarkStar style={{fontSize: "20px", cursor: "pointer"}} onClick = {() => handleBookmark(post._id, post.createdBy._id)} />
             </div>
             <button
               className='vote-down'
@@ -108,10 +123,13 @@ const QuestionSection = ({post: {post}}) => {
 
 QuestionSection.propTypes = {
   post: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  addPostToBookmark: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(QuestionSection);
+export default connect(mapStateToProps, {addPostToBookmark})(QuestionSection);

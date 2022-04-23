@@ -10,6 +10,8 @@ import {
   POST_ERROR,
   DELETE_POST,
   ADD_POST,
+  ADD_POST_TO_BOOKMARK,
+  ADD_POST_TO_BOOKMARK_ERROR
 } from "./posts.types"
 
 // Get posts
@@ -34,6 +36,26 @@ export const getPosts =
       })
     }
   }
+
+export const addPostToBookmark = (body) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      config.BASE_URL + "/questions/add-bookmark",
+      body,
+    )
+    console.log("question add to bookmark", res);
+    dispatch({
+      type: ADD_POST_TO_BOOKMARK,
+      payload: res.data.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: ADD_POST_TO_BOOKMARK_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    })
+  }
+}
+
 
 // Get post
 export const getPost = (id) => async (dispatch) => {

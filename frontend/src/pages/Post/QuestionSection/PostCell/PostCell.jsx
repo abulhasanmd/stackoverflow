@@ -18,7 +18,7 @@ import './PostCell.styles.css';
 // }
 
 //{post: {post: {id=12, post_body, tags, gravatar, user_id, username, created_at} }}
-const PostCell = ({post: {post}}) => {
+const PostCell = ({post: {post}}, auth) => {
 console.log("post is", post)
   // const post1 = {
   //   id: 1,
@@ -62,9 +62,9 @@ console.log("post is", post)
                 >
                   follow
                 </Link>
-                {/* {!auth.loading &&
+                {!auth.loading &&
                   auth.isAuthenticated &&
-                  user_id === auth.user.id && ( */}
+                  user_id === auth.user.userId && (
                     <Link
                       className='s-link s-link__danger'
                       style={{paddingLeft: '4px'}}
@@ -74,7 +74,7 @@ console.log("post is", post)
                     >
                       delete
                     </Link>
-                  {/* )} */}
+                   )} 
               </div>
             </div>
             <UserCard
@@ -98,7 +98,7 @@ PostCell.propTypes = {
 
 const mapStateToProps = (state) => ({
   post: state.post,
-//   auth: state.auth,
+  auth: state.auth,
 });
 
 // connect(mapStateToProps, {deletePost})

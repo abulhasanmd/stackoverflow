@@ -16,8 +16,8 @@ const AnswerItem =({
   // deleteAnswer,
   answer,
   // answer: {body, user_id, gravatar, vote, id, created_at, username},
-  // post: {post},
-  // auth,
+  post: {post},
+  auth,
 }) => {
 console.log("answer is");
   // const answer1 = {
@@ -31,6 +31,10 @@ console.log("answer is");
 
   // const {answer, user_id, gravatar, created_at, username} = answer1;
 
+const handleVote = (id, type) => {
+  console.log("vote is", type, id);
+}
+
   return (
     <Fragment>
       <div className='answer-layout'>
@@ -40,6 +44,7 @@ console.log("answer is");
               className='vote-up'
               title='This answer is useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
+              onClick = {() => handleVote(answer?.id, 'up')}
             >
               <UpVote className='icon' />
             </button>
@@ -48,6 +53,7 @@ console.log("answer is");
               className='vote-down'
               title='This answer is not useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
+              onClick = {() => handleVote(answer?.id, 'down')}
             >
               <DownVote className='icon' />
             </button>
@@ -77,19 +83,19 @@ console.log("answer is");
                 >
                   follow
                 </Link>
-                {/* {!auth.loading &&
+                {!auth.loading &&
                   auth.isAuthenticated &&
-                  user_id === auth.user.id && (
+                  answer?.createdBy?._id === auth.user.userId && (
                     <Link
                       className='s-link s-link__danger'
                       style={{paddingLeft: '4px'}}
                       title='Delete the answer'
-                      onClick={() => deleteAnswer(id)}
-                      to={`/questions/${post.id}`}
+                      onClick={() => deleteAnswer(post._id)}
+                      to={`/questions/${post._id}`}
                     >
                       delete
                     </Link>
-                  )} */}
+                  )}
               </div>
             </div>
             <UserCard

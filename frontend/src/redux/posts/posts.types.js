@@ -1,3 +1,5 @@
+export const ADD_POST_TO_BOOKMARK = 'ADD_POST_TO_BOOKMARK';
+export const ADD_POST_TO_BOOKMARK_ERROR = 'ADD_POST_TO_BOOKMARK_ERROR';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
 export const GET_TOP_POSTS = 'GET_TOP_POSTS';
