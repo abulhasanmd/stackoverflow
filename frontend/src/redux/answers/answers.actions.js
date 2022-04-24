@@ -27,7 +27,7 @@ export const getAnswers = (questionId) => async (dispatch) => {
 };
 
 // Add Answer
-export const addAnswer = (postId, formData) => async (dispatch) => {
+export const addAnswer = (formData) => async (dispatch) => {
   const config_headers = {
     headers: {
       'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const addAnswer = (postId, formData) => async (dispatch) => {
 
   try {
     const res = await axios.post(
-      config.BASE_URL + `/api/posts/answers/${postId}`,
+      config.BASE_URL + `/answer/post-answer`,
       formData,
       config_headers
     );
@@ -48,7 +48,7 @@ export const addAnswer = (postId, formData) => async (dispatch) => {
 
     dispatch(setAlert(res.data.message, 'success'));
 
-    dispatch(getAnswers(postId));
+    dispatch(getAnswers(formData.questionId));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
 
