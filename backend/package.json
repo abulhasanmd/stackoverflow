@@ -10,6 +10,7 @@
   "dependencies": {
     "aws-sdk": "^2.1120.0",
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
     "express": "~4.16.1",

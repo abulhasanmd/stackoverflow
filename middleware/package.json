@@ -19,6 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "kafkajs": "^1.16.0",
     "morgan": "~1.9.1",
+    "package.json": "^2.0.1",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "redis": "^4.0.6",
