@@ -1,0 +1,38 @@
+.caption {
+  margin-right: 48px;
+  margin-bottom: 0px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+.caption h3 {
+  margin-bottom: 32px;
+}
+.caption .caption-item {
+  display: flex;
+  margin-bottom: 24px;
+}
+.caption .caption-item .grid-icon {
+  margin-right: 8px;
+}
+.caption .caption-item .grid-icon .svg-icon {
+  color: #0095ff;
+}
+.caption .fs-light {
+  color: #6a737c;
+  font-size: 13px;
+  box-sizing: inherit;
+}
+@media (max-width: 799px) {
+  .caption {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    min-width: 400px;
+    margin-right: 0;
+ }
+  h3 {
+    font-size: 1.6rem;
+ }
+}

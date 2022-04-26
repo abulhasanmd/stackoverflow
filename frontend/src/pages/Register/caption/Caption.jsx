@@ -6,7 +6,7 @@ import {ReactComponent as VoteLogo} from '../../../assets/Vote.svg';
 import {ReactComponent as TagsLogo} from '../../../assets/Tags.svg';
 import {ReactComponent as TrophyLogo} from '../../../assets/Trophy.svg';
 
-import './Caption.styles.scss';
+import './Caption.styles.css';
 
 const Caption = () => {
   return (

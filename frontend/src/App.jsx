@@ -1,10 +1,11 @@
 import React from 'react';
-import './App.css';
-import Sidebar from './components/questions-tab/SideBar';
+// import './App.css';
+// import Sidebar from './components/questions-tab/SideBar';
+import RoutesTree from './RoutesTree';
 
 function App() {
 	return <div className="App">
-		<h1>Hello</h1>
+		<RoutesTree />
 	</div>;
 }
 

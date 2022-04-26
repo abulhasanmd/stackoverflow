@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // import {setAlert} from '../../redux/alert/alert.actions';
@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 import Caption from './Caption/Caption';
 import AuthForm from '../../components/auth-form/AuthForm';
 
-import './Register.styles.scss';
+import './Register.styles.css';
 
-const Register = ({isAuthenticated}) => {
+const RegisterPage = ({isAuthenticated}) => {
   if (isAuthenticated) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   return (
@@ -26,10 +26,10 @@ const Register = ({isAuthenticated}) => {
   );
 };
 
-Register.propTypes = {
+RegisterPage.propTypes = {
   setAlert: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
 
-export default Register;
+export default RegisterPage;
