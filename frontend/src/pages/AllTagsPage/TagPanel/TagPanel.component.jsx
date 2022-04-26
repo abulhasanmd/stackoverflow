@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TagBadge from '../../../components/TagBadge/TagBadge.component';
 
-const TagPanel = ({tag: {name, descr, questionsCount, noOfQuestionsInSevenDays}}) => {//createdOn
+const TagPanel = ({tag: {name, descr, questionsCount, noOfQuestionsInSevenDays, numberOfQuestionsByDate}}) => {//createdOn
   return (
     <div className="grid--item s-card js-tag-cell d-flex fd-column">
       <div className="d-flex jc-space-between ai-center mb12">
@@ -22,7 +22,7 @@ const TagPanel = ({tag: {name, descr, questionsCount, noOfQuestionsInSevenDays}}
           added {moment(createdOn).fromNow(false)}
         </div> */}
         <div className="flex--item s-anchors s-anchors__inherit">
-         11 asked today, {noOfQuestionsInSevenDays} this week
+         {numberOfQuestionsByDate} 11 asked today, {noOfQuestionsInSevenDays} this week
         </div>
         {/* <div className="flex--item">{questionsCountThisWeek} this week</div> */}
       </div>

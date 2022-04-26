@@ -14,6 +14,7 @@ import AdminAnalytics from './components/admin-analytics/AdminAnalytics';
 import Post from './pages/Post/Post';
 import Home from './pages/Home/Home';
 import ChatBody from './components/chatBody/ChatBody';
+import AllUsersPage from './pages/AllUsersPage/AllUsersPage.component';
 
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
@@ -44,6 +45,12 @@ const IndividualPost = withPageTitle({
 	title: 'Post - Stack Overflow',
 });
 
+const AllUsersPageComponent = withPageTitle({
+	component: LayoutWrapper({component: AllUsersPage}),
+	title: 'Users - CLONE Stack Overflow',
+  });
+
+
 const AdminAnalyticsComponent = withPageTitle({
 	component: LayoutWrapper({ component: AdminAnalytics }),
 	title: 'Admin Analytics',
@@ -67,6 +74,7 @@ const RoutesTree = () => {
 			{/* <Route exact path='/tags/:tagname' component={TagPageComponent} /> */}
 			<Route exact path="/questions/:id" element={<IndividualPost />} />
 			<Route exact path="/questions/timeline/:id" element={<QuestionActivityComponent />} />
+			<Route exact path='/users' component={AllUsersPageComponent} />
 			<Route exact path="/tags" element={<AllTagsPageComponent />} />
 			<Route exact path="/register" element={<RegisterPage />} />
 			<Route exact path="/login" element={<LoginPage />} />
