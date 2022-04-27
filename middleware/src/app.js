@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 require('dotenv').config();
 const cors = require('cors');
+const redis = require('redis')
 
 const usersRouter = require('./routes/userRouter');
 const adminRouter = require('./routes/adminRouter');
@@ -41,6 +42,14 @@ app.use('/vote', voteRouter);
 app.use('/tag', tagRouter);
 app.use('/posts', postRouter);
 
+async function initRedis() {
+	const client = redis.createClient({
+	  url: process.env.REDISURL
+	})
+	await client.connect()
+	global.redisClient = client 
+}
+initRedis()
 // error handler
 
 app.use((err, req, res, next) => {

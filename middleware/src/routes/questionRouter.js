@@ -4,14 +4,17 @@ const {
 } = require('../kafka/producer');
 
 const router = express.Router();
+// const redis = require('redis');
+// const redisClient = redis.createClient(6379);
 
 router.post('/post-question', async (req, res) => {
 	sendMessage(
 		process.env.QUESTION_TOPIC,
 		req.body,
 		'POST-QUESTION',
-		(error, data) => {
+		async (error, data) => {
 			if (data) {
+				await redisClient.del('allposts')
 				res.status(200).json(data);
 			} else {
 				res.status(400).json(error);
