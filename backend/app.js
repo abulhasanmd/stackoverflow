@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
 
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  res.status(err.status || 400).json({ error: err.message });
+  res.status(err.status || 400).json({ error: { message: err.message } });
 });
 
 module.exports = app;
