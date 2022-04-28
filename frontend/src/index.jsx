@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 // import PostQuestion from './components/post-question/PostQuestion';
+//import UserProfile from './components/user-profile/UserProfile';
+//import UserActivityTab from './components/user-activity-tab/UserActivityTab';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
