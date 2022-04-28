@@ -15,6 +15,7 @@ const corsOptions = {
 
 const usersRouter = require('./routes/userRouter');
 const adminRouter = require('./routes/adminRouter');
+const messagesRouter = require('./routes/messagesRouter')
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+app.use('/messages', messagesRouter);
+
 app.use((err, req, res, next) => {
   console.error('in error handler');
   // set locals, only providing error in development
