@@ -63,7 +63,7 @@ const updateReviewStatus = async (updateParams) => {
     if (questions.modifiedCount < 1) {
       return { error: { message: 'No Question found to be updated or status unchanged' } };
     }
-    return { data: `Status successfully updated to ${updateParams.action} for the question` };
+    return { data: { message: `Status successfully updated to ${updateParams.action} for the question` } };
   } catch (e) {
     console.error('Exception occurred while updating review status', e);
     return { error: { message: e.message } };
