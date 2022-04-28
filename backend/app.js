@@ -14,6 +14,8 @@ const corsOptions = {
 };
 
 const usersRouter = require('./routes/userRouter');
+const adminRouter = require('./routes/adminRouter');
+const messagesRouter = require('./routes/messagesRouter')
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/users', usersRouter);
+app.use('/admin', adminRouter);
+app.use('/messages', messagesRouter);
 
 app.use((err, req, res, next) => {
   console.error('in error handler');
@@ -32,7 +36,7 @@ app.use((err, req, res, next) => {
 
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  res.status(err.status || 400).json({ error: err.message });
+  res.status(err.status || 400).json({ error: { message: err.message } });
 });
 
 module.exports = app;
