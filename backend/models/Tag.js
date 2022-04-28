@@ -9,6 +9,7 @@ const tagSchema = new mongoose.Schema({
   descr: {
     type: String,
   },
+  //   TODO changes to ObjectId
   createdBy: {
     type: String,
     required: true,
