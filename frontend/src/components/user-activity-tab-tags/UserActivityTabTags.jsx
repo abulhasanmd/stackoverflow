@@ -4,7 +4,7 @@ import './UserActivityTabTags.css';
 
 export default function UserActivityTabTags() {
 	return (
-		<section className="flex--item fl-grow1 wmx100">
+		<div className="user-activity-tab-tags">
 			<div id="user-tab-tags" className="js-user-tab">
 				<div className="d-flex ai-end jc-space-between mb8 fw-wrap">
 					<div className="flex--item fl-grow1">
@@ -12,26 +12,6 @@ export default function UserActivityTabTags() {
 							<h2 className="flex--item fs-title mb0">
 								663 Tags
 							</h2>
-						</div>
-					</div>
-					<div className="flex--item">
-						<div className="d-flex ai-end">
-							<div className="flex--item s-btn-group js-user-tab-sorts fl-shrink0 md:fl-shrink1">
-								<a
-									href="/users/8380272/onyambu?tab=tags&amp;sort=votes"
-									className="as-center s-btn s-btn__muted s-btn__outlined s-btn__xs js-user-tab-sort is-selected js-selected"
-									data-sort="votes"
-								>
-									Score
-								</a>
-								<a
-									href="/users/8380272/onyambu?tab=tags&amp;sort=name"
-									className="as-center s-btn s-btn__muted s-btn__outlined s-btn__xs js-user-tab-sort"
-									data-sort="name"
-								>
-									Name
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -82,6 +62,6 @@ export default function UserActivityTabTags() {
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
 	);
 }
