@@ -1,6 +1,7 @@
 import React from "react"
 import { Routes, Route } from "react-router-dom"
 import LoginPage from "./pages/Login/LoginPage"
+import NotFoundPage from "./pages/NotFound/NotFoundPage"
 // import withPageTitle from "./components/withPageTitle/withPageTitle"
 
 import RegisterPage from "./pages/Register/RegisterPage"
@@ -15,6 +16,7 @@ const RoutesTree = () => {
     <Routes>
       <Route exact path='/register' element={<RegisterPage />} />
       <Route exact path='/login' element={<LoginPage />} />
+      <Route path='*' element={<NotFoundPage />} />
     </Routes>
   )
 }
