@@ -36,7 +36,7 @@ const getBookmarks = async (userId) => {
 		const bookmarks = await User.findById({
 			userId,
 		}).select({
-			bookmarks,
+			bookmarks: 1,
 		}).exec();
 		return {
 			data: bookmarks,
