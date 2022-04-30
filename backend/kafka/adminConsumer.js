@@ -1,13 +1,13 @@
 const { kafka } = require('./kafkaClient');
 
-const consumer = kafka.consumer({ groupId: 'backend-user-consumers' });
-const userService = require('../services/userService');
+const consumer = kafka.consumer({ groupId: 'backend-admin-consumers' });
+const adminService = require('../services/adminService');
 const { sendMessage } = require('./producer');
 
 (async () => {
   await consumer.connect();
   await consumer.subscribe({
-    topic: process.env.USER_TOPIC,
+    topic: process.env.ADMIN_TOPIC,
   });
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
@@ -27,9 +27,20 @@ const actionHandler = async (message) => {
     );
     let response;
     switch (action) {
-      // TODO change action and invoked service method
-      case 'POST-QUESTION':
-        // response = await userService.postQuestion(messageJSON);
+      case 'GET-TAGS':
+        response = await adminService.getTags();
+        break;
+      case 'ADD-TAG':
+        response = await adminService.addTag(messageJSON);
+        break;
+      case 'GET-PENDING-QUESTIONS':
+        response = await adminService.getPendingQuestions();
+        break;
+      case 'UPDATE-REVIEW-STATUS':
+        response = await adminService.updateReviewStatus(messageJSON);
+        break;
+      case 'GET-ANALYTICS':
+        response = await adminService.getAnalytics();
         break;
       default:
         break;
@@ -39,7 +50,7 @@ const actionHandler = async (message) => {
     console.error(error);
     sendMessage(
       {
-        error: { message: error.message || 'Some error occured during processing USER request' },
+        error: { message: error.message || 'Some error occured during processing admin request' },
       },
       id,
       partition,

@@ -1,0 +1,171 @@
+GET http://localhost:3001/shops/get?shopname=shop1
+###
+POST http://localhost:3000/shops/register
+Content-Type: application/json
+
+{
+   "shop_name":"Amazon",
+    "shop_pic":"a",
+    "user_id":26
+  }
+###
+POST http://localhost:3000/shops/update
+Content-Type: application/json
+
+{
+   "shop_name":"Amazon",
+    "shop_pic":"a",
+    "shop_id":11
+  }
+###
+GET http://localhost:3000/shops/check-availability?shopname=shop2
+###
+GET http://localhost:3001/users/get
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjI0Y2Y5NzQ5YzAzODZmNjk4M2U3ZDhiIiwiaWF0IjoxNjQ5MjE2MDQzfQ.-sb7dRfIGJS-LJA6YESGu_VKbGcYO1_yRXQ4aXkDAhI
+
+###
+POST http://localhost:3001/users/login
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFidWxAaGFzYS5jb20iLCJpYXQiOjE2NDYwMTE4Njh9.0pt0egax4qlMeZKyuX-z_HX-5gBxj1YBI5adp_Q1OwU
+
+{
+    "email":"abul@hasa3.com",
+    "password":"password"
+}
+
+###
+
+POST http://localhost:3001/users/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFidWxAaGFzYS5jb20iLCJpYXQiOjE2NDYwMTE4Njh9.0pt0egax4qlMeZKyuX-z_HX-5gBxj1YBI5adp_Q1OwU
+
+{
+    "fullname":"Abul hasan",
+    "email":"abulhasan.mohammed@sjsu.edu",
+    "password":"password",
+    "phone":"3413455083",
+    "gender":"M",
+    "dob":"1996-10-01",
+    "country":"USA",
+    "city":"San Jose",
+    "about":"Easy to go",
+    "address_1":"529 S 10th street",
+    "address_2":"7",
+    "profile_pic":""
+}
+###
+
+PUT  http://localhost:3001/users/update
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjI0Y2Y5NzQ5YzAzODZmNjk4M2U3ZDhiIiwiaWF0IjoxNjQ5MjE2MDQzfQ.-sb7dRfIGJS-LJA6YESGu_VKbGcYO1_yRXQ4aXkDAhI
+
+{
+    "fullname":"Abul hasan Mohammedd",
+    "email":"abul@hasa3.com",
+    "password":"password",
+    "phone":"3413455083",
+    "gender":"M",
+    "dob":"1996-10-01",
+    "country":"USA",
+    "city":"San Jose",
+    "about":"Easy to go",
+    "address_1":"529 S 10th street",
+    "address_2":"7",
+    "profile_pic":"",
+    "user_id":"624cf9749c0386f6983e7d8b"
+}
+###
+GET process.env.REACT_APP_items/get-all
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwic2hvcF9pZCI6NCwiaWF0IjoxNjQ3MzE5Nzg0fQ.0myw0fJcchJYyXaaYrtE-bPSEcr3RKSnTcfzibXnzWE
+
+###
+GET process.env.REACT_APP_items/get-all-by-shop
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwic2hvcF9pZCI6NCwiaWF0IjoxNjQ3MzE5Nzg0fQ.0myw0fJcchJYyXaaYrtE-bPSEcr3RKSnTcfzibXnzWE
+###
+POST http://localhost:3000/shops/add-item
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFidWxAaGFzYS5jb20iLCJpYXQiOjE2NDYwMTE4Njh9.0pt0egax4qlMeZKyuX-z_HX-5gBxj1YBI5adp_Q1OwU
+ 
+   {
+    "name": "myitem",
+      "category": "cheap",
+      "description": "good item",
+      "price": 100,
+      "stock":0,
+      "sold_count": 0,
+      "shop_id": 1
+   }
+###
+
+POST http://localhost:3000/items/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFidWxAaGFzYS5jb20iLCJpYXQiOjE2NDYwMTE4Njh9.0pt0egax4qlMeZKyuX-z_HX-5gBxj1YBI5adp_Q1OwU
+ 
+   {
+    "name": "myitem11",
+      "category": "ultra-luxury",
+      "description": "good item",
+      "price": 100,
+      "stock":10,
+      "item_id": 1
+   }
+
+###
+   GET http://localhost:3000/favourites/get?user_id=26
+
+###
+
+POST http://localhost:3000/favourites/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFidWxAaGFzYS5jb20iLCJpYXQiOjE2NDYwMTE4Njh9.0pt0egax4qlMeZKyuX-z_HX-5gBxj1YBI5adp_Q1OwU
+ 
+   {
+    "user_id": 26,
+      "item_id": 1
+   }
+###
+
+DELETE http://localhost:3000/favourites/remove?favourite_id=8
+
+ {
+    "user_id": 26,
+      "item_id": 6
+   }
+
+###
+
+GET http://localhost:3000/orders/get?user_id=26
+
+###
+
+POST process.env.REACT_APP_orders/create
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwic2hvcF9pZCI6NCwiaWF0IjoxNjQ3MDY2NjY1fQ.BsOE13JD4ReM2pbeOm4D_rPR_aymoNMMCXqBpTh3GNc
+ 
+   {
+    "order_date": "1990-10-26",
+      "total_price": 1000,
+      "total_quantity":4,
+      "user_id":26,
+      "orderDetails":[{
+               "item_id":12,
+                "item_quantity":1,
+                "unit_price" : 250,
+                "shop_id": 4,
+                "item_name":"Toothpaste",
+                "item_pic":"",
+                "category":"designer",
+                "description":"zabardat"
+      },
+      {
+                        "item_id":17,
+                "item_quantity":1,
+                "unit_price" : 250,
+                "shop_id": 4,
+                "item_name":"Toothpaste",
+                "item_pic":"",
+                "category":"cheap",
+                "description":"zabardat"
+      }
+      ]
+   }
