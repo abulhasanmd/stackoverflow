@@ -1,14 +1,12 @@
 const Tag = require('../models/Tag');
 const Question = require('../models/Question');
+const User = require('../models/User');
 const questionConstants = require('../constants/questionConstants');
 
 const getTags = async () => {
   console.log('Entering adminService.getTags');
   try {
     const tags = await Tag.find().exec();
-    // if (tags.length < 1) {
-    //   return { error: { message: 'No Tags found' } };
-    // }
     return { data: tags };
   } catch (e) {
     console.error('Exception occurred while getting tags', e);
@@ -42,9 +40,6 @@ const getPendingQuestions = async () => {
     const questions = await Question.find(
       { reviewStatus: questionConstants.PENDING_STATUS },
     ).exec();
-    // if (questions.length < 1) {
-    //   return { error: { message: 'No Questions found to be reviewed' } };
-    // }
     return { data: questions };
   } catch (e) {
     console.error('Exception occurred while getting pendingQuestions', e);
@@ -73,16 +68,37 @@ const updateReviewStatus = async (updateParams) => {
 const getAnalytics = async () => {
   console.log('Entering adminService.getAnalytics');
   try {
-    const topTags = await Tag.find().sort({ questionsCount: -1 }).limit(10).exec();
+    const topTags = await Tag.find({}, { _id: 0, name: 1, questionsCount: 1 })
+      .sort({ questionsCount: -1 }).limit(10).exec();
     const topQuestions = await Question.find({}, {
       views: 1,
+      title: 1,
+      _id: 0,
     }).sort({ views: -1 }).limit(10).exec();
-    // const questionsPerDay
-    // const topUsers
-    // const bottomUsers =
-    return { data: { topTags, topQuestions } };
+    const questionsPerDay = await Question.aggregate([{
+      $group: {
+        _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdOn' } },
+        count: { $sum: 1 },
+
+      },
+    },
+    ]);
+    // const questionsPerDay = {};
+    // questionsGrouped.forEach((elem) => {
+    //   questionsPerDay[elem._id] = elem.count;
+    // });
+    const topUsers = await User.find({}, { name: 1, _id: 0, reputation: 1 })
+      .sort({ reputation: -1 }).limit(10).exec();
+    const bottomUsers = await User.find({}, { name: 1, _id: 0, reputation: 1 })
+      .sort({ reputation: 1 }).limit(10).exec();
+
+    return {
+      data: {
+        topTags, topQuestions, topUsers, bottomUsers, questionsPerDay,
+      },
+    };
   } catch (e) {
-    console.error('Exception occurred while updating review status', e);
+    console.error('Exception occurred while getting analytics', e);
     return { error: { message: e.message } };
   }
 };

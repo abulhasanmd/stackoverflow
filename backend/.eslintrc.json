@@ -17,6 +17,7 @@
 		"indent": [0, "tab"],
 		"eol-last": "off",
 		"function-call-argument-newline": "off",
-		"function-paren-newline": "off"
+		"function-paren-newline": "off",
+		"allow-indentation-tabs": "off"
 	}
 }
