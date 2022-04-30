@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {ReactComponent as Logo} from '../../assets/LogoGlyphMd.svg';
@@ -31,18 +31,18 @@ const AuthForm = ({action}) => {
   const signUpLink = (
     <Fragment>
       Already have an account?{' '}
-      {/* <Link to='/login' name='login'> */}
+      <Link to='/login' name='login'>
         Log in
-      {/* </Link> */}
+      </Link>
     </Fragment>
   );
 
   const logInLink = (
     <Fragment>
       Don&apos;t have an account?{' '}
-      {/* <Link to='/register' name='register'> */}
+      <Link to='/register' name='register'>
         Sign up
-      {/* </Link> */}
+      </Link>
     </Fragment>
   );
 
@@ -94,27 +94,27 @@ const AuthForm = ({action}) => {
           </form>
           <div className='fs-caption license fc-black-500'>
             By clicking “{action}”, you agree to our{' '}
-            {/* <Link
+            <Link
               to='https://stackoverflow.com/legal/terms-of-service/public'
               className='-link'
-             > */}
+             >
               terms of service
-            {/* </Link> */}
+            </Link>
             ,{' '}
-            {/* <Link
+            <Link
               to='https://stackoverflow.com/legal/privacy-policy'
               name='privacy'
               className='-link'
-            > */}
+            >
               privacy policy
-            {/* </Link>{' '} */}
+            </Link>{' '}
             and{' '}
-            {/* <Link
+            <Link
               to='https://stackoverflow.com/legal/cookie-policy'
               className='-link'
-            > */}
+            >
               cookie policy
-            {/* </Link> */}
+            </Link>
             <input type='hidden' name='legalLinksShown' value='1' />
           </div>
         </div>
@@ -122,13 +122,13 @@ const AuthForm = ({action}) => {
           {action === 'Sign up' ? signUpLink : logInLink}
           <div>
             Are you an employer?{' '}
-            {/* <Link
+            <Link
               to='https://careers.stackoverflow.com/employer/login'
               name='talent'
-            > */}
+            >
               Sign up on Talent{' '}
               <ExternalLink/>
-            {/* </Link> */}
+            </Link>
           </div>
         </div>
       </div>
