@@ -9,20 +9,22 @@ const messagesRouter = require('./routes/messagesRouter');
 const questionRouter = require('./routes/questionRouter');
 
 const corsOptions = {
-  origin: true,
+	origin: true,
 
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+	methods: 'GET,POST,PUT,DELETE,OPTIONS',
 
-  credentials: true,
+	credentials: true,
 
-  optionsSuccessStatus: 204, // some legacy browsers (IE11, various SmartTVs) choke on 204
+	optionsSuccessStatus: 204, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 const app = express();
 app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+	extended: false
+}));
 
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
@@ -32,18 +34,18 @@ app.use('/questions', questionRouter);
 // error handler
 
 app.use((err, req, res, next) => {
-  console.error('in error handler');
-  // set locals, only providing error in development
+	console.error('in error handler');
+	// set locals, only providing error in development
 
-  res.locals.message = err.message;
+	res.locals.message = err.message;
 
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  res.status(err.status || 400).json({
-    error: {
-      message: err.message,
-    },
-  });
+	res.status(err.status || 400).json({
+		error: {
+			message: err.message,
+		},
+	});
 });
 
 module.exports = app;

@@ -13,6 +13,10 @@
 		"no-console": "off",
 		"no-use-before-define": "off",
 		"no-underscore-dangle": "off",
-		"allow-indentation-tabs": true
+		"no-tabs": 0,
+		"indent": [0, "tab"],
+		"eol-last": "off",
+		"function-call-argument-newline": "off",
+		"function-paren-newline": "off"
 	}
 }
