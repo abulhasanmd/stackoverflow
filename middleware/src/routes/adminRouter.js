@@ -6,8 +6,10 @@ const { sendMessage } = require('../kafka/producer');
 
 /* GET TAGS. */
 router.get('/get-tags', async (req, res, next) => {
+
   sendMessage(
     process.env.ADMIN_TOPIC,
+    req.body,
     'GET-TAGS',
     (error, data) => {
       if (data) {
@@ -35,6 +37,7 @@ router.post('/add-tag', async (req, res, next) => {
 router.get('/get-pending-questions', async (req, res, next) => {
   sendMessage(
     process.env.ADMIN_TOPIC,
+    req.body,
     'GET-PENDING-QUESTIONS',
     (error, data) => {
       if (data) {
