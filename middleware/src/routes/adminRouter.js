@@ -6,7 +6,6 @@ const { sendMessage } = require('../kafka/producer');
 
 /* GET TAGS. */
 router.get('/get-tags', async (req, res, next) => {
-
   sendMessage(
     process.env.ADMIN_TOPIC,
     req.body,
@@ -16,7 +15,8 @@ router.get('/get-tags', async (req, res, next) => {
         res.status(200).json(data);
       } else {
         res.status(400).json(error);
-    }}  );
+    }
+});
 });
 
 /* ADD TAGS. */
@@ -30,7 +30,8 @@ router.post('/add-tag', async (req, res, next) => {
         res.status(200).json(data);
       } else {
         res.status(400).json(error);
-    }}  );
+    }
+});
 });
 
 /* GET PENDING QUESTIONS. */
@@ -44,7 +45,8 @@ router.get('/get-pending-questions', async (req, res, next) => {
         res.status(200).json(data);
       } else {
         res.status(400).json(error);
-    }}  );
+    }
+});
 });
 
 /* UPDATE REVIEW STATUS. */
@@ -58,7 +60,8 @@ router.post('/update-review-status', async (req, res, next) => {
         res.status(200).json(data);
       } else {
         res.status(400).json(error);
-    }}  );
+    }
+});
 });
 
 /* GET ANALYTICS. */
@@ -72,9 +75,9 @@ router.get('/get-analytics', async (req, res, next) => {
         res.status(200).json(data);
       } else {
         res.status(400).json(error);
-    }}  
+    }
+},
     );
 });
-
 
 module.exports = router;

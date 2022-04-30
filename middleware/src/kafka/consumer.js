@@ -18,10 +18,10 @@ let partition;
   });
 })();
 
-consumer.on(consumer.events.GROUP_JOIN,(event)=>{
-  partition = ''+event.payload.memberAssignment.responses[0];
-  console.log(`listening on partition: ${partition}`)
-})
+consumer.on(consumer.events.GROUP_JOIN, (event) => {
+  partition = `${event.payload.memberAssignment.responses[0]}`;
+  console.log(`listening on partition: ${partition}`);
+});
 
 const addCallBacktoCallBackMap = async (id, callback) => {
   const tId = setTimeout(
