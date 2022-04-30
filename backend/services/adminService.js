@@ -6,9 +6,9 @@ const getTags = async () => {
   console.log('Entering adminService.getTags');
   try {
     const tags = await Tag.find().exec();
-    if (tags.length < 1) {
-      return { error: { message: 'No Tags found' } };
-    }
+    // if (tags.length < 1) {
+    //   return { error: { message: 'No Tags found' } };
+    // }
     return { data: tags };
   } catch (e) {
     console.error('Exception occurred while getting tags', e);
@@ -42,9 +42,9 @@ const getPendingQuestions = async () => {
     const questions = await Question.find(
       { reviewStatus: questionConstants.PENDING_STATUS },
     ).exec();
-    if (questions.length < 1) {
-      return { error: { message: 'No Questions found to be reviewed' } };
-    }
+    // if (questions.length < 1) {
+    //   return { error: { message: 'No Questions found to be reviewed' } };
+    // }
     return { data: questions };
   } catch (e) {
     console.error('Exception occurred while getting pendingQuestions', e);
@@ -70,6 +70,22 @@ const updateReviewStatus = async (updateParams) => {
   }
 };
 
+const getAnalytics = async () => {
+  console.log('Entering adminService.getAnalytics');
+  try {
+    const topTags = await Tag.find().sort({ questionsCount: -1 }).limit(10).exec();
+    const topQuestions = await Question.find({}, {
+      views: 1,
+    }).sort({ views: -1 }).limit(10).exec();
+    // const questionsPerDay
+    // const topUsers
+    // const bottomUsers =
+    return { data: { topTags, topQuestions } };
+  } catch (e) {
+    console.error('Exception occurred while updating review status', e);
+    return { error: { message: e.message } };
+  }
+};
 module.exports = {
-  getTags, addTag, getPendingQuestions, updateReviewStatus,
+  getTags, addTag, getPendingQuestions, updateReviewStatus, getAnalytics,
 };
