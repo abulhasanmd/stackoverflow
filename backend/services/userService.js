@@ -7,19 +7,24 @@ const questionConstants = require('../constants/questionConstants');
 
 const getTagsUsedInQuestions = async (userId) => {
 	try {
-		const allTags = await Question.find({
-			createdBy: userId,
-		}).populate('tags').select({
-			tags: 1,
-		});
-		const mergedTags = {};
-		allTags.forEach((tags) => {
-			tags.forEach((tag) => {
-				mergedTags[tag.name] = tag;
-			});
-		});
+		// 	const allTags = await Question.find({
+		// 		createdBy: userId,
+		// 	}).populate('tags').select({
+		// 		tags: 1,
+		// 	});
+		// 	const mergedTags = {};
+		// 	allTags.forEach((tags) => {
+		// 		tags.forEach((tag) => {
+		// 			mergedTags[tag.name] = tag;
+		// 		});
+		// 	});
+		const tags = await User.findById({
+			userId,
+		}).select({
+			associatedTags: 1,
+		}).exec();
 		return {
-			data: Object.values(allTags),
+			data: Object.values(tags),
 		};
 	} catch (e) {
 		console.error('Exception occurred while getting tags', e);
