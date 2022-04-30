@@ -1,13 +1,13 @@
 const {
-	kafka
+	kafka,
 } = require('./kafkaClient');
 
 const consumer = kafka.consumer({
-	groupId: 'backend-user-consumers'
+	groupId: 'backend-user-consumers',
 });
 const userService = require('../services/userService');
 const {
-	sendMessage
+	sendMessage,
 } = require('./producer');
 
 (async () => {
@@ -19,7 +19,7 @@ const {
 		eachMessage: async ({
 			topic,
 			partition,
-			message
+			message,
 		}) => {
 			actionHandler(message);
 		},
@@ -37,7 +37,6 @@ const actionHandler = async (message) => {
 		);
 		let response;
 		switch (action) {
-			// TODO change action and invoked service method
 		case 'GET-TAGS-USED-IN-QUESTIONS':
 			response = await userService.getTagsUsedInQuestions(messageJSON.userId);
 			// response = await userService.postQuestion(messageJSON);
@@ -48,17 +47,20 @@ const actionHandler = async (message) => {
 		case 'GET-REPUTATION-ACTIVITY':
 			response = await userService.getReputationActivity(messageJSON.userId);
 			break;
+		case 'GET-ALL-USERS':
+			response = await userService.getAllUsers();
+			break;
 		default:
 			break;
 		}
 		sendMessage({
-			data: response
+			data: response,
 		}, id, partition);
 	} catch (error) {
 		console.error(error);
 		sendMessage({
 				error: {
-					message: error.message || 'Some error occured during processing USER request'
+					message: error.message || 'Some error occured during processing USER request',
 				},
 			},
 			id,

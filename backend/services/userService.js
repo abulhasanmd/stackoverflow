@@ -5,19 +5,24 @@ const Event = require('../models/Event');
 
 const questionConstants = require('../constants/questionConstants');
 
+const getAllUsers = async () => {
+	try {
+		const users = await User.find();
+		return {
+			data: users,
+		};
+	} catch (e) {
+		console.error('Exception occured while getting users', e);
+		return {
+			error: {
+				message: e.message,
+			},
+		};
+	}
+};
+
 const getTagsUsedInQuestions = async (userId) => {
 	try {
-		// 	const allTags = await Question.find({
-		// 		createdBy: userId,
-		// 	}).populate('tags').select({
-		// 		tags: 1,
-		// 	});
-		// 	const mergedTags = {};
-		// 	allTags.forEach((tags) => {
-		// 		tags.forEach((tag) => {
-		// 			mergedTags[tag.name] = tag;
-		// 		});
-		// 	});
 		const tags = await User.findById({
 			userId,
 		}).select({
@@ -78,4 +83,5 @@ module.exports = {
 	getTagsUsedInQuestions,
 	getBookmarks,
 	getReputationActivity,
+	getAllUsers,
 };
