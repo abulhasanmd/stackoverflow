@@ -9,6 +9,10 @@ const tagSchema = new mongoose.Schema({
   descr: {
     type: String,
   },
+  questionsCount: {
+    type: Number,
+    default: 0,
+  },
   //   TODO changes to ObjectId
   createdBy: {
     type: String,
@@ -18,7 +22,7 @@ const tagSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-});
+}, { versionKey: false });
 
 const Tag = mongooseConnection.model('Tag', tagSchema);
 
