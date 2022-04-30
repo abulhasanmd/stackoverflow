@@ -1,13 +1,13 @@
 const { kafka } = require('./kafkaClient');
 
-const consumer = kafka.consumer({ groupId: 'backend-user-consumers' });
-const userService = require('../services/userService');
+const consumer = kafka.consumer({ groupId: 'backend-admin-consumers' });
+const questionService = require('../services/questionService');
 const { sendMessage } = require('./producer');
 
 (async () => {
   await consumer.connect();
   await consumer.subscribe({
-    topic: process.env.USER_TOPIC,
+    topic: process.env.QUESTION_TOPIC,
   });
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
@@ -27,9 +27,8 @@ const actionHandler = async (message) => {
     );
     let response;
     switch (action) {
-      // TODO change action and invoked service method
       case 'POST-QUESTION':
-        // response = await userService.postQuestion(messageJSON);
+        response = await questionService.postQuestion(messageJSON);
         break;
       default:
         break;
@@ -39,7 +38,7 @@ const actionHandler = async (message) => {
     console.error(error);
     sendMessage(
       {
-        error: { message: error.message || 'Some error occured during processing USER request' },
+        error: { message: error.message || 'Some error occured during processing questions request' },
       },
       id,
       partition,
