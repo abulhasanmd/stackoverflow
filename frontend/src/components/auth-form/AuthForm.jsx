@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, {Fragment, useState} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import {ReactComponent as Logo} from '../../assets/LogoGlyphMd.svg';
 import {ReactComponent as ExternalLink} from '../../assets/ExternalLink.svg';
@@ -136,11 +137,11 @@ const AuthForm = ({action}) => {
   );
 };
 
-AuthForm.propTypes = {
-    register: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired,
-    action: PropTypes.string.isRequired,
-    isAuthenticated: PropTypes.bool,
-};
+// AuthForm.propTypes = {
+//     register: PropTypes.func.isRequired,
+//     login: PropTypes.func.isRequired,
+//     action: PropTypes.string.isRequired,
+//     isAuthenticated: PropTypes.bool,
+// };
 
 export default AuthForm;
