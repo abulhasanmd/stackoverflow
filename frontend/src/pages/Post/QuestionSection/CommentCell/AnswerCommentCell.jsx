@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import {
   getComments,
   deleteComment,
-  // addComment,
+  addComment,
 } from '../../../../redux/comments/comments.actions';
 
 import Spinner from '../../../../components/Spinner/Spinner';
@@ -28,6 +28,7 @@ import './CommentCell.styles.css';
 // const PostCell = ({post: {post}}) => {
   const AnswerCommentCell = ({
     getComments,
+    addComment,
     comment,
     answerId,
     auth,
@@ -55,6 +56,17 @@ import './CommentCell.styles.css';
   const handleSubmit = async (e) => {
     e.preventDefault();
     // addComment(post.id, {body});
+    let payload = {
+      "createdBy": {
+        "_id": auth?.user?._id,
+        "imageUrl": "h"
+    },
+      "resourceType": "ans" ,
+        "resourceId":answerId,
+        "comment": body
+    }  
+    console.log("Add comment payload is",payload);
+    addComment(payload);
     setFormData({
       body: '',
     });
@@ -87,7 +99,7 @@ import './CommentCell.styles.css';
               <Spinner width='25px' height='25px' />
               ) :
                 (
-              comment?.answerComments?.data?.map((comment, index) => (
+              comment?.answerComments?.map((comment, index) => (
                 (comment.resourceId === answerId) ? (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>
@@ -192,5 +204,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   // deleteComment,
   getComments,
-  // addComment,
+  addComment,
 })(AnswerCommentCell);
