@@ -20,11 +20,16 @@ router.post('/post-question', async (req, res) => {
 	);
 });
 
-router.get('/get-allquestion', async (req, res) => {
-	
+router.get('/get-allquestion', async (req, res) => 
+{
+	let msg = {
+		body: req.body,
+		params: req.params,
+		query: req.query
+	}
 	sendMessage(
 		process.env.QUESTION_TOPIC,
-		req.body,
+		msg,
 		'GET-ALLQUESTION',
 		(error, data) => {
 			if (data) {

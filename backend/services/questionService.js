@@ -18,7 +18,11 @@ const postQuestion = async (body) => {
 	}
 };
 
-const getAllQuestions = async (body) => {
+const getAllQuestions = async (msg) => {
+    let body = msg.body;
+    let query = msg.query;
+    let params = msg.params;
+    let filter = query.filter;
 	try {
 		const que = await Question.find({ }).lean();
 		if(que)
@@ -38,6 +42,28 @@ const getAllQuestions = async (body) => {
                 // }
                 // que[i].tags = Array.from(tagNames);
             }
+
+            if(filter=="Interesting")
+            {
+                que.sort((a, b) => (a.modifiedOn > b.modifiedOn) ? -1 : 1);
+
+            }else if(filter=="Hot")
+            {
+                que.sort((a, b) => (a.views > b.views) ? -1 : 1);
+            }
+            else if(filter=="Score")
+            {
+                que.sort((a, b) => (a.score > b.score) ? -1 : 1);
+            }
+            else if(filter=="Unanswered")
+            {
+                que.filter(function(item) { 
+                    return item.answers.length>0
+                });
+                que.sort((a, b) => (a.score > b.score) ? -1 : 1);
+            }
+
+
             return {
 				data: que
 			};

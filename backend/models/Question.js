@@ -38,6 +38,10 @@ const questionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  modifiedOn: {
+    type: Date,
+    default: Date.now(),
+  },
   score: {
     type: Number,
     default: 0,

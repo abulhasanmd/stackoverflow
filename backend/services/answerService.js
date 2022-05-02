@@ -37,9 +37,11 @@ const addAnswer = async (body) =>
   }
 };
 
-const updateAnswer = async ({params, body}) => {
+const updateAnswer = async ({params, body}) => 
+{
     console.log(`Entering answerService.updateAnswer with params: ${params} && payload:${body}`);
     try {
+      body.modifiedOn = Date.now();
       const answerResponse = await Answer.updateOne(
         { _id: params.answerId },
         { $set: body },
