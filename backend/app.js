@@ -2,6 +2,13 @@ const express = require('express');
 const logger = require('morgan');
 require('dotenv').config();
 require('./kafka/adminConsumer');
+require('./kafka/answerConsumer');
+require('./kafka/commentConsumer');
+require('./kafka/messageConsumer');
+require('./kafka/questionConsumer');
+require('./kafka/tagConsumer');
+require('./kafka/userConsumer');
+require('./kafka/voteConsumer');
 require('./kafka/producer');
 
 const app = express();

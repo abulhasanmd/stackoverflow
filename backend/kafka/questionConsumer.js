@@ -1,6 +1,6 @@
 const { kafka } = require('./kafkaClient');
 
-const consumer = kafka.consumer({ groupId: 'backend-admin-consumers' });
+const consumer = kafka.consumer({ groupId: 'backend-question-consumers' });
 const questionService = require('../services/questionService');
 const { sendMessage } = require('./producer');
 
