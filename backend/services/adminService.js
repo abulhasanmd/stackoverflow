@@ -30,6 +30,9 @@ const addTag = async (tagRequest) => {
     return { error: { message: 'Some error occured while creating Tag' } };
   } catch (e) {
     console.error('Exception occurred while getting tags', e);
+    if (e && e.message.includes('name_1')) {
+      return { error: { message: `Tag ${tagRequest.name} already exist` } };
+    }
     return { error: { message: e.message } };
   }
 };
@@ -81,7 +84,13 @@ const getAnalytics = async () => {
         count: { $sum: 1 },
 
       },
+      
     },
+    {
+      $sort:{
+        _id:1
+      }
+    }
     ]);
     // const questionsPerDay = {};
     // questionsGrouped.forEach((elem) => {

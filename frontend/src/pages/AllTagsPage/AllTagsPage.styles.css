@@ -55,6 +55,9 @@
   border-color: transparent !important;
   background-color: #f48225 !important;
 }
+.addtag-btn{
+  padding-right: 50px;
+}
 @media (max-width: 1100px) {
   .side-bar {
     display: none;

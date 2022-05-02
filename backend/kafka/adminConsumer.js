@@ -45,7 +45,7 @@ const actionHandler = async (message) => {
       default:
         break;
     }
-    sendMessage({ data: response }, id, partition);
+    sendMessage(response, id, partition);
   } catch (error) {
     console.error(error);
     sendMessage(
