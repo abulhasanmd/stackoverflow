@@ -29,7 +29,7 @@ const addCallBacktoCallBackMap = async (id, callback) => {
       callback('Request Timeout, Please try again!', null);
       delete idToCallBackMap.id;
     },
-    10000,
+    600000,
     id,
   );
   idToCallBackMap[id] = { callback, tId };
