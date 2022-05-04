@@ -1,5 +1,6 @@
 var app = require('../app');
 var cluster = require('cluster')
+var os = require('os')
 var debug = require('debug')('backend:server');
 var http = require('http');
 var workers = process.env.WORKERS || os.cpus().length;
@@ -19,7 +20,6 @@ function initServer() {
   server.on('error', onError);
   server.on('listening', onListening);
 }
-
 
 if (cluster.isMaster) {
   console.log('start cluster with %s workers', workers);
