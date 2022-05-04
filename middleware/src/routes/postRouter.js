@@ -6,7 +6,7 @@ router.post('/get-posts', async (req, res, next) => {
 	try {
 		let data = await redisClient.get('allposts');
 		// console.log("##### redis data", data)
-		if(data) return res.status(200).json(JSON.parse(data));
+		if(data != "null" && data) return res.status(200).json(JSON.parse(data));
 		next();
 	} catch(err) {
 		console.log("### err", err)
@@ -20,6 +20,7 @@ router.post('/get-posts', async (req, res, next) => {
 		data,
 		'GET-POSTS',
 		async (error, data) => {
+			console.log("#### POSTS fetching using kafka service")
 			await redisClient.set('allposts', JSON.stringify(data), {EX: 3600});
 			if (data) {
 				res.status(200).json(data);
