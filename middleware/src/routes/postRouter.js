@@ -1,6 +1,7 @@
 const express = require('express');
 const { sendMessage } = require('../kafka/producer');
 const router = express.Router();
+let postService = require('../../../backend/services/postService.js')
 
 router.post('/get-posts', async (req, res, next) => {
 	try {
@@ -29,6 +30,18 @@ router.post('/get-posts', async (req, res, next) => {
 			}
 		}
 	);
+});
+
+router.post('/get-posts/B', async (req, res, next) => {
+	try {
+		let {body, params, query} = req
+		let data = {body, params, query}; 
+		let result = await postService.getAllPosts(data);
+		return res.json(result).status(200)
+	} catch(err) {
+		console.log("### err", err)
+		return res.status(400).json(err)
+	}
 });
 
 module.exports = router;
