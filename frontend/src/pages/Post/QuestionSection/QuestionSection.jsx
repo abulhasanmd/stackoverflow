@@ -12,6 +12,8 @@ import {ReactComponent as DownVote} from '../../../assets/ArrowDownLg.svg';
 import './QuestionSection.styles.css';
 import { BsBookmarkStar } from 'react-icons/bs'
 import {MdOutlineHistory} from 'react-icons/md';
+import { useParams } from 'react-router';
+import {Link} from 'react-router-dom'
 //   {
 //   post: {
 //     post: {answer_count, comment_count, tags},
@@ -21,9 +23,13 @@ import {MdOutlineHistory} from 'react-icons/md';
 
 const QuestionSection = ({post: {post}}) => {
   
-  console.log("Testing 1");
+  let {id} = useParams();
 
-   
+  // useEffect(() => {
+  //   // let {id} = useParams()
+  // }, [])
+
+  let questionActivityUrl = `/questions/timeline/${id}` ;
 
     // const createBookmark = async () => {
     //   let result = await axios.post(KAFKA_MIDDLEWARE_URL + "bookmarks/create-bookmark", {
@@ -71,8 +77,11 @@ const QuestionSection = ({post: {post}}) => {
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
             >
               </button>
-              <div className='vote-count fc-black-500' style={{marginLeft: "10px"}}>
-                <MdOutlineHistory style={{ fontSize: "20px", cursor: "pointer" }} />
+              <div className='vote-count fc-black-500' style={{ marginLeft: "10px" }}>
+                <Link to= {questionActivityUrl}>
+                  <MdOutlineHistory style={{ fontSize: "20px", cursor: "pointer" }} />
+                </Link>
+                
               </div>
             {/* <div className='vote-count fc-black-500'>Activity</div> */}
             <button
