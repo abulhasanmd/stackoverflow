@@ -27,7 +27,7 @@ const handleSorting = (sortType, page = '') => {
     case 'Popular':
       return (a, b) => b.posts_count - a.posts_count;
     case 'Name':
-      return (a, b) => a.tagname.localeCompare(b.tagname);
+      return (a, b) => a.name.localeCompare(b.name);
     case 'Username':
       return (a, b) => a.username.localeCompare(b.username);
     case 'Popular users':
