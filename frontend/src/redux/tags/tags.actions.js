@@ -24,8 +24,9 @@ export const getTag = (tagName) => async (dispatch) => {
 
 export const getTags = () => async (dispatch) => {
   try {
-    const res = await axios.get(config.BASE_URL + '/api/tags');
-
+    console.log("Asa"+config.BASE_URL);
+    const res = await axios.get(config.BASE_URL + '/tag/get-tags');
+    console.log(res);
     dispatch({
       type: GET_TAGS,
       payload: res.data.data,

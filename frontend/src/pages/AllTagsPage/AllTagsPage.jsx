@@ -1,11 +1,11 @@
-import React, {Fragment, useState} from 'react';
-//import {connect} from 'react-redux';
+import React, {Fragment, useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-//import {getTags} from '../../redux/tags/tags.actions';
+import {getTags} from '../../redux/tags/tags.actions';
 import handleSorting from '../../services/handleSorting';
 
 import TagPanel from './TagPanel/TagPanel.component';
-//import Spinner from '../../components/Spinner/Spinner.component';
+import Spinner from '../../components/Spinner/Spinner';
 import SearchBox from '../../components/SearchBox/SearchBox.component';
 import ButtonGroup from '../../components/ButtonGroup/ButtonGroup.component';
 import Pagination from "../../components/Pagination/Pagination.component";
@@ -15,10 +15,10 @@ import AdminAddTag from '../../components/admin-add-tag/AdminAddTag';
 
 const itemsPerPage = 12;
 
-const AllTagsPage = () => {
-  // useEffect(() => {
-  //   //getTags();
-  // }, [getTags]);
+const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
+  useEffect(() => {
+    getTags();
+  }, [getTags]);
 
   const [page, setPage] = useState(1);
   const [fetchSearch, setSearch] = useState('');
@@ -41,140 +41,12 @@ const AllTagsPage = () => {
     setIsModalOpen(false);
   }
 
-  const tags=[
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2014-12-12",
-      posts_count:0
-    },
-    { 
-      tagname:"asassa",
-      description:"asasasasas",
-      created_at:"2021-12-12",
-      posts_count:1
-    }
-  ]
+ 
 
   
-   return (
-  //loading || tags === null ? (
-  //   <Spinner type='page' width='75px' height='200px' />
-  // ) : (
+  return loading || tags === null ? (
+    <Spinner type='page' width='75px' height='200px' />
+  ) : (
     <Fragment>
       <div id='mainbar' className='tags-page fc-black-800'>
         <h1 className='headline'>Tags</h1>
@@ -209,7 +81,7 @@ const AllTagsPage = () => {
           <div className='grid-layout'>
             {tags
               .filter((tag) =>
-                tag.tagname.toLowerCase().includes(fetchSearch.toLowerCase())
+                tag.name.toLowerCase().includes(fetchSearch.toLowerCase())
               )
               ?.sort(handleSorting(sortType))
               .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
@@ -220,7 +92,7 @@ const AllTagsPage = () => {
         </div>
         <Pagination
           page={page}
-          itemList={tags.filter((tag) => tag.tagname.toLowerCase().includes(fetchSearch.toLowerCase()))}
+          itemList={tags.filter((tag) => tag.name.toLowerCase().includes(fetchSearch.toLowerCase()))}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />
@@ -230,13 +102,13 @@ const AllTagsPage = () => {
 };
 
 AllTagsPage.propTypes = {
-  //getTags: PropTypes.func.isRequired,
+  getTags: PropTypes.func.isRequired,
   tag: PropTypes.object.isRequired,
 };
 
-// const mapStateToProps = (state) => ({
-//   tag: state.tag,
-// });
+const mapStateToProps = (state) => ({
+  tag: state.tag,
+});
 
-//export default connect(mapStateToProps, {getTags})(AllTagsPage);
-export default AllTagsPage;
+export default connect(mapStateToProps, {getTags})(AllTagsPage);
+//export default AllTagsPage;
