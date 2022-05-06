@@ -4,7 +4,7 @@ const AnswerModel = require('../models/Answer');
 const QuestionsModel = require('../models/Question');
 var _ = require('lodash')
 
-function parseTagNames(searchq) {
+function parseTagNames(searchq = '') {
     var tagRegex = /\[([^\][]*)]/g;
     let tagNames = [], m;
     while ( m = tagRegex.exec(searchq) ) {
@@ -13,7 +13,7 @@ function parseTagNames(searchq) {
     return tagNames
 }
 
-async function getQueryMatchCond(searchq) {
+async function getQueryMatchCond(searchq = '') {
     if(!searchq) {
         return {}
     }
@@ -41,7 +41,7 @@ async function getQueryMatchCond(searchq) {
 
 }
 
-function getQueryModel(searchq){
+function getQueryModel(searchq = ''){
     let parseArr = searchq.split(':');
     let key = parseArr[0], value = parseArr[1];
     if(key == 'is') {
@@ -55,6 +55,10 @@ function getQueryModel(searchq){
 async function getAllPosts(data) {
     let {body, query, params} = data;
     let {searchq, filter, tagIds} = body;
+    let redisData = await redisClient.get('allposts');
+    // console.log("##### redis data", data)
+    if(redisData != "null" && redisData) return JSON.parse(redisData);
+		
     let dbquery = getQueryModel(searchq);
     let searchqMatchCond = await getQueryMatchCond(searchq);
     dbquery = dbquery.find(searchqMatchCond)

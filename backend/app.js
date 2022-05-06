@@ -1,5 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
+const redis = require('redis')
+
 require('dotenv').config();
 require('./kafka/adminConsumer');
 require('./kafka/answerConsumer');
@@ -19,6 +21,15 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: false,
 }));
+
+async function initRedis() {
+	const client = redis.createClient({
+	  url: process.env.REDISURL
+	})
+	await client.connect()
+	global.redisClient = client 
+}
+initRedis()
 
 app.use((err, req, res, next) => {
   console.error('in error handler');
