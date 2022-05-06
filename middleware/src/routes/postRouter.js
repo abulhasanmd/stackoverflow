@@ -7,17 +7,9 @@ const redis = require('redis');
 const router = express.Router();
 let postService = require('../../../backend/services/postService.js');
 
-const redisClient2 = redis.createClient({
-	url: process.env.REDISURL,
-});
-async function connectRedis() {
-	await redisClient2.connect();
-}
-connectRedis();
-
 router.post('/get-posts', async (req, res, next) => {
 	try {
-		let data = await redisClient2.get('allposts');
+		let data = await redisClient.get('allposts');
 		// console.log("##### redis data", data)
 		if (data != "null" && data) return res.status(200).json(JSON.parse(data));
 		next();
@@ -42,7 +34,7 @@ router.post('/get-posts', async (req, res, next) => {
 		'GET-POSTS',
 		async (error, data) => {
 			console.log("#### POSTS fetching using kafka service")
-			await redisClient2.set('allposts', JSON.stringify(data), {
+			await redisClient.set('allposts', JSON.stringify(data), {
 				EX: 3600
 			});
 			if (data) {
