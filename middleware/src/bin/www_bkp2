@@ -1,40 +1,41 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
-//importing our app.js
 var app = require('../app');
-//the debug mode will only be enabled if we set DEBUG variable to same as the backend:server 
+var cluster = require('cluster')
 var debug = require('debug')('backend:server');
-//http node module
 var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3001');
+var os = require('os');
+var workers = process.env.WORKERS || os.cpus().length;
+var port = normalizePort(process.env.PORT || '3003');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+function initServer() {
+  function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+  }
+  var server = http.createServer(app);
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+}
 
-var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+if (cluster.isMaster) {
+  console.log('start cluster with %s workers', workers);
+  for (var i = 0; i < workers; ++i) {
+      var worker = cluster.fork().process;
+      console.log('worker %s started.', worker.pid);
+  }
+  cluster.on('exit', function(worker) {
+      console.log('worker %s died. restart...', worker.process.pid);
+      cluster.fork();
+  });
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
+} else {
+  initServer()
+}
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -80,14 +81,3 @@ function onError(error) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
