@@ -7,7 +7,7 @@
 //importing our app.js
 var app = require('../app');
 //the debug mode will only be enabled if we set DEBUG variable to same as the backend:server 
-var debug = require('debug')('backend:server');
+var debug = require('debug')('middleware:server');
 //http node module
 var http = require('http');
 
