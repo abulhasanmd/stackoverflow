@@ -42,14 +42,14 @@ app.use('/answer', answerRouter);
 app.use('/vote', voteRouter);
 app.use('/tag', tagRouter);
 app.use('/posts', postRouter);
-app.use('/health',healthRouter);
+app.use('/health', healthRouter);
 
 async function initRedis() {
 	const client = redis.createClient({
-	  url: process.env.REDISURL
+		url: process.env.REDISURL,
 	})
 	await client.connect()
-	global.redisClient = client 
+	global.redisClient = client
 }
 initRedis()
 // error handler
