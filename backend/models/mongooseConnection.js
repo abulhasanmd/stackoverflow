@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  maxPoolSize: 100,
+  maxPoolSize: process.env.maxPoolSize,
 };
 
 mongoose.connect(process.env.mongoUrl, options, (err, res) => {
