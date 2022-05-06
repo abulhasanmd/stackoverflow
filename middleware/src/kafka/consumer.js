@@ -40,9 +40,9 @@ const responseHandler = async (message) => {
   const id = message.headers.id.toString();
   try {
     const messageJSON = JSON.parse(message.value.toString());
-    console.log('id from header is ', id);
+    // console.log('id from header is ', id);
     // console.log('maps is',idToCallBackMap);
-    console.log('messagejson is', JSON.stringify(messageJSON));
+    // console.log('messagejson is', JSON.stringify(messageJSON));
     const entry = idToCallBackMap[id];
     if (entry) {
       if (messageJSON.data) {

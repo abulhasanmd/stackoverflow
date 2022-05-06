@@ -32,9 +32,9 @@ const actionHandler = async (message) => {
 	const partition = message.headers.partition.toString();
 	try {
 		const messageJSON = JSON.parse(message.value.toString());
-		console.log(
-			`received message with action:${action} id: ${id} parition: ${partition} and message:${JSON.stringify(messageJSON)}`,
-		);
+		// console.log(
+		// 	`received message with action:${action} id: ${id} parition: ${partition} and message:${JSON.stringify(messageJSON)}`,
+		// );
 		let response;
 		switch (action) {
 		case 'GET-TAGS-USED-IN-QUESTIONS':

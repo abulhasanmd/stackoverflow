@@ -22,9 +22,9 @@ const actionHandler = async (message) => {
   const partition = message.headers.partition.toString();
   try {
     const data = JSON.parse(message.value.toString());
-    console.log(
-      `received message with action:${action} id: ${id} parition: ${partition} and message:${JSON.stringify(data)}`,
-    );
+    // console.log(
+    //   `received message with action:${action} id: ${id} parition: ${partition} and message:${JSON.stringify(data)}`,
+    // );
     let response;
     switch (action) {
       case 'GET-POSTS':

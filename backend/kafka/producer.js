@@ -6,8 +6,8 @@ const producer = kafka.producer();
 
 const sendMessage = async (message, id, partition) => {
   try {
-    console.log(`message to be sent is${JSON.stringify(message)}`);
-    console.log('parition is', partition);
+    // console.log(`message to be sent is${JSON.stringify(message)}`);
+    // console.log('parition is', partition);
     await producer.send({
       topic: process.env.RESPONSE_TOPIC,
       messages: [
