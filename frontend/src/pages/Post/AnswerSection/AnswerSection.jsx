@@ -6,7 +6,7 @@ import {getAnswers} from '../../../redux/answers/answers.actions';
 
 import AnswerItem from './AnswerItem/AnswerItem';
 // import Spinner from '../../../components/spinner/Spinner';
-import AnswerForm from './AnswerForm/AnswerForm';
+// import AnswerForm from './AnswerForm/AnswerForm';
 import ButtonGroup from '../../../components/ButtonGroup/ButtonGroup.component';
 
 import './AnswerSection.styles.css';
@@ -54,9 +54,9 @@ const AnswerSection = () => {
           ))
         )} */}
         <AnswerItem />
-        <div className='add-answer'>
+        {/* <div className='add-answer'>
           <AnswerForm/>
-        </div>
+        </div> */}
       </div>
     </Fragment>
   );
