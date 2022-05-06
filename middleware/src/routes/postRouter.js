@@ -19,7 +19,7 @@ router.post('/get-posts', async (req, res, next) => {
 	try {
 		let data = await redisClient2.get('allposts');
 		// console.log("##### redis data", data)
-		if (data !== null && data) return res.status(200).json(JSON.parse(data));
+		if (data != "null" && data) return res.status(200).json(JSON.parse(data));
 		next();
 	} catch (err) {
 		console.log("### err", err)
