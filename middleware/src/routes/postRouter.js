@@ -6,7 +6,11 @@ const redis = require('redis');
 
 const router = express.Router();
 let postService = require('../../../backend/services/postService.js');
-const redisClient2 = redis.createClient(6379);
+
+const redisClient2 = redis.createClient({
+	url: process.env.REDISURL,
+});
+await redisClient2.connect();
 
 router.post('/get-posts', async (req, res, next) => {
 	try {
