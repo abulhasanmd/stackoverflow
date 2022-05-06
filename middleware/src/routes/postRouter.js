@@ -10,7 +10,7 @@ let postService = require('../../../backend/services/postService.js');
 const redisClient2 = redis.createClient({
 	url: process.env.REDISURL,
 });
-async connectRedis() {
+async function connectRedis() {
 	await redisClient2.connect();
 }
 connectRedis();
