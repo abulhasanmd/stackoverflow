@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import './index.css';
-// import App from './App';
-//import PostQuestion from './components/post-question/PostQuestion';
-//import UserProfile from './components/user-profile/UserProfile';
-//import UserActivityTab from './components/user-activity-tab/UserActivityTab';
-// import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
-import reportWebVitals from './reportWebVitals';
 import App from './App';
-import {BrowserRouter} from 'react-router-dom';
+// import PostQuestion from './components/post-question/PostQuestion';
+// import UserProfile from './components/user-profile/UserProfile';
+// import UserActivityTab from './components/user-activity-tab/UserActivityTab';
+// import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
+// import UserBadgesActivity from './components/user-activity-tab-badges/UserBadgesActivity';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<BrowserRouter>
-    <App />
-  </BrowserRouter>,
+	<BrowserRouter>
+		<App />
+	</BrowserRouter>,
 );
 
 // If you want to start measuring performance in your app, pass a function
