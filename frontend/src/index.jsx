@@ -1,5 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import '@stackoverflow/stacks-icons';
+import '@stackoverflow/stacks/dist/css/stacks.css';
+import '@stackoverflow/stacks/dist/js/stacks';
 // import './index.css';
 import App from './App';
 // import PostQuestion from './components/post-question/PostQuestion';

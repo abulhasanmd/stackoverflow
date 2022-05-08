@@ -1,8 +1,5 @@
 /* eslint-disable no-debugger */
 import React from 'react';
-import '@stackoverflow/stacks-icons';
-import '@stackoverflow/stacks/dist/css/stacks.css';
-import '@stackoverflow/stacks/dist/js/stacks';
 
 import './UserReputationActivity.css';
 

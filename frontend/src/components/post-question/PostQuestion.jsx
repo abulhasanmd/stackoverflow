@@ -6,8 +6,6 @@ import { Formik } from 'formik';
 import '@stackoverflow/stacks-editor/dist/styles.css';
 import '@stackoverflow/stacks-editor/dist/stacks-editor/editor';
 import '@stackoverflow/stacks-editor/dist/shared/prosemirror-plugins/image-upload';
-import '@stackoverflow/stacks-icons';
-import '@stackoverflow/stacks/dist/css/stacks.css';
 
 import './PostQuestion.css';
 
