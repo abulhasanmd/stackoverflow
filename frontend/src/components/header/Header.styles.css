@@ -8,6 +8,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+.navbar-stats {
+  font-size: 14px; font-weight: bold; color: #fff; padding-right: 5px
+}
+
 .fixed-top {
   position: fixed;
   top: 0;

@@ -6,11 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 // import {logout} from '../../redux/auth/auth.actions';
 import { BsFillInboxFill } from 'react-icons/bs';
+import { FaCircle } from 'react-icons/fa';
+import { FiLogOut } from 'react-icons/fi';
 import { ReactComponent as Search } from '../../assets/Search.svg';
 import { ReactComponent as Logo } from '../../assets/LogoMd.svg';
 import { ReactComponent as SmallLogo } from '../../assets/LogoGlyphMd.svg';
 // import Spinner from '../spinner/Spinner';
-import LinkButton from '../link-button/LinkButton';
+// import LinkButton from '../link-button/LinkButton';
 import MobileSideBar from '../mobile-sidebar/MobileSideBar';
 
 import './Header.styles.css';
@@ -38,26 +40,38 @@ const Header = () => {
 			{/* } */}
 			<Link to="/userprofile"></Link>
 			<Link
-				to={'/'}
-				title={'Messages'}
-				style={{ paddingRight: '20px', color: '#fff' }}
-			>
-				<BsFillInboxFill style={{ fontSize: '20px' }} />
-			</Link>
-			<Link
 				to={`/users/${user.id}`}
 				title={user.username}
-				style={{ paddingRight: '10px' }}
 			>
 				<img alt="user-logo" className="logo" src={user.gravatar} />
 			</Link>
 			{'  '}
-			<LinkButton
+			<Link to='/userprofile'>
+				<div style={{backgroundColor: "", padding:"0px 20px 0px 10px", }}>
+					<span className='navbar-stats'>45 </span>
+					<span> <FaCircle style={{color:"#FFD700", fontSize: "12px" , paddingRight: "5px"}} /> </span>
+					<span className='navbar-stats'>1 </span>
+					<span> <FaCircle style={{color:"#a9a9a9", fontSize: "12px", paddingRight: "5px"}} /> </span>
+					<span className='navbar-stats'>2 </span>
+					<span> <FaCircle style={{color:"#964B00", fontSize: "12px", paddingRight: "5px"}} /> </span>
+					<span className='navbar-stats'>8 </span>
+				</div>
+			</Link>
+			<Link
+				to={'/'}
+				title={'Messages'}
+				style={{ marginTop:"5px", paddingRight: '20px', color: '#fff' }}
+			>
+				<BsFillInboxFill style={{ fontSize: '20px' }} />
+			</Link>
+			<Link
 				text={'Log out'}
-				link={'/login'}
+				to={'/login'}
 				type={'s-btn__filled'}
 				handleClick={logout}
-			/>
+			>
+				<FiLogOut style={{ marginTop:"5px", fontSize: '18px', color: "#fff" }} />
+			</Link>
 		</div>
 	);
 
