@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // import {setAlert} from '../../redux/alert/alert.actions';
 
-import Caption from './Caption/Caption';
+import Caption from './caption/Caption';
 import AuthForm from '../../components/auth-form/AuthForm';
 
 import './Register.styles.css';
