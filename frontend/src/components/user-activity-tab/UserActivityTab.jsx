@@ -1,6 +1,4 @@
 import React from 'react';
-import '@stackoverflow/stacks-icons';
-import '@stackoverflow/stacks/dist/css/stacks.css';
 
 import UserActivityTabTags from '../user-activity-tab-tags/UserActivityTabTags';
 import './UserActivityTab.css';
