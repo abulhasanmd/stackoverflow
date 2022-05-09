@@ -11,6 +11,7 @@ import QuestionsPage from './pages/QuestionsPage/QuestionsPage';
 import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 import AdminAnalytics from './components/admin-analytics/AdminAnalytics';
 import Post from './pages/Post/Post';
+import Home from './pages/Home/Home';
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
 // const Register = withPageTitle({
@@ -43,6 +44,7 @@ const AdminAnalyticsComponent = withPageTitle({
 const RoutesTree = () => {
 	return (
 		<Routes>
+			<Route exact path="/" element={<Home />} />
 			<Route
 				exact
 				path="/questions"
