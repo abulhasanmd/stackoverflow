@@ -8,17 +8,17 @@ import '@stackoverflow/stacks/dist/js/stacks';
 import App from './App';
 // import PostQuestion from './components/post-question/PostQuestion';
 // import UserProfile from './components/user-profile/UserProfile';
-import UserActivityTab from './components/user-activity-tab/UserActivityTab';
+// import UserActivityTab from './components/user-activity-tab/UserActivityTab';
 // import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
 // import UserBadgesActivity from './components/user-activity-tab-badges/UserBadgesActivity';
-import UserBookmarksActivity from './components/user-activity-tab-bookmarks/UserBookmarksActivity';
+// import UserBookmarksActivity from './components/user-activity-tab-bookmarks/UserBookmarksActivity';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<BrowserRouter>
-		<UserActivityTab />
+		<App />
 	</BrowserRouter>,
 );
 
