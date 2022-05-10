@@ -53,6 +53,7 @@
 }
 .side-bar-container .side-bar-tabs .active .menu-list-text > span {
   font-weight: 700;
+  font-size: 14px;
 }
 @media (max-width: 768px) {
   .side-bar-container {

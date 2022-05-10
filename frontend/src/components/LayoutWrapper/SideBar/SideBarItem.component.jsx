@@ -33,7 +33,7 @@ const HomeItem = ({ link, text }) => (
   >
     <ListItem disablePadding>
       <ListItemButton style={{ paddingLeft: '8px' }}>
-        <ListItemText className='menu-list-text' primary={text} />
+        <ListItemText className='menu-list-text' style={{fontSize: "16px"}}  primary={text} />
       </ListItemButton>
     </ListItem>
   </NavLink>
@@ -50,7 +50,7 @@ const DefaultItem = ({ link, icon, text }) => (
         <ListItemIcon className='menu-list-icon'>
           {icon}
         </ListItemIcon>
-        <ListItemText className='menu-list-text' primary={text}/>
+        <ListItemText className='menu-list-text'  style={{fontSize: "16px"}}  primary={text}/>
       </ListItemButton>
     </ListItem>
   </NavLink>
