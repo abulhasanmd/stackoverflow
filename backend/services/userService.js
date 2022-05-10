@@ -99,45 +99,48 @@ const getReputationActivity = async (userId) => {
 
 async function tagsUsedByUser(userId) {
 	const questions = await Question.find({
-		createdBy: userId,
+		"createdBy._id": userId,
 	}, {
 		tags: 1,
 		votes: 1,
-	}).exec();
+	}).lean();
+	// console.log("tagsUsedByUser: ##### questions:", questions);
 	const tagIds = _.uniq(_.concat(..._.map(questions, 'tags')));
-	let tags = Tag.find({
+	let tags = await Tag.find({
 		_id: {
 			$in: tagIds,
 		},
-	}).exec();
+	}).lean();
+	// console.log("tagsUsedByUser: ##### tags:", tags);
 	const tagsScore = {};
 	_.forEach(tagIds, (tagId) => {
 		tagsScore[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId) && question.votes || 0);
 	});
 	tags = _.map(tags, (tag) => {
-		tag.score = tagsScore[tag._id];
+		tag.score = tagsScore[tag._id] || 0;
 		return tag;
 	});
 	_.sortBy(tags, (tag) => -tag.score); // sorted in descending order
-	return tags;
+	return _.cloneDeep(tags);
 }
 
-const getUserProfile = async (userId) => {
+let getUserProfile = async (userId) => {
+	// console.log("######## IN getUserProfile #######")
 	try {
-		const userDetails = await User.findOne({
+		let userDetails = await User.findOne({
 			_id: userId,
-		}).exec();
-		const questionsAsked = await Question.count({
+		}).lean();
+		let questionsAsked = await Question.count({
 			createdBy: userId,
-		}).exec();
-		const questionsAnswered = await Answer.count({
+		}).lean();
+		let questionsAnswered = await Answer.count({
 			'createdBy._id': userId,
-		}).exec();
-		const tagsUsed = await tagsUsedByUser(userId);
+		}).lean();
+		let tagsUsed = await tagsUsedByUser(userId);
+		userDetails.tagsUsed = _.cloneDeep(tagsUsed);
 		Object.assign(userDetails, {
 			questionsAnswered,
-			questionsAsked,
-			tags: tagsUsed,
+			questionsAsked
 		});
 		return userDetails;
 	} catch (e) {
