@@ -5,6 +5,7 @@ const TagsModel = require('../models/Tag');
 const UserModel = require('../models/User');
 const AnswerModel = require('../models/Answer');
 const QuestionsModel = require('../models/Question');
+const CommentsModel = require('../models/Comment');
 
 function parseTagNames(searchq = '') {
 	const tagRegex = /\[([^\][]*)]/g;
@@ -133,6 +134,57 @@ async function resolveUsers(posts) {
 	return posts;
 }
 
+async function resolveCommentsCount(posts) {
+	const questionIds = _.uniq(_.map(posts, '_id'));
+	const commentsCounts = await CommentsModel.aggregate([{
+		$match: {
+			resourceId: {
+				$in: questionIds,
+			},
+		},
+	}, {
+		$group: {
+			_id: '$resourceId',
+			count: {
+				$sum: 1,
+			},
+		},
+	}]);
+	const commentsCountHmap = _.keyBy(commentsCounts, (result) => result._id);
+	console.log("commentsCounts : ", commentsCounts, commentsCountHmap)
+	posts = _.map(posts, (post) => {
+		post.commentsCount = _.get(commentsCountHmap[post._id], 'count') || 0;
+		return post;
+	});
+	return posts;
+}
+
+
+async function resolveAnswersCount(posts) {
+	const questionIds = _.uniq(_.map(posts, '_id'));
+	const answersCounts = await AnswerModel.aggregate([{
+		$match: {
+			questionId: {
+				$in: questionIds,
+			},
+		},
+	}, {
+		$group: {
+			_id: '$questionId',
+			count: {
+				$sum: 1,
+			},
+		},
+	}]);
+	const answersCountsHmap = _.keyBy(answersCounts, (result) => result._id);
+	console.log("answersCounts : ", answersCounts, answersCountsHmap)
+	posts = _.map(posts, (post) => {
+		post.answersCount = _.get(answersCountsHmap[post._id], 'count') || 0;
+		return post;
+	});
+	return posts;
+}
+
 async function getAllPosts(data) {
 	const self = this;
 	const {
@@ -198,6 +250,8 @@ async function getAllPosts(data) {
 	let posts = await dbquery.lean();
 	posts = await resolveTags(posts);
 	posts = await resolveUsers(posts);
+	posts =  await resolveCommentsCount(posts)
+	posts = await resolveAnswersCount(posts)
 	return {
 		posts,
 		total: posts.length,
