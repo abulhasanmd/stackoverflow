@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 require('dotenv').config();
 const cors = require('cors');
-const redis = require('redis')
+const redis = require('redis');
 
 const usersRouter = require('./routes/userRouter');
 const adminRouter = require('./routes/adminRouter');
@@ -14,6 +14,7 @@ const voteRouter = require('./routes/voteRouter');
 const tagRouter = require('./routes/tagRouter');
 const postRouter = require('./routes/postRouter');
 const healthRouter = require('./routes/healthRouter');
+const miscRouter = require('./routes/miscRouter');
 
 const corsOptions = {
 	origin: true,
@@ -30,9 +31,10 @@ app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
-	extended: false
+	extended: false,
 }));
 
+app.use('/misc', miscRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/messages', messagesRouter);
@@ -47,11 +49,12 @@ app.use('/health', healthRouter);
 async function initRedis() {
 	const client = redis.createClient({
 		url: process.env.REDISURL,
-	})
-	await client.connect()
-	global.redisClient = client
+	});
+	await client.connect();
+	global.redisClient = client;
 }
-initRedis()
+
+initRedis();
 // error handler
 
 app.use((err, req, res, next) => {

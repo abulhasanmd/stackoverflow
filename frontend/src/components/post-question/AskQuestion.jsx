@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useEffect } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
@@ -7,18 +8,50 @@ import '@stackoverflow/stacks-editor/dist/styles.css';
 import '@stackoverflow/stacks-editor/dist/stacks-editor/editor';
 import '@stackoverflow/stacks-editor/dist/shared/prosemirror-plugins/image-upload';
 
-import './PostQuestion.css';
+import './AskQuestion.css';
+import { KAFKA_MIDDLEWARE_URL } from '../../config/configBackend';
 
-export default function PostQuestion() {
+export default function AskQuestion() {
 	useEffect(() => {
 		if (!document.querySelector('#editor-container').hasChildNodes()) {
 			new StacksEditor(
 				document.querySelector('#editor-container'),
 				'*Your* **question** goes here',
-				{},
+				{
+					imageUpload: {
+						handler: async (file) => {
+							console.log(file);
+							const req = await fetch(
+								`${KAFKA_MIDDLEWARE_URL}misc/get-signed-url`,
+								{
+									method: 'GET',
+									mode: 'cors',
+									cache: 'no-cache',
+									credentials: 'same-origin',
+									headers: {
+										'Content-Type': 'application/json',
+									},
+									redirect: 'follow',
+									referrerPolicy: 'no-referrer',
+								},
+							);
+							const resp = await req.json();
+							console.log(resp);
+							await fetch(resp.data, {
+								method: 'PUT',
+								headers: {
+									'Content-Type': 'multipart/form-data',
+								},
+								body: file,
+							});
+							return resp.data;
+						},
+					},
+				},
 			);
 		}
 	}, []);
+
 	const top100Films = [
 		{ title: 'The Shawshank Redemption', year: 1994 },
 		{ title: 'The Godfather', year: 1972 },
@@ -36,7 +69,16 @@ export default function PostQuestion() {
 			<div className="question-box">
 				<div>
 					<Formik
-						initialValues={{ title: '', body: '', tags: [] }}
+						initialValues={{
+							title: '',
+							body: '',
+							tags: [
+								{
+									title: 'The Shawshank Redemption',
+									year: 1994,
+								},
+							],
+						}}
 						validate={(values) => {
 							const errors = {};
 							if (!values.title) {
@@ -44,7 +86,37 @@ export default function PostQuestion() {
 							}
 							return errors;
 						}}
-						onSubmit={() => {}}
+						onSubmit={async (values) => {
+							console.log(values);
+							console.log(
+								document
+									.querySelector('#editor-container')
+									.querySelector('.js-editor')
+									.innerHTML.toString(),
+							);
+							await fetch(
+								`${KAFKA_MIDDLEWARE_URL}questions/post-question`,
+								{
+									method: 'POST',
+									mode: 'cors',
+									cache: 'no-cache',
+									credentials: 'same-origin',
+									headers: {
+										'Content-Type': 'application/json',
+									},
+									redirect: 'follow',
+									referrerPolicy: 'no-referrer',
+									body: JSON.stringify({
+										title: values.title,
+										descr: document
+											.querySelector('#editor-container')
+											.querySelector('.js-editor')
+											.innerHTML.toString(),
+										reviewStatus: 'pending',
+									}),
+								},
+							);
+						}}
 					>
 						{({
 							values,
@@ -53,6 +125,7 @@ export default function PostQuestion() {
 							handleChange,
 							handleBlur,
 							handleSubmit,
+							setFieldValue,
 						}) => (
 							<form
 								onSubmit={handleSubmit}
@@ -136,17 +209,28 @@ export default function PostQuestion() {
 										<Autocomplete
 											fullWidth
 											multiple
-											// value={values.tags}
+											id="tags"
+											name="tags"
+											value={values.tags}
 											// onChange={handleChange}
 											// onBlur={handleBlur}
 											size="small"
-											id="tags-standard"
+											isOptionEqualToValue={(
+												option,
+												value,
+											) => option.title === value.title}
 											options={top100Films}
 											getOptionLabel={(option) =>
 												option.title
 											}
+											onChange={(e, value) =>
+												setFieldValue('tags', value)
+											}
 											renderInput={(params) => (
 												<TextField
+													name="tags"
+													// value={[...values.tags]}
+
 													{...params}
 													variant="outlined"
 													placeholder="Tags"
