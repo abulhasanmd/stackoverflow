@@ -36,7 +36,7 @@ consumer.on(consumer.events.GROUP_JOIN, (event) => {
 const addCallBacktoCallBackMap = async (id, callback) => {
 	const tId = setTimeout(
 		() => {
-			callback('Request Timeout, Please try again!', null);
+			callback({error:{message:'Request Timeout, Please try again!'}}, null);
 			delete idToCallBackMap.id;
 		},
 		600000,
@@ -55,13 +55,13 @@ const responseHandler = async (message) => {
 		const messageJSON = JSON.parse(message.value.toString());
 		// console.log('id from header is ', id);
 		// console.log('maps is',idToCallBackMap);
-		// console.log('messagejson is', JSON.stringify(messageJSON));
+		//console.log('messagejson is', JSON.stringify(messageJSON));
 		const entry = idToCallBackMap[id];
 		if (entry) {
 			if (messageJSON.data) {
-				entry.callback(null, messageJSON.data);
+				entry.callback(null, messageJSON);
 			} else {
-				entry.callback(messageJSON.error, null);
+				entry.callback(messageJSON, null);
 			}
 			delete idToCallBackMap.id;
 			clearTimeout(entry.tId);

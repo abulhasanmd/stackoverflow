@@ -11,6 +11,7 @@ import ButtonGroup from '../../components/ButtonGroup/ButtonGroup.component';
 import Pagination from "../../components/Pagination/Pagination.component";
 
 import './AllTagsPage.styles.css';
+import AdminAddTag from '../../components/admin-add-tag/AdminAddTag';
 
 const itemsPerPage = 12;
 
@@ -22,6 +23,7 @@ const AllTagsPage = () => {
   const [page, setPage] = useState(1);
   const [fetchSearch, setSearch] = useState('');
   const [sortType, setSortType] = useState('Popular');
+  const [isModalOpen,setIsModalOpen] = useState(false);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -31,6 +33,13 @@ const AllTagsPage = () => {
 
   const handlePaginationChange = (e, value) => setPage(value);
 
+  const handleModalOpen = ()=>{
+    setIsModalOpen(true);
+  }
+
+  const handleModalClose = ()=>{
+    setIsModalOpen(false);
+  }
 
   const tags=[
     { 
@@ -183,6 +192,13 @@ const AllTagsPage = () => {
             handleChange={handleChange}
             width={'200px'}
           />
+            <div className='addtag-btn'>
+            <button
+              className={'s-btn s-btn__primary'}
+              onClick = {()=>handleModalOpen(true)}
+            >Add Tag</button>
+          </div>
+          {isModalOpen && <AdminAddTag handleModalClose={handleModalClose}/>}
           <ButtonGroup
             buttons={['Popular', 'Name', 'New']}
             selected={sortType}
