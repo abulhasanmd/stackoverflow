@@ -1,0 +1,61 @@
+.side-bar-container {
+  width: 17%;
+  min-width: 206px;
+  flex-shrink: 0;
+  z-index: 1;
+  box-shadow: 0 0 0 rgba(12, 13, 14, 0.05);
+  transition: box-shadow ease-in-out 0.1s, transform ease-in-out 0.1s;
+  position: relative !important;
+  background-color: #FFFFFF
+}
+.side-bar-container .side-bar-tabs {
+  float: right;
+  margin-top: 25px;
+}
+.side-bar-container .side-bar-tabs .public-tabs {
+  margin-bottom: 12px;
+}
+.side-bar-container .side-bar-tabs .nav-link {
+  text-decoration: none;
+  color: #000000;
+}
+.side-bar-container .side-bar-tabs .nav-link li {
+  font-size: 13px;
+}
+.side-bar-container .side-bar-tabs .nav-link li .menu-list-icon {
+  min-width: 21px !important;
+}
+.side-bar-container .side-bar-tabs .nav-link li .menu-list-text {
+  margin: 0 !important;
+}
+.side-bar-container .side-bar-tabs .home-link li {
+  border-right: 3px;
+  margin-bottom: 12px;
+}
+.side-bar-container .side-bar-tabs .icon-link li {
+  border-right: 3px solid transparent;
+  width: 160px;
+}
+.side-bar-container .side-bar-tabs .icon-link li .menu-list-btn {
+  padding-left: 8px;
+}
+.side-bar-container .side-bar-tabs .title {
+  font-size: 12px;
+  padding-left: 8px;
+  margin-bottom: 5px;
+}
+.side-bar-container .side-bar-tabs .active li {
+  font-weight: bold;
+  background: #f2f2f3;
+  color: #000000;
+  border-right: 3px solid #f48024;
+  
+}
+.side-bar-container .side-bar-tabs .active .menu-list-text > span {
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  .side-bar-container {
+    display: none;
+ }
+}

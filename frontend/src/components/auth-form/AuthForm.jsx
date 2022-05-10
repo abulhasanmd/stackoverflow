@@ -57,15 +57,15 @@ const AuthForm = ({action}) => {
           <form className='login-form' onSubmit={(e) => onSubmit(e)}>
             <div>
               <label className='form-label s-label fc-black-600'>
-                Username
+                Email
               </label>
               <input
                 className='form-input s-input'
-                type='text'
-                name='username'
+                type='email'
+                name='email'
                 value={username}
                 onChange={(e) => onChange(e)}
-                id='username'
+                id='email'
                 required
               />
             </div>

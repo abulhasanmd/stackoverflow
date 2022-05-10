@@ -77,7 +77,7 @@
 }
 .header-search-div {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   align-items: center;
 }
 .glyph-logo {
@@ -91,20 +91,20 @@
   cursor: pointer;
 }
 .small-search {
-  width: 98vw;
-  position: fixed;
+  width: 298px;
+  /* position: fixed; */
   top: 69px;
   left: 5px;
   border-radius: 8px;
 }
 .small-search-form {
-  position: fixed;
-  display: flex;
+  /* position: fixed; */
+  /* display: flex; */
   z-index: 1000;
   padding: 2rem;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 300px;
   background-color: #000 42;
   box-shadow: 2px 2px 8px 3px gray;
 }
@@ -209,3 +209,4 @@
     display: none;
  }
 }
+
