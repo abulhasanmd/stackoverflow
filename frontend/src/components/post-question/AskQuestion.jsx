@@ -20,7 +20,6 @@ export default function AskQuestion() {
 				{
 					imageUpload: {
 						handler: async (file) => {
-							console.log(file);
 							const req = await fetch(
 								`${KAFKA_MIDDLEWARE_URL}misc/get-signed-url`,
 								{
@@ -39,12 +38,9 @@ export default function AskQuestion() {
 							console.log(resp);
 							await fetch(resp.data, {
 								method: 'PUT',
-								headers: {
-									'Content-Type': 'multipart/form-data',
-								},
 								body: file,
 							});
-							return resp.data;
+							return resp.data.split('?')[0];
 						},
 					},
 				},
@@ -232,6 +228,7 @@ export default function AskQuestion() {
 													// value={[...values.tags]}
 
 													{...params}
+													size="medium"
 													variant="outlined"
 													placeholder="Tags"
 												/>
