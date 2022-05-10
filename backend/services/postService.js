@@ -14,15 +14,21 @@ function parseTagNames(searchq = '') {
 }
 
 async function getQueryMatchCond(searchq = '') {
+    var self = this;
     if(!searchq) {
         return {}
     }
     let parseArr = searchq.split(':');
     let key = parseArr[0], value = parseArr[1];
     let tagNames = parseTagNames(searchq)
+    self.searchTitle = '', self.searchDescription = ''
     if(tagNames.length) {
-        let tagRecords = await TagsModel.find({name:{$regex:tagNames[0], $options: 'i'}}, {_id: 1}) .lean()
+        self.searchTitle = `Results for Query ${searchq} tagged with ${tagNames[0]}`
+        let tagRecords = await TagsModel.find({name:{$regex:tagNames[0], $options: 'i'}}, {_id: 1, name: 1, descr: 1}) .lean()
         let tagIds = _.map(tagRecords, '_id');
+        _.map(tagRecords, (tag) => {
+            self.searchDescription+= `${tag.descr}\n`
+        });
         return {tags: {$in : tagIds}}
     }
     switch(key) {
@@ -53,14 +59,15 @@ function getQueryModel(searchq = ''){
 }
 
 async function getAllPosts(data) {
+    var self = this;
     let {body, query, params} = data;
     let {searchq, filter, tagIds} = body;
-    let redisData = await redisClient.get('allposts');
-    // console.log("##### redis data", data)
-    if(redisData != "null" && redisData) return JSON.parse(redisData);
-		
+    if(false) { //By-Passing redis, considering dynamic search
+        let redisData = await redisClient.get('allposts');
+        if(redisData != "null" && redisData) return JSON.parse(redisData);
+    }
     let dbquery = getQueryModel(searchq);
-    let searchqMatchCond = await getQueryMatchCond(searchq);
+    let searchqMatchCond = await getQueryMatchCond.call(self, searchq);
     dbquery = dbquery.find(searchqMatchCond)
     switch(filter) {
         case 'votes':
@@ -71,7 +78,7 @@ async function getAllPosts(data) {
             dbquery.sort({votes : 1});break;
     }
     let posts = await dbquery.lean();
-    return {posts, total: posts.length}
+    return {posts, total: posts.length, searchTitle: self.searchTitle, searchDescription: self.searchDescription}
 
 }
 
