@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const Comment = require('../models/Comment');
 const User = require('../models/User');
+const Logs = require('../models/logs');
+let utils = require('../utils.js');
 
 const getCommentsByResourceId = async (params) => {
 	console.log('Entering commentService.getCommentsByResourceId');
@@ -34,6 +36,8 @@ const getCommentsByResourceId = async (params) => {
 };
 
 const addComment = async (body) => {
+	let userId = body.createdBy._id;
+	let {resourceId, comment} = body 
 	console.log(`Entering commentService.addComment,payload is ${body}`);
 	try {
 		const comment = {
@@ -42,6 +46,7 @@ const addComment = async (body) => {
 		const commentResponse = await Comment.create(comment);
 		console.log(`add comment response :${commentResponse}`);
 		if (commentResponse) {
+			await utils.log('comment', comment, userId, resourceId)
 			return {
 				data: {
 					message: 'Comment created Successfully',
