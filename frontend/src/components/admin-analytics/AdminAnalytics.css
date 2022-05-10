@@ -1,0 +1,21 @@
+.analytics-container{
+    margin-top: 50px;
+}
+.analytics-graphs-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.analytics-barchart{
+    /* height: 600px ; */
+    width: 800px ;
+    margin-top: 50px;
+    /* border: 2px solid red; */
+    align-self: stretch;
+    justify-self: stretch;
+}
+.analytics-header{
+    font-size: 32px;
+}

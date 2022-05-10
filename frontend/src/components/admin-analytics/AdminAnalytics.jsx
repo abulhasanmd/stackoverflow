@@ -11,8 +11,9 @@ import {
   Legend,
 } from "chart.js";
 import { Bar,Line } from "react-chartjs-2";
-import faker from "@faker-js/faker";
 import { KAFKA_MIDDLEWARE_URL } from "../../config/configBackend";
+import './AdminAnalytics.css';
+import PageTitle from "../PageTitle/PageTitle.component";
 
 ChartJS.register(
   CategoryScale,
@@ -25,8 +26,9 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const baseOptions = {
   responsive: true,
+  // maintainAspectRatio: false,
   plugins: {
     legend: {
       position: "top",
@@ -37,14 +39,59 @@ export const options = {
     },
   },
 };
-
+const topTagsOptions = {
+  ...baseOptions,
+  plugins: {
+    ...baseOptions.plugins,
+    title: {
+      display: true,
+      text: "Top Tags Bar Graph",
+    },
+  },
+};
+const topQuestionsOptions = {
+  ...baseOptions,
+  plugins: {
+    title: {
+      display: true,
+      text: "Top Questions Bar Graph",
+    },
+  },
+};
+const topUsersOptions = {
+  ...baseOptions,
+  plugins: {
+    title: {
+      display: true,
+      text: "Top Users Bar Graph",
+    },
+  },
+};
+const bottomUsersOptions = {
+  ...baseOptions,
+  plugins: {
+    title: {
+      display: true,
+      text: "Bottom Users Bar Graph",
+    },
+  },
+};
+const questionsPerDayOptions = {
+  ...baseOptions,
+  plugins: {
+    title: {
+      display: true,
+      text: "Questions Per Day Line Graph",
+    },
+  },
+};
 export default function AdminAnalytics() {
   
   const [topTagsData,setTopTagsData] = useState({
     labels: [],
     datasets: [
       {
-        label: "Top Tags Data",
+        label: "Questions Per Tag",
         data: [],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -55,7 +102,7 @@ export default function AdminAnalytics() {
     labels: [],
     datasets: [
       {
-        label: "Top Questions Data",
+        label: "Views Per Question",
         data: [],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -66,7 +113,7 @@ export default function AdminAnalytics() {
     labels: [],
     datasets: [
       {
-        label: "Top Users Data",
+        label: "Reputation Per User",
         data: [],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -77,7 +124,7 @@ export default function AdminAnalytics() {
     labels: [],
     datasets: [
       {
-        label: "Bottom Users Data",
+        label: "Reputation Per User",
         data: [],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -88,7 +135,7 @@ export default function AdminAnalytics() {
     labels: [],
     datasets: [
       {
-        label: "Questions Per Day Data",
+        label: "Questions Per Day",
         data: [],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -103,7 +150,7 @@ export default function AdminAnalytics() {
       labels: [],
       datasets: [
         {
-          label: "Top Tags Data",
+          label: "Questions Per Tag",
           data: [],
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
@@ -122,7 +169,7 @@ export default function AdminAnalytics() {
       labels: [],
       datasets: [
         {
-          label: "Top Questions Data",
+          label: "Views Per Question",
           data: [],
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
@@ -141,7 +188,7 @@ export default function AdminAnalytics() {
       labels: [],
       datasets: [
         {
-          label: "Top Users Data",
+          label: "Reputation Per User",
           data: [],
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
@@ -160,7 +207,7 @@ export default function AdminAnalytics() {
       labels: [],
       datasets: [
         {
-          label: "Bottom Users Data",
+          label: "Reputation Per User",
           data: [],
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
@@ -179,7 +226,7 @@ export default function AdminAnalytics() {
       labels: [],
       datasets: [
         {
-          label: "Questions Per Day Data",
+          label: "Questions Per Day",
           data: [],
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
@@ -218,12 +265,17 @@ export default function AdminAnalytics() {
   }, []);
 
   return (
-    <>
-      <Bar options={options} data={topTagsData} />
-      <Bar options={options} data={topQuestionsData} />
-      <Bar options={options} data={topUsersData} />
-      <Bar options={options} data={bottomUsersData} />
-      <Line options={options} data={questionsPerDayData} />
-    </>
+    <div className="analytics-container">
+      <PageTitle title='Admin Analytics'/>
+      <div className="analytics-header">Admin Analytics</div>
+    <div className="analytics-graphs-container">
+      <div className="analytics-barchart"><Bar options={topTagsOptions} data={topTagsData} /></div>
+      <div className="analytics-barchart"><Bar options={topQuestionsOptions} data={topQuestionsData} /></div>
+      <div className="analytics-barchart"><Bar options={topUsersOptions} data={topUsersData} /></div>
+      <div className="analytics-barchart"> <Bar options={bottomUsersOptions} data={bottomUsersData}  /></div>
+      <div className="analytics-barchart"><Line options={questionsPerDayOptions} data={questionsPerDayData} /></div>
+    </div>
+    </div>
+
   );
 }
