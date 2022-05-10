@@ -67,7 +67,7 @@ router.put('/update-question', async (req, res) => {
 	);
 });
 
-router.get('/add-bookmark', async (req, res) => {
+router.post('/add-bookmark', async (req, res) => {
 	sendMessage(
 		process.env.QUESTION_TOPIC,
 		req.body,

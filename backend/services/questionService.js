@@ -134,14 +134,29 @@ const getQuestionById = async (msg) =>
 };
 
 const addBookmark = async (body) => {
+    let userId = body.createdBy, questionId = body.questionId
     try {
         const userResponse = await User.updateOne({
-            _id: body.createdBy
-        }, {
-            $push: {
-                bookmarks: body.questionId
+            _id: userId
+        }, 
+        [{
+            $set: {
+                bookmarks: {
+                    $cond: [
+                        {
+                            $in: [`${questionId}`, "$bookmarks"]
+                        },
+                        {
+                            $setDifference: ["$bookmarks", [`${questionId}`]]
+                        },
+                        {
+                            $concatArrays: ["$bookmarks", [`${questionId}`]]
+                        }
+                    ]
+                }
             }
-        }).exec();
+        }
+    ]).exec();
         if (userResponse) {
             return {
                 data: {

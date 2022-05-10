@@ -1,5 +1,5 @@
 var request = require("request");
-var host = 'http://127.0.0.1:3003'; 
+var host = 'http://127.0.0.1:3001'; 
 var options = { method: 'POST',
   url: host + '/questions/post-question',
   headers: 
@@ -11,13 +11,13 @@ var options = { method: 'POST',
      descr: 'descr1',
      tags: [ '626c87d1c0b2b6b5a2d68081' ],
      createdBy: 
-      { _id: '626c87d1c0b2b6b5a2d68081',
+      { _id: '626da3a2298f363d9c012a30',
         imageUrl: 'https://vsdfvdfv.com/dlvknkd' },
      reviewStatus: 'pending' },
   json: true };
 
 function createQuestion(idx){
-    if(idx == 10000) {
+    if(idx == 25) {
       return;
     }
     let prevQuestion = options.body.title;
