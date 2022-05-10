@@ -81,7 +81,13 @@ const getAnalytics = async () => {
         count: { $sum: 1 },
 
       },
+      
     },
+    {
+      $sort:{
+        _id:1
+      }
+    }
     ]);
     // const questionsPerDay = {};
     // questionsGrouped.forEach((elem) => {

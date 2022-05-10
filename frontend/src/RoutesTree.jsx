@@ -7,7 +7,7 @@ import LayoutWrapper from './components/LayoutWrapper/LayoutWrapper.component';
 import RegisterPage from './pages/Register/RegisterPage';
 import AllTagsPage from './pages/AllTagsPage/AllTagsPage';
 import QuestionsPage from './pages/QuestionsPage/QuestionsPage';
-import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
+// import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 import AdminAnalytics from './components/admin-analytics/AdminAnalytics';
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
@@ -28,6 +28,10 @@ const AllTagsPageComponent = withPageTitle({
 	title: 'All Questions - CLONE Stack Overflow',
   });
   
+  const AdminAnalyticsComponent = withPageTitle({
+	component: LayoutWrapper({component: AdminAnalytics}),
+	title: 'Admin Analytics',
+  });
 
 const RoutesTree = () => {
 	return (
@@ -38,7 +42,7 @@ const RoutesTree = () => {
 			<Route exact path="/tags" element={<AllTagsPage />} />
 			<Route exact path="/register" element={<RegisterPage />} />
 			<Route exact path="/login" element={<LoginPage />} />
-			<Route exact path="/admin/analytics" element={<AdminAnalytics />} />
+			<Route exact path="/admin/analytics" element={<AdminAnalyticsComponent />} />
 			<Route path="*" element={<NotFoundPage />} />
 		</Routes>
 	);

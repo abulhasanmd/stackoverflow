@@ -25,9 +25,17 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+ChartJS.defaults.color="#000000";
 
 const baseOptions = {
   responsive: true,
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+  },
   // maintainAspectRatio: false,
   plugins: {
     legend: {
@@ -93,7 +101,7 @@ export default function AdminAnalytics() {
       {
         label: "Questions Per Tag",
         data: [],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(244,130,37, 0.5)",
       },
     ],
   });
@@ -104,7 +112,7 @@ export default function AdminAnalytics() {
       {
         label: "Views Per Question",
         data: [],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(244,130,37, 0.5)",
       },
     ],
   });
@@ -115,7 +123,7 @@ export default function AdminAnalytics() {
       {
         label: "Reputation Per User",
         data: [],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(244,130,37, 0.5)",
       },
     ],
   });
@@ -126,7 +134,7 @@ export default function AdminAnalytics() {
       {
         label: "Reputation Per User",
         data: [],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(244,130,37, 0.5)",
       },
     ],
   });
@@ -137,7 +145,7 @@ export default function AdminAnalytics() {
       {
         label: "Questions Per Day",
         data: [],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(244,130,37, 0.5)",
       },
     ],
   });
@@ -152,7 +160,7 @@ export default function AdminAnalytics() {
         {
           label: "Questions Per Tag",
           data: [],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "rgb(255,153,0)",
         },
       ],
     }
@@ -171,7 +179,7 @@ export default function AdminAnalytics() {
         {
           label: "Views Per Question",
           data: [],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "rgb(255,153,0)",
         },
       ],
     }
@@ -190,7 +198,7 @@ export default function AdminAnalytics() {
         {
           label: "Reputation Per User",
           data: [],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "rgb(255,153,0)",
         },
       ],
     }
@@ -209,7 +217,7 @@ export default function AdminAnalytics() {
         {
           label: "Reputation Per User",
           data: [],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "rgb(255,153,0)",
         },
       ],
     }
@@ -228,7 +236,7 @@ export default function AdminAnalytics() {
         {
           label: "Questions Per Day",
           data: [],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "rgb(255,153,0)",
         },
       ],
     }
@@ -265,7 +273,7 @@ export default function AdminAnalytics() {
   }, []);
 
   return (
-    <div className="analytics-container">
+    <div className="mainbar questions-page">
       <PageTitle title='Admin Analytics'/>
       <div className="analytics-header">Admin Analytics</div>
     <div className="analytics-graphs-container">
