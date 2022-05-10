@@ -1,5 +1,5 @@
 /* eslint-disable no-debugger */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
 import { StacksEditor } from '@stackoverflow/stacks-editor';
@@ -12,6 +12,7 @@ import './AskQuestion.css';
 import { KAFKA_MIDDLEWARE_URL } from '../../config/configBackend';
 
 export default function AskQuestion() {
+	const [tags, setTags] = useState([]);
 	useEffect(() => {
 		if (!document.querySelector('#editor-container').hasChildNodes()) {
 			new StacksEditor(
@@ -20,7 +21,6 @@ export default function AskQuestion() {
 				{
 					imageUpload: {
 						handler: async (file) => {
-							console.log(file);
 							const req = await fetch(
 								`${KAFKA_MIDDLEWARE_URL}misc/get-signed-url`,
 								{
@@ -39,12 +39,9 @@ export default function AskQuestion() {
 							console.log(resp);
 							await fetch(resp.data, {
 								method: 'PUT',
-								headers: {
-									'Content-Type': 'multipart/form-data',
-								},
 								body: file,
 							});
-							return resp.data;
+							return resp.data.split('?')[0];
 						},
 					},
 				},
@@ -52,15 +49,22 @@ export default function AskQuestion() {
 		}
 	}, []);
 
-	const top100Films = [
-		{ title: 'The Shawshank Redemption', year: 1994 },
-		{ title: 'The Godfather', year: 1972 },
-		{ title: 'The Godfather: Part II', year: 1974 },
-		{ title: 'The Dark Knight', year: 2008 },
-		{ title: '12 Angry Men', year: 1957 },
-		{ title: "Schindler's List", year: 1993 },
-		{ title: 'Pulp Fiction', year: 1994 },
-	];
+	useEffect(async () => {
+		const req = await fetch(`${KAFKA_MIDDLEWARE_URL}tag/get-tags`, {
+			method: 'GET',
+			mode: 'cors',
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			redirect: 'follow',
+			referrerPolicy: 'no-referrer',
+		});
+		const resp = await req.json();
+		setTags(resp.data.data);
+	}, []);
+
 	return (
 		<div className="post-question-container">
 			<div className="s-page-title">
@@ -72,12 +76,7 @@ export default function AskQuestion() {
 						initialValues={{
 							title: '',
 							body: '',
-							tags: [
-								{
-									title: 'The Shawshank Redemption',
-									year: 1994,
-								},
-							],
+							tags: [],
 						}}
 						validate={(values) => {
 							const errors = {};
@@ -218,10 +217,10 @@ export default function AskQuestion() {
 											isOptionEqualToValue={(
 												option,
 												value,
-											) => option.title === value.title}
-											options={top100Films}
+											) => option.name === value.name}
+											options={tags}
 											getOptionLabel={(option) =>
-												option.title
+												option.name
 											}
 											onChange={(e, value) =>
 												setFieldValue('tags', value)
@@ -232,6 +231,7 @@ export default function AskQuestion() {
 													// value={[...values.tags]}
 
 													{...params}
+													size="medium"
 													variant="outlined"
 													placeholder="Tags"
 												/>

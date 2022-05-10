@@ -1,17 +1,16 @@
 const express = require('express');
 const {
-	sendMessage
+	sendMessage,
 } = require('../kafka/producer');
 
 const router = express.Router();
 
-
 router.get('/get-tags', async (req, res) => {
-	let msg = {
+	const msg = {
 		body: req.body,
 		params: req.params,
-		query: req.query
-	}
+		query: req.query,
+	};
 	sendMessage(
 		process.env.TAG_TOPIC,
 		msg,
@@ -22,7 +21,7 @@ router.get('/get-tags', async (req, res) => {
 			} else {
 				res.status(400).json(error);
 			}
-		}
+		},
 	);
 });
 
