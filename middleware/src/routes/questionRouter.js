@@ -1,12 +1,14 @@
+/* eslint-disable no-undef */
 const express = require('express');
 const {
-	sendMessage
+	sendMessage,
 } = require('../kafka/producer');
 
 const router = express.Router();
 // const redis = require('redis');
 // const redisClient = redis.createClient(6379);
 
+// for creating question
 router.post('/post-question', async (req, res) => {
 	sendMessage(
 		process.env.QUESTION_TOPIC,
@@ -14,7 +16,7 @@ router.post('/post-question', async (req, res) => {
 		'POST-QUESTION',
 		async (error, data) => {
 			if (data) {
-				await redisClient.del('allposts')
+				// await redisClient.del('allposts');
 				res.status(200).json(data);
 			} else {
 				res.status(400).json(error);
@@ -23,10 +25,17 @@ router.post('/post-question', async (req, res) => {
 	);
 });
 
-router.get('/get-allquestion', async (req, res) => 
-{
-	let {body, query, params} = req;
-	let data = {body, query, params}
+router.get('/get-allquestion', async (req, res) => {
+	const {
+		body,
+		query,
+		params,
+	} = req;
+	const data = {
+		body,
+		query,
+		params,
+	};
 	sendMessage(
 		process.env.QUESTION_TOPIC,
 		data,
@@ -43,8 +52,10 @@ router.get('/get-allquestion', async (req, res) =>
 
 router.put('/update-question', async (req, res) => {
 	sendMessage(
-		process.env.QUESTION_TOPIC,
-		{...req.params, ...req.body},
+		process.env.QUESTION_TOPIC, {
+			...req.params,
+			...req.body
+		},
 		'UPDATE-QUESTION',
 		(error, data) => {
 			if (data) {
