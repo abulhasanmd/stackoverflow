@@ -10,6 +10,7 @@ import AllTagsPage from './pages/AllTagsPage/AllTagsPage';
 import QuestionsPage from './pages/QuestionsPage/QuestionsPage';
 import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 import AdminAnalytics from './components/admin-analytics/AdminAnalytics';
+import Post from './pages/Post/Post';
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
 // const Register = withPageTitle({
@@ -29,6 +30,11 @@ const QuestionsPageComponent = withPageTitle({
 	title: 'All Questions - CLONE Stack Overflow',
 });
 
+const IndividualPost = withPageTitle({
+	component: LayoutWrapper({ component: Post }),
+	title: 'Post - CLONE Stack Overflow',
+});
+
 const AdminAnalyticsComponent = withPageTitle({
 	component: LayoutWrapper({ component: AdminAnalytics }),
 	title: 'Admin Analytics',
@@ -43,8 +49,14 @@ const RoutesTree = () => {
 				element={<QuestionsPageComponent />}
 			/>
 			<Route exact path="/add/question" element={<AskQuestionPage />} />
+			<Route
+				exact
+				path="/questions"
+				element={<QuestionsPageComponent />}
+			/>
 			{/* <Route exact path='/tags/:tagname' component={TagPageComponent} /> */}
-			<Route exact path="/tags" element={<AllTagsPage />} />
+			<Route exact path="/questions/:id" element={<IndividualPost />} />
+			<Route exact path="/tags" element={<AllTagsPageComponent />} />
 			<Route exact path="/register" element={<RegisterPage />} />
 			<Route exact path="/login" element={<LoginPage />} />
 			<Route

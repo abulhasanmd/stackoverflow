@@ -73,7 +73,7 @@ export default function AdminAddTag({ handleModalClose }) {
           >
             Add Tag
           </button>
-          <button className="s-btn s-btn__secondary">Close</button>
+          <button className="s-btn s-btn__secondary" onClick={handleModalClose}>Close</button>
         </div>
       </form>
     </Modal>

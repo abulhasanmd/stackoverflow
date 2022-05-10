@@ -1,0 +1,20 @@
+.vote-cell {
+  width: auto;
+  padding-right: 16px;
+  vertical-align: top;
+  grid-column: 1;
+  grid-column-start: 1;
+  grid-column-end: auto;
+  color: #6a737c;
+}
+.vote-cell .vote {
+  padding: 0;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.vote-cell .vote .vote-count {
+  font-size: 20px;
+}
+.vote-cell .vote .count-text {
+  font-size: 12px;
+}
