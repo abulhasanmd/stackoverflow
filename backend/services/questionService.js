@@ -2,6 +2,7 @@ const { log } = require('console');
 const Question = require('../models/Question');
 const Tag = require('../models/Tag');
 const User = require('../models/User');
+var _ = require('lodash');
 
 const postQuestion = async (body) => {
 	try {
@@ -102,31 +103,29 @@ const updateQuestion = async ({params, body}) => {
     }
 };
 
+async function getTags(tagIds) {
+    let tagsInfo = await Tag.find({_id: {$in: tagIds}}).lean();
+    return tagsInfo;
+}
+
 const getQuestionById = async (msg) => 
 {
-    let body = msg.body;
-    let query = msg.query;
-    let params = msg.params;
+    let {body, query, params} = msg;
+    let {questionId} = params
     console.log(`Entering questionService get Question By ID with params: ${params} && payload:${body}`);
     try {
-     
-      const questionResponse = await Question.findById(params.questionId).lean();
-      console.log(`update question response :${questionResponse}`);
-      if (questionResponse) 
-      {
-        const viewUpdateResponse = await Question.updateOne(
-            { _id: params.questionId },
-            { $set: {"views": questionResponse.views+1} },
-          ).exec();
-          questionResponse.views = questionResponse.views + 1;
-          let userId = questionResponse.createdBy._id.toString();
-          const userResponse = await User.findById(userId).lean();
-
-          questionResponse.user = userResponse;
-
-        return { data:  questionResponse};
-      }
-      return { error: { message: 'Some error occured while getting question by ID' } };
+        let queDetails = await Question.findOneAndUpdate({_id: questionId }, { $inc: { views: 1}}, {returnNewDocument: true}).lean();
+        let tags = await getTags(queDetails.tags)
+        let tagsMap = _.keyBy(tags, '_id');
+        /**  resolve tags in question **/
+        queDetails.tags = _.map(queDetails.tags, (tag) => tagsMap[tag._id])
+        //end
+        /** resolving userInfo in questions **/ 
+        let userId = queDetails.createdBy._id.toString();
+        let userDetails = await User.findById(userId).lean();
+        Object.assign(queDetails.createdBy, userDetails)
+        //end
+        return queDetails;
     } catch (e) {
       console.error('Exception occurred while while getting question by ID', e);
       return { error: { message: e.message } };
