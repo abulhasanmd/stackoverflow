@@ -22,15 +22,19 @@ const actionHandler = async (message) => {
   const partition = message.headers.partition.toString();
   try {
     const messageJSON = JSON.parse(message.value.toString());
-    // console.log(
-    //   `received message with action:${action} id: ${id} parition: ${partition} and message:${JSON.stringify(messageJSON)}`,
-    // );
+    console.log(messageJSON)
     let response;
     switch (action) {
       // TODO change action name and invoked service
-      case 'GET-TAGS':
+      case 'GET-MESSAGES':
         // response = await adminService.getTags();
+        response = await messageService.getMessages(messageJSON)
         break;
+
+      case 'POST-MESSAGES':
+        respnse = await messageService.postMessage(messageJSON)
+        break;
+
       default:
         break;
     }
