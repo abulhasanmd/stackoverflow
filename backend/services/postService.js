@@ -13,16 +13,23 @@ function parseTagNames(searchq = '') {
     return tagNames
 }
 
-async function getQueryMatchCond(searchq = '') {
+async function getQueryMatchCond(searchq = '', inputTagIds = []) {
+    var self = this;
     if(!searchq) {
         return {}
     }
     let parseArr = searchq.split(':');
     let key = parseArr[0], value = parseArr[1];
     let tagNames = parseTagNames(searchq)
+    self.searchTitle = '', self.searchDescription = ''
     if(tagNames.length) {
-        let tagRecords = await TagsModel.find({name:{$regex:tagNames[0], $options: 'i'}}, {_id: 1}) .lean()
+        self.searchTitle = `Results for Query ${searchq} tagged with ${tagNames[0]}`
+        let tagRecords = await TagsModel.find({name:{$regex:tagNames[0], $options: 'i'}}, {_id: 1, name: 1, descr: 1}) .lean()
         let tagIds = _.map(tagRecords, '_id');
+        _.map(tagRecords, (tag) => {
+            self.searchDescription+= `${tag.descr}\n`
+        });
+        tagIds = _.uniq(tagIds.concat(inputTagIds))
         return {tags: {$in : tagIds}}
     }
     switch(key) {
@@ -51,27 +58,68 @@ function getQueryModel(searchq = ''){
     }
     return QuestionsModel;
 }
+async function getTags(tagIds) {
+    let tagsInfo = await TagsModel.find({_id: {$in: tagIds}}).lean();
+    return tagsInfo;
+}
+
+async function resolveTags(posts) {
+    let tagIds =  _.uniq(_.map(posts, 'tags').flat(1));
+    let tags = await getTags(tagIds);
+    let tagsMap = _.keyBy(tags, '_id')
+    posts = _.map(posts, (question) => {
+        question.tags = _.map(question.tags, (tag) => tagsMap[tag._id])
+        return question;
+    })
+    return posts;
+}
+
+async function resolveUsers(posts) {
+    let userIds = _.uniq(_.map(posts, 'createdBy._id'))
+    let userDetails = await UserModel.find({_id: {$in: userIds}}).lean();
+    let usersMap = _.keyBy(userDetails, '_id')
+    posts = _.map(posts, (post) => {
+        post.createdBy = usersMap[post.createdBy._id]
+        return post
+    })
+    return posts
+}
 
 async function getAllPosts(data) {
+    var self = this;
     let {body, query, params} = data;
     let {searchq, filter, tagIds} = body;
-    let redisData = await redisClient.get('allposts');
-    // console.log("##### redis data", data)
-    if(redisData != "null" && redisData) return JSON.parse(redisData);
-		
+    if(false) { //By-Passing redis, considering dynamic search
+        let redisData = await redisClient.get('allposts');
+        if(redisData != "null" && redisData) return JSON.parse(redisData);
+    }
     let dbquery = getQueryModel(searchq);
-    let searchqMatchCond = await getQueryMatchCond(searchq);
+    let searchqMatchCond = await getQueryMatchCond.call(self, searchq, tagIds);
+    if(!searchqMatchCond.tags && tagIds) {
+        searchqMatchCond.tags = {$in: tagIds}
+    }
     dbquery = dbquery.find(searchqMatchCond)
     switch(filter) {
         case 'votes':
-            dbquery.sort({votes : 1});break;
+            dbquery.sort({votes : -1});break;
         case 'newest':
-            dbquery.sort({createdOn: 1});break;
+            dbquery.sort({createdOn: -1});break;
+        case 'Interesting':
+            dbquery.sort({modifiedOn: -1});break
+        case 'Hot':
+            dbquery.sort({views: -1});break
+        case 'Score':
+            dbquery.sort({score: -1});break
+        case 'Unanswered':
+            //TO-DO
+            dbquery.sort({modifiedOn: -1});break
         default:
             dbquery.sort({votes : 1});break;
     }
     let posts = await dbquery.lean();
-    return {posts, total: posts.length}
+    posts = await resolveTags(posts);
+    posts = await resolveUsers(posts)
+    return {posts, total: posts.length, searchTitle: self.searchTitle, searchDescription: self.searchDescription}
 
 }
 

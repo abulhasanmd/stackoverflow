@@ -2,6 +2,13 @@ const { log } = require('console');
 const Question = require('../models/Question');
 const Tag = require('../models/Tag');
 const User = require('../models/User');
+var _ = require('lodash');
+
+
+async function getTags(tagIds) {
+    let tagsInfo = await Tag.find({_id: {$in: tagIds}}).lean();
+    return tagsInfo;
+}
 
 const postQuestion = async (body) => {
 	try {
@@ -19,61 +26,36 @@ const postQuestion = async (body) => {
 	}
 };
 
+function addSortFunc(que, filter){
+    switch(filter) {
+        case 'Interesting':
+            que.sort({modifiedOn: -1});break
+        case 'Hot':
+            que.sort({views: -1});break
+        case 'Score':
+            que.sort({score: -1});break
+        case 'Unanswered':
+            //TO-DO
+            que.sort({modifiedOn: -1});break
+    }
+}
+
 const getAllQuestions = async (data) => {
     let {body, query, params} = data
     let filter = body.filter;
 	try {
-		const que = await Question.find({ }).lean();
-		if(que)
-        {
-            for(let i=0;i<que.length;i++)
-            {
-                var tagArray = await Tag.find({_id: {$in: que[i].tags}});
-                que[i].tags = tagArray;
-                // const tags = Array.from(que[i].tags);
-                // que[i].tags=[];
-                // let tagNames=[];
-                // for(let i=0;i<tags.length;i++)
-                // {
-                //     let k = tags[i].toString();
-                //     const tag = await Tag.findById(k)
-                //     tagNames.push(tag?.name);
-                // }
-                // que[i].tags = Array.from(tagNames);
-            }
-
-            if(filter=="Interesting")
-            {
-                que.sort((a, b) => (a.modifiedOn > b.modifiedOn) ? -1 : 1);
-
-            }else if(filter=="Hot")
-            {
-                que.sort((a, b) => (a.views > b.views) ? -1 : 1);
-            }
-            else if(filter=="Score")
-            {
-                que.sort((a, b) => (a.score > b.score) ? -1 : 1);
-            }
-            else if(filter=="Unanswered")
-            {
-                que.filter(function(item) { 
-                    return item.answers.length>0
-                });
-                que.sort((a, b) => (a.score > b.score) ? -1 : 1);
-            }
-
-
-            return {
-				data: que
-			};
-        }else
-        {
-			return {
-				error: {
-					message: 'Error fetching questions',
-				},
-			};
-        }
+		let que = Question.find({reviewStatus: 'approved'}).lean();
+        await addSortFunc(que, filter)
+        let tagIds =  _.uniq(_.map(que, 'tags').flat(1));
+        let tags = await getTags(tagIds);
+        let tagsMap = _.keyBy(tags, '_id')
+        que = _.map(que, (question) => {
+            question.tags = _.map(question.tags, (tag) => tagsMap[tag._id])
+            return question;
+        })
+        return {
+            data: que
+        };
 	} catch (e) {
 		console.error('Exception occurred while creating question', e);
 		return {
@@ -104,29 +86,22 @@ const updateQuestion = async ({params, body}) => {
 
 const getQuestionById = async (msg) => 
 {
-    let body = msg.body;
-    let query = msg.query;
-    let params = msg.params;
+    let {body, query, params} = msg;
+    let {questionId} = params
     console.log(`Entering questionService get Question By ID with params: ${params} && payload:${body}`);
     try {
-     
-      const questionResponse = await Question.findById(params.questionId).lean();
-      console.log(`update question response :${questionResponse}`);
-      if (questionResponse) 
-      {
-        const viewUpdateResponse = await Question.updateOne(
-            { _id: params.questionId },
-            { $set: {"views": questionResponse.views+1} },
-          ).exec();
-          questionResponse.views = questionResponse.views + 1;
-          let userId = questionResponse.createdBy._id.toString();
-          const userResponse = await User.findById(userId).lean();
-
-          questionResponse.user = userResponse;
-
-        return { data:  questionResponse};
-      }
-      return { error: { message: 'Some error occured while getting question by ID' } };
+        let queDetails = await Question.findOneAndUpdate({_id: questionId }, { $inc: { views: 1}}, {returnNewDocument: true}).lean();
+        let tags = await getTags(queDetails.tags)
+        let tagsMap = _.keyBy(tags, '_id');
+        /**  resolve tags in question **/
+        queDetails.tags = _.map(queDetails.tags, (tag) => tagsMap[tag._id])
+        //end
+        /** resolving userInfo in questions **/ 
+        let userId = queDetails.createdBy._id.toString();
+        let userDetails = await User.findById(userId).lean();
+        Object.assign(queDetails.createdBy, userDetails)
+        //end
+        return queDetails;
     } catch (e) {
       console.error('Exception occurred while while getting question by ID', e);
       return { error: { message: e.message } };
@@ -134,14 +109,29 @@ const getQuestionById = async (msg) =>
 };
 
 const addBookmark = async (body) => {
+    let userId = body.createdBy, questionId = body.questionId
     try {
         const userResponse = await User.updateOne({
-            _id: body.createdBy
-        }, {
-            $push: {
-                bookmarks: body.questionId
+            _id: userId
+        }, 
+        [{
+            $set: {
+                bookmarks: {
+                    $cond: [
+                        {
+                            $in: [`${questionId}`, "$bookmarks"]
+                        },
+                        {
+                            $setDifference: ["$bookmarks", [`${questionId}`]]
+                        },
+                        {
+                            $concatArrays: ["$bookmarks", [`${questionId}`]]
+                        }
+                    ]
+                }
             }
-        }).exec();
+        }
+    ]).exec();
         if (userResponse) {
             return {
                 data: {
