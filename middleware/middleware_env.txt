@@ -1,0 +1,15 @@
+bucketName =273-etsy-clone
+dirName =profile-pics
+region =us-east-2
+accessKeyId =AKIAZLDRU2VARGU7H2ON
+secretAccessKey =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
+mongoUrl=mongodb+srv://admin:admin@cluster0.lxwco.mongodb.net/stackoverflow-db?retryWrites=true&w=majority
+RESPONSE_TOPIC =responses
+ADMIN_TOPIC=admin
+MESSAGE_TOPIC=message
+QUESTION_TOPIC=question
+USER_TOPIC=user
+TAG_TOPIC=tag
+POST_TOPIC=post
+REDISURL=redis://127.0.0.1:6379
+BROKER_HOST=localhost:9092

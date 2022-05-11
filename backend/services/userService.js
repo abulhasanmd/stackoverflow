@@ -106,8 +106,8 @@ const getUserProfile = async (userId) => {
 		let questionsAsked = await Question.count({createdBy: userId}).exec();
 		let questionsAnswered = await Answer.count({'createdBy._id': userId}).exec();
 		let tagsUsed = await tagsUsedByUser(userId)
-		let response = {...userDetails, questionsAnswered, questionsAsked, tags: tagsUsed}
-		return {data: response}
+		Object.assign(userDetails, {questionsAnswered, questionsAsked, tags: tagsUsed})
+		return userDetails
 	} catch (e) {
 		console.error('Error while fetching getUserProfile', e);
 		return {

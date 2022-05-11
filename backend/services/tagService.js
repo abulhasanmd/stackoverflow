@@ -39,9 +39,7 @@ const getTags = async (msg) =>
             } 
 
             tags.sort((a, b) => (a.questionsCount > b.questionsCount) ? -1 : 1);
-            return {
-				data: tags,
-			};
+            return tags
         }
 	} 
     catch (e) 
