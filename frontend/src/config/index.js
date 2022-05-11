@@ -4,7 +4,7 @@ const config = {
 }
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  config.BASE_URL = "http://localhost:5000"
+  config.BASE_URL = ""
 }
 
 export default config
