@@ -74,6 +74,17 @@ async function resolveTags(posts) {
     return posts;
 }
 
+async function resolveUsers(posts) {
+    let userIds = _.uniq(_.map(posts, 'createdBy._id'))
+    let userDetails = await UserModel.find({_id: {$in: userIds}}).lean();
+    let usersMap = _.keyBy(userDetails, '_id')
+    posts = _.map(posts, (post) => {
+        post.createdBy = usersMap[post.createdBy._id]
+        return post
+    })
+    return posts
+}
+
 async function getAllPosts(data) {
     var self = this;
     let {body, query, params} = data;
@@ -107,6 +118,7 @@ async function getAllPosts(data) {
     }
     let posts = await dbquery.lean();
     posts = await resolveTags(posts);
+    posts = await resolveUsers(posts)
     return {posts, total: posts.length, searchTitle: self.searchTitle, searchDescription: self.searchDescription}
 
 }
