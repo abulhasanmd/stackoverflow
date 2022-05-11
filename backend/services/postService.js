@@ -13,7 +13,7 @@ function parseTagNames(searchq = '') {
     return tagNames
 }
 
-async function getQueryMatchCond(searchq = '') {
+async function getQueryMatchCond(searchq = '', inputTagIds = []) {
     var self = this;
     if(!searchq) {
         return {}
@@ -29,6 +29,7 @@ async function getQueryMatchCond(searchq = '') {
         _.map(tagRecords, (tag) => {
             self.searchDescription+= `${tag.descr}\n`
         });
+        tagIds = _.uniq(tagIds.concat(inputTagIds))
         return {tags: {$in : tagIds}}
     }
     switch(key) {
@@ -57,6 +58,21 @@ function getQueryModel(searchq = ''){
     }
     return QuestionsModel;
 }
+async function getTags(tagIds) {
+    let tagsInfo = await TagsModel.find({_id: {$in: tagIds}}).lean();
+    return tagsInfo;
+}
+
+async function resolveTags(posts) {
+    let tagIds =  _.uniq(_.map(posts, 'tags').flat(1));
+    let tags = await getTags(tagIds);
+    let tagsMap = _.keyBy(tags, '_id')
+    posts = _.map(posts, (question) => {
+        question.tags = _.map(question.tags, (tag) => tagsMap[tag._id])
+        return question;
+    })
+    return posts;
+}
 
 async function getAllPosts(data) {
     var self = this;
@@ -67,17 +83,30 @@ async function getAllPosts(data) {
         if(redisData != "null" && redisData) return JSON.parse(redisData);
     }
     let dbquery = getQueryModel(searchq);
-    let searchqMatchCond = await getQueryMatchCond.call(self, searchq);
+    let searchqMatchCond = await getQueryMatchCond.call(self, searchq, tagIds);
+    if(!searchqMatchCond.tags && tagIds) {
+        searchqMatchCond.tags = {$in: tagIds}
+    }
     dbquery = dbquery.find(searchqMatchCond)
     switch(filter) {
         case 'votes':
-            dbquery.sort({votes : 1});break;
+            dbquery.sort({votes : -1});break;
         case 'newest':
-            dbquery.sort({createdOn: 1});break;
+            dbquery.sort({createdOn: -1});break;
+        case 'Interesting':
+            dbquery.sort({modifiedOn: -1});break
+        case 'Hot':
+            dbquery.sort({views: -1});break
+        case 'Score':
+            dbquery.sort({score: -1});break
+        case 'Unanswered':
+            //TO-DO
+            dbquery.sort({modifiedOn: -1});break
         default:
             dbquery.sort({votes : 1});break;
     }
     let posts = await dbquery.lean();
+    posts = await resolveTags(posts);
     return {posts, total: posts.length, searchTitle: self.searchTitle, searchDescription: self.searchDescription}
 
 }

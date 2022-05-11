@@ -4,6 +4,12 @@ const Tag = require('../models/Tag');
 const User = require('../models/User');
 var _ = require('lodash');
 
+
+async function getTags(tagIds) {
+    let tagsInfo = await Tag.find({_id: {$in: tagIds}}).lean();
+    return tagsInfo;
+}
+
 const postQuestion = async (body) => {
 	try {
 		const question = await new Question(body).save();
@@ -20,61 +26,36 @@ const postQuestion = async (body) => {
 	}
 };
 
+function addSortFunc(que, filter){
+    switch(filter) {
+        case 'Interesting':
+            que.sort({modifiedOn: -1});break
+        case 'Hot':
+            que.sort({views: -1});break
+        case 'Score':
+            que.sort({score: -1});break
+        case 'Unanswered':
+            //TO-DO
+            que.sort({modifiedOn: -1});break
+    }
+}
+
 const getAllQuestions = async (data) => {
     let {body, query, params} = data
     let filter = body.filter;
 	try {
-		const que = await Question.find({ }).lean();
-		if(que)
-        {
-            for(let i=0;i<que.length;i++)
-            {
-                var tagArray = await Tag.find({_id: {$in: que[i].tags}});
-                que[i].tags = tagArray;
-                // const tags = Array.from(que[i].tags);
-                // que[i].tags=[];
-                // let tagNames=[];
-                // for(let i=0;i<tags.length;i++)
-                // {
-                //     let k = tags[i].toString();
-                //     const tag = await Tag.findById(k)
-                //     tagNames.push(tag?.name);
-                // }
-                // que[i].tags = Array.from(tagNames);
-            }
-
-            if(filter=="Interesting")
-            {
-                que.sort((a, b) => (a.modifiedOn > b.modifiedOn) ? -1 : 1);
-
-            }else if(filter=="Hot")
-            {
-                que.sort((a, b) => (a.views > b.views) ? -1 : 1);
-            }
-            else if(filter=="Score")
-            {
-                que.sort((a, b) => (a.score > b.score) ? -1 : 1);
-            }
-            else if(filter=="Unanswered")
-            {
-                que.filter(function(item) { 
-                    return item.answers.length>0
-                });
-                que.sort((a, b) => (a.score > b.score) ? -1 : 1);
-            }
-
-
-            return {
-				data: que
-			};
-        }else
-        {
-			return {
-				error: {
-					message: 'Error fetching questions',
-				},
-			};
-        }
+		let que = Question.find({reviewStatus: 'approved'}).lean();
+        await addSortFunc(que, filter)
+        let tagIds =  _.uniq(_.map(que, 'tags').flat(1));
+        let tags = await getTags(tagIds);
+        let tagsMap = _.keyBy(tags, '_id')
+        que = _.map(que, (question) => {
+            question.tags = _.map(question.tags, (tag) => tagsMap[tag._id])
+            return question;
+        })
+        return {
+            data: que
+        };
 	} catch (e) {
 		console.error('Exception occurred while creating question', e);
 		return {
@@ -102,11 +83,6 @@ const updateQuestion = async ({params, body}) => {
       return { error: { message: e.message } };
     }
 };
-
-async function getTags(tagIds) {
-    let tagsInfo = await Tag.find({_id: {$in: tagIds}}).lean();
-    return tagsInfo;
-}
 
 const getQuestionById = async (msg) => 
 {
