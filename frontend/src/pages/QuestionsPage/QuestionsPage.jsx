@@ -1,13 +1,13 @@
-import React, {Fragment, useState} from 'react';
-import {useLocation} from 'react-router-dom';
-//import {connect} from 'react-redux';
-//import PropTypes from 'prop-types';
-//import {getPosts} from '../../redux/posts/posts.actions';
+import React, {Fragment, useState, useEffect} from 'react';
+// import {useLocation} from 'react-router-dom';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {getPosts} from '../../redux/posts/posts.actions';
 import handleSorting from '../../services/handleSorting';
 
 import LinkButton from '../../components/link-button/LinkButton';
 import PostItem from '../../components/PostItem/PostItem.component';
-//import Spinner from '../../components/Spinner/Spinner';
+import Spinner from '../../components/spinner/Spinner';
 import ButtonGroup from '../../components/ButtonGroup/ButtonGroup.component';
 import SearchBox from '../../components/SearchBox/SearchBox.component';
 import PageTitle from '../../components/PageTitle/PageTitle.component';
@@ -17,38 +17,53 @@ import './QuestionsPage.styles.css';
 
 const itemsPerPage = 10;
 
-const QuestionsPage = () => {
+const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
+  
+// const [searchQuery, setSearchQuery] = useState('');
+  
+  useEffect(() => {
+    // const params = new URLSearchParams(window.location.search)
+    // let search = params.get('search')
+    // searchQuery = URLSearchParams(useLocation().search).get('search')
+
+    getPosts();
+    // setSearchQuery(URLSearchParams(useLocation().search).get('search'));
+  }, [getPosts]);
+
   // useEffect(() => {
-  //   getPosts();
-  // }, [getPosts]);
-const posts = [
-  {
-      id:"1212",
-      title:"asasasas",
-      body:"asasasasasas",
-      username:"qwqwqw",
-      gravatar:"121212",
-      user_id:"1212",
-      answer_count:1212,
-      comment_count:9877,
-      views:909,
-      created_at:"2020-11-11",
-      tags:[
-        {
-        tagname:"python"
-        },
-        {
-          tagname:"python"
-        }
-    ]
+  //   getPosts(searchQuery);
+  //  }, searchQuery);
+
+  console.log(posts)
+
+// const posts = [
+//   {
+//       id:"1212",
+//       title:"asasasas",
+//       body:"asasasasasas",
+//       username:"qwqwqw",
+//       gravatar:"121212",
+//       user_id:"1212",
+//       answer_count:1212,
+//       comment_count:9877,
+//       views:909,
+//       created_at:"2020-11-11",
+//       tags:[
+//         {
+//         tagname:"python"
+//         },
+//         {
+//           tagname:"python"
+//         }
+//     ]
   
-  }
+//   }
   
-]
+// ]
+
   const [page, setPage] = useState(1);
   const [sortType, setSortType] = useState('Newest');
-
-  let searchQuery = new URLSearchParams(useLocation().search).get('search');
+  let searchQuery = "";
 
   const handlePaginationChange = (e, value) => setPage(value);
 
@@ -56,7 +71,9 @@ const posts = [
   // loading || posts === null ? (
   //   <Spinner type='page' width='75px' height='200px' />
   // ) : 
-  return (
+  return loading || posts === null ? (
+    <Spinner type='page' width='75px' height='200px' />
+  ) : (
     <Fragment>
       {searchQuery ? (
         <PageTitle
@@ -98,7 +115,8 @@ const posts = [
             setSelected={setSortType}
           />
         </div>
-        <div className='questions'>
+          <div className='questions'>
+            {/* {searchQuery ? () : ()} */}
           {posts
             .filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))
             ?.sort(handleSorting(sortType))
@@ -118,14 +136,14 @@ const posts = [
   );
 };
 
-// QuestionsPage.propTypes = {
-//   getPosts: PropTypes.func.isRequired,
-//   post: PropTypes.object.isRequired,
-// };
+QuestionsPage.propTypes = {
+  getPosts: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
+};
 
-// const mapStateToProps = (state) => ({
-//   post: state.post,
-// });
+const mapStateToProps = (state) => ({
+  post: state.post,
+});
 
-//export default connect(mapStateToProps, {getPosts})(QuestionsPage);
-export default QuestionsPage;
+export default connect(mapStateToProps, {getPosts})(QuestionsPage);
+// export default QuestionsPage;
