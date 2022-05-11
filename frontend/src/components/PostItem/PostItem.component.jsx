@@ -13,29 +13,27 @@ import './PostItem.styles.css';
 
 const PostItem = ({
   post: {
-    id,
+    _id,
     title,
-    body,
-    username,
-    gravatar,
-    user_id,
+    descr,
+    createdBy,
     answer_count,
-    comment_count,
+    // comment_count,
     views,
-    created_at,
+    createdOn,
     tags,
   },
 }) => {
   const answerVoteUp = (
     <div className='vote answer'>
-      <span className='vote-count fc-green-500'>{answer_count}</span>
+      <span className='vote-count fc-green-500'>5</span>
       <div className='count-text'>answers</div>
     </div>
   );
 
   const answerVoteDown = (
     <div className='vote'>
-      <span className='vote-count'>{answer_count}</span>
+      <span className='vote-count'>5</span>
       <div className='count-text'>answers</div>
     </div>
   );
@@ -45,7 +43,7 @@ const PostItem = ({
       <div className='stats-container fc-black-500'>
         <div className='stats'>
           <div className='vote'>
-            <span className='vote-count'>{comment_count}</span>
+            <span className='vote-count'>10</span>
             <div className='count-text'>comments</div>
           </div>
           {answer_count > 0 ? answerVoteUp : answerVoteDown}
@@ -60,17 +58,17 @@ const PostItem = ({
       </div>
       <div className='summary'>
         <h3>
-          <Link to={`/questions/${id}`}>{title}</Link>
+          <Link to={`/questions/${_id}`}>{title}</Link>
         </h3>
-        <div className='brief' dangerouslySetInnerHTML={{__html: injectEllipsis(htmlSubstring(body, 200))}}></div>
+        <div className='brief' dangerouslySetInnerHTML={{__html: injectEllipsis(htmlSubstring(descr, 200))}}></div>
         {tags.map((tag, index) => (
-          <TagBadge key={index} tag_name={tag.tagname} size={'s-tag'} float={'left'} />
+          <TagBadge key={index} tag_name={tag.name} size={'s-tag'} float={'left'} />
         ))}
         <UserCard
-          created_at={created_at}
-          user_id={user_id}
-          gravatar={gravatar}
-          username={username}
+          created_at={createdOn}
+          user_id={createdBy._id}
+          gravatar="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+          username={createdBy.name}
           float={'right'}
           backgroundColor={'transparent'}
         />
