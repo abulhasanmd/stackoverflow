@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, {Fragment, useState} from 'react';
 import {Link} from 'react-router-dom';
-// import PropTypes from 'prop-types';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {login} from '../../redux/auth/auth.actions';
+import {register} from '../../redux/auth/auth.actions';
 import {ReactComponent as Logo} from '../../assets/LogoGlyphMd.svg';
 import {ReactComponent as ExternalLink} from '../../assets/ExternalLink.svg';
 
 import './AuthForm.styles.css';
 
 // Also use register, login as props for AuthForm
-const AuthForm = ({action}) => {
+const AuthForm = ({register, login, action}) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -23,9 +25,11 @@ const AuthForm = ({action}) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (action === 'Sign up') {
-        console.log('Sign up'); 
+      console.log('Sign up'); 
+      register({username, password});
     } else {
-        console.log('Sign in');
+      console.log('Sign in');
+      login({username, password});
     }
   };
 
@@ -137,11 +141,15 @@ const AuthForm = ({action}) => {
   );
 };
 
-// AuthForm.propTypes = {
-//     register: PropTypes.func.isRequired,
-//     login: PropTypes.func.isRequired,
-//     action: PropTypes.string.isRequired,
-//     isAuthenticated: PropTypes.bool,
-// };
+AuthForm.propTypes = {
+    register: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    // action: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool,
+};
 
-export default AuthForm;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {login, register})(AuthForm);
