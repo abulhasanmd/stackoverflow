@@ -99,7 +99,8 @@ import './CommentCell.styles.css';
               <Spinner width='25px' height='25px' />
               ) :
                 (
-              comment?.comments?.data?.map((comment, index) => (
+                  comment?.comments?.data?.map((comment, index) => (
+                (comment.resourceId === post._id) ? (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>
                     <div className='comment-body'>
@@ -133,7 +134,8 @@ import './CommentCell.styles.css';
                         </Link>
                       )}
                   </div>
-                </li>
+                    </li>
+                  ) : null
               ))
             )}
           </ul>

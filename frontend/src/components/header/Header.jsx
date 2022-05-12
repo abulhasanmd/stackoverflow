@@ -18,6 +18,11 @@ import MobileSideBar from '../mobile-sidebar/MobileSideBar';
 import './Header.styles.css';
 
 // 
+const handleSubmit = (e) => { 
+	e.preventDefault();
+	history.push('/questions')
+}
+
 const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 	let history = useNavigate();
 	const [searchState, setSearchState] = useState(false);
@@ -93,11 +98,8 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 	<Link to='/' className='s-navigation--item is-selected'>
 	Products
 	</Link>
-	<Link to='/' className='s-navigation--item not-selected'>
-		Customers
-	</Link>
-	<Link to='/' className='s-navigation--item not-selected'>
-		Use cases
+	<Link to='/questions' className='s-navigation--item not-selected'>
+		All Questions
 	</Link>
 	</div>
 	);
@@ -112,7 +114,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 	const SearchBar = () => {
 		return (
 			<form
-				onSubmit={() => history.push('/questions')}
+				onSubmit={handleSubmit}
 				className="small-search-form"
 				autoComplete="off"
 			>
