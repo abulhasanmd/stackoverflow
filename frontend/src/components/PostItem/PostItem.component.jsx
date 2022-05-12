@@ -43,17 +43,17 @@ const PostItem = ({
       <div className='stats-container fc-black-500'>
         <div className='stats'>
           <div className='vote'>
-            <span className='vote-count'>10</span>
-            <div className='count-text'>comments</div>
+            <span className='vote-count'>{views}</span>
+            <div className='count-text'>views</div>
           </div>
           {answer_count > 0 ? answerVoteUp : answerVoteDown}
           <div className='vote'>
             <span className='vote-count'>{tags.length}</span>
-            <div className='count-text'>tags</div>
+            <div className='count-text'>{tags.length > 1 ? "votes" : "vote" }</div>
           </div>
-          <div className='vote'>
+          {/* <div className='vote'>
             <div className='count-text'>{views} views</div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className='summary'>
