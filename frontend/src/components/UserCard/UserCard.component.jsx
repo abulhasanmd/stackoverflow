@@ -2,7 +2,7 @@
 import React, {Fragment} from 'react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
-
+import {FaCircle} from 'react-icons/fa';
 import './UserCard.styles.css';
 
 const UserCard = ({
@@ -12,13 +12,13 @@ const UserCard = ({
   username,
   dateType,
   float,
-  backgroundColor,
+  // backgroundColor,
 }) => {
   return (
     <Fragment>
       <div
         className='owner'
-        style={{float: float, backgroundColor: backgroundColor}}
+        style={{float: float, backgroundColor: "#dde8f7d9", paddingLeft: "5px"  }}
       >
         <div className='user-block fc-black-500'>
           <div className='action-time'>
@@ -43,6 +43,15 @@ const UserCard = ({
               {username}
             </Link>
           </div>
+          <div style={{backgroundColor: "", padding:"0px 30px 0px 0px", }}>
+					<span className='navbar-stats' style={{color: "#343434", fontSize: "12px", marginLeft: "10px"}}>45 </span>
+					<span> <FaCircle style={{color:"#FFD700", fontSize: "8px" , paddingRight: "5px"}} /> </span>
+					<span className='navbar-stats' style={{color: "#7B7676", fontSize: "10px"}}>1 </span>
+					<span> <FaCircle style={{color:"#a9a9a9", fontSize: "8px", paddingRight: "5px"}} /> </span>
+					<span className='navbar-stats' style={{color: "#7B7676", fontSize: "10px"}}>2 </span>
+					<span> <FaCircle style={{color:"#964B00", fontSize: "8px", paddingRight: "5px"}} /> </span>
+					<span className='navbar-stats' style={{color: "#7B7676", fontSize: "10px"}}>8 </span>
+				</div>
         </div>
       </div>
     </Fragment>

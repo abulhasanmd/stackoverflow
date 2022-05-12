@@ -10,6 +10,8 @@ import PostCell from './PostCell/PostCell';
 import {ReactComponent as UpVote} from '../../../assets/ArrowUpLg.svg';
 import {ReactComponent as DownVote} from '../../../assets/ArrowDownLg.svg';
 import './QuestionSection.styles.css';
+import { BsBookmarkStar } from 'react-icons/bs'
+import {MdOutlineHistory} from 'react-icons/md';
 //   {
 //   post: {
 //     post: {answer_count, comment_count, tags},
@@ -43,7 +45,7 @@ const QuestionSection = ({post: {post}}) => {
     <Fragment>
       <div className='question'>
         <div className='post-layout'>
-        <div className='vote-cell'>
+        <div className='vote-cell' style={{marginRight: "30px"}}>
           <div className='vote-container'>
             <button
               className='vote-up'
@@ -52,7 +54,7 @@ const QuestionSection = ({post: {post}}) => {
             >
               <UpVote className='icon' />
             </button>
-            <div className='vote-count fc-black-500'>{post?.votes}</div>
+              <div className='fc-black-500' style={{fontSize: "22px", textAlign: "center"}}>{post?.votes}</div>
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
@@ -60,14 +62,19 @@ const QuestionSection = ({post: {post}}) => {
             >
               <DownVote className='icon' />
             </button>
-            <div className='vote-count fc-black-500'>Bookmark</div>
+              <div className='vote-count fc-black-500' style={{marginLeft: "10px"}}>
+              <BsBookmarkStar style={{fontSize: "20px", cursor: "pointer"}} />
+            </div>
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
             >
-            </button>
-            <div className='vote-count fc-black-500'>Activity</div>
+              </button>
+              <div className='vote-count fc-black-500' style={{marginLeft: "10px"}}>
+                <MdOutlineHistory style={{ fontSize: "20px", cursor: "pointer" }} />
+              </div>
+            {/* <div className='vote-count fc-black-500'>Activity</div> */}
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
