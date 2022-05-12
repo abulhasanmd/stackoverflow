@@ -1,0 +1,25 @@
+.table {
+  max-width: 80%;
+  padding-left: 20px;
+}
+
+.table-bordered, tr, th, td {
+    border: 1px solid #ddd !important;
+    text-align: center;
+  }
+  
+  /* table caption {
+      padding: .5em 0;
+  }
+  
+  @media screen and (max-width: 767px) {
+    table caption {
+      display: none;
+    }
+  }
+  
+  .p {
+    text-align: center;
+    padding-top: 140px;
+    font-size: 14px;
+  } */
