@@ -17,7 +17,7 @@ const SideBar = ({ user }) => (
         {SideBarData.map(({ link, icon, text }, index) => (
           <SideBarItem key={index} link={link} icon={icon} text={text} />
         ))}
-        {user?.isAdmin &&
+        {user && user.isAdmin &&
           AdminSideBarData.map(({ link, icon, text }, index) => (
             <SideBarItem key={index} link={link} icon={icon} text={text} />
           ))}
