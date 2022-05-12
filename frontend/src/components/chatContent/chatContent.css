@@ -25,8 +25,9 @@
   .settings .btn-nobg {
     color: #000;
   }
-  .content__body {
-    max-height: calc(100vh - calc(100vh / 2));
+  .content__body,
+  .chat__items {
+    height: calc(100vh - calc(100vh / 2));
     overflow: auto;
   }
   .chat__item {

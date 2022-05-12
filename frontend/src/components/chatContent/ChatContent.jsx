@@ -16,6 +16,7 @@ export default class ChatContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+    userList:"",
       chat: this.chatItms,
       msg: "",
       username:"Select the user you want to Send Message"
@@ -24,6 +25,7 @@ export default class ChatContent extends Component {
     this.changeUser = this.changeUser.bind(this)
     this.sendMessage = this.sendMessage.bind(this)
     this.changeUsername = this.changeUsername.bind(this)
+
   }
 
   changeUsername = (e) => {
@@ -78,10 +80,11 @@ export default class ChatContent extends Component {
                     });
                     this.setState({ chat: [...this.chatItms] });
                     this.scrollToBottom();
-                    this.setState({ msg: "" });
+                    
                   }
             })
         }
+        this.setState({ msg: "" });
   }
 
   changeUser = (e) => {
@@ -95,6 +98,17 @@ export default class ChatContent extends Component {
   };
 
   componentDidMount() {
+
+    axios.get(config.BASE_URL + '/users/get-all-users')
+    .then((response)=>{
+        console.log(response.data.data)
+        var us = []
+        for(let i=0;i<response.data.data.length;i++){
+            us.push(response.data.data[i].name)
+        }
+        this.setState({userList:us})
+    })
+
     window.addEventListener("keydown", (e) => {
       if (e.keyCode == 13) {
         if (this.state.msg != "") {
@@ -118,9 +132,10 @@ export default class ChatContent extends Component {
   };
 
   render() {
+      console.log(this.state.userList)
     this.items = []
-    for(let i=0;i<this.users.length;i++)
-        this.items.push(<option key={this.users[i]} value={this.users[i]}>{this.users[i]}</option>)
+    for(let i=0;i<this.state.userList.length;i++)
+        this.items.push(<option key={this.state.userList[i]} value={this.state.userList[i]}>{this.state.userList[i]}</option>)
     return (
       <div className="main__chatcontent">
         <div className="content__header">
