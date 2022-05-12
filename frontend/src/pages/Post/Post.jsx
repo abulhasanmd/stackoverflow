@@ -8,7 +8,7 @@ import {getPost} from '../../redux/posts/posts.actions';
 
 import PageTitle from '../../components/PageTitle/PageTitle.component';
 import LinkButton from '../../components/link-button/LinkButton';
-import Spinner from '../../components/spinner/spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import AnswerSection from './AnswerSection/AnswerSection';
 import QuestionSection from './QuestionSection/QuestionSection';
 

@@ -8,7 +8,7 @@ import handleSorting from '../../services/handleSorting';
 
 import LinkButton from '../../components/link-button/LinkButton';
 import PostItem from '../../components/PostItem/PostItem.component';
-import Spinner from '../../components/spinner/spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import ButtonGroup from '../../components/ButtonGroup/ButtonGroup.component';
 import SearchBox from '../../components/SearchBox/SearchBox.component';
 import PageTitle from '../../components/PageTitle/PageTitle.component';
