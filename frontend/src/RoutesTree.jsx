@@ -8,6 +8,7 @@ import LayoutWrapper from './components/LayoutWrapper/LayoutWrapper.component';
 import RegisterPage from './pages/Register/RegisterPage';
 import AllTagsPage from './pages/AllTagsPage/AllTagsPage';
 import QuestionsPage from './pages/QuestionsPage/QuestionsPage';
+import QuestionActivity from './pages/QuestionActivity/QuestionActivity';
 import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 import AdminAnalytics from './components/admin-analytics/AdminAnalytics';
 import Post from './pages/Post/Post';
@@ -30,12 +31,17 @@ const AllTagsPageComponent = withPageTitle({
 
 const QuestionsPageComponent = withPageTitle({
 	component: LayoutWrapper({ component: QuestionsPage }),
-	title: 'All Questions - CLONE Stack Overflow',
+	title: 'All Questions - Stack Overflow',
+});
+
+const QuestionActivityComponent = withPageTitle({
+	component: LayoutWrapper({ component: QuestionActivity }),
+	title: 'Question Activity - Stack Overflow',
 });
 
 const IndividualPost = withPageTitle({
 	component: LayoutWrapper({ component: Post }),
-	title: 'Post - CLONE Stack Overflow',
+	title: 'Post - Stack Overflow',
 });
 
 const AdminAnalyticsComponent = withPageTitle({
@@ -60,6 +66,7 @@ const RoutesTree = () => {
 			/>
 			{/* <Route exact path='/tags/:tagname' component={TagPageComponent} /> */}
 			<Route exact path="/questions/:id" element={<IndividualPost />} />
+			<Route exact path="/questions/timeline/:id" element={<QuestionActivityComponent />} />
 			<Route exact path="/tags" element={<AllTagsPageComponent />} />
 			<Route exact path="/register" element={<RegisterPage />} />
 			<Route exact path="/login" element={<LoginPage />} />
