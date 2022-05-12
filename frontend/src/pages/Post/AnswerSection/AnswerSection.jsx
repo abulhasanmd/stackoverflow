@@ -12,7 +12,8 @@ import Spinner from '../../../components/Spinner/Spinner';
 import ButtonGroup from '../../../components/ButtonGroup/ButtonGroup.component';
 
 import './AnswerSection.styles.css';
-// import AnswerCommentCell from '../QuestionSection/CommentCell/AnswerCommentCell';
+import AnswerCommentCell from '../QuestionSection/CommentCell/AnswerCommentCell';
+// import CommentCell from '../QuestionSection/CommentCell/CommentCell';
 
 
 // {getAnswers, answer, post: {post}}
@@ -55,7 +56,7 @@ console.log("Answer section is", answer, "post id is",post._id);
           answer?.answers?.sort(handleSorting(sortType)).map((answer, index) => (
             <div key={index} className='answers'>
               <AnswerItem answer={answer}/>
-              {/* <AnswerCommentCell answerId = {answer._id}/> */}
+              <AnswerCommentCell answerId = {answer._id}/>
             </div>
           ))
         )}

@@ -14,10 +14,11 @@ import './AuthForm.styles.css';
 const AuthForm = ({register, login, action}) => {
   const [formData, setFormData] = useState({
     username: '',
+    email:'',
     password: '',
   });
 
-  const {username, password} = formData;
+  const {username, password, email} = formData;
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -26,10 +27,10 @@ const AuthForm = ({register, login, action}) => {
     e.preventDefault();
     if (action === 'Sign up') {
       console.log('Sign up'); 
-      register({username, password});
+      register({username, email, password});
     } else {
       console.log('Sign in');
-      login({username, password});
+      login({email, password});
     }
   };
 
@@ -59,6 +60,22 @@ const AuthForm = ({register, login, action}) => {
         </div>
         <div className='form-container'>
           <form className='login-form' onSubmit={(e) => onSubmit(e)}>
+            {action === 'Sign up' ? (
+              <div>
+                <label className='form-label s-label fc-black-600'>
+                  Username
+                </label>
+                <input
+                  className='form-input s-input'
+                  type='text'
+                  name='username'
+                  value={username}
+                  onChange={(e) => onChange(e)}
+                  id='username'
+                  required
+                />
+            </div>
+            ): null}
             <div>
               <label className='form-label s-label fc-black-600'>
                 Email
@@ -67,7 +84,7 @@ const AuthForm = ({register, login, action}) => {
                 className='form-input s-input'
                 type='email'
                 name='email'
-                value={username}
+                value={email}
                 onChange={(e) => onChange(e)}
                 id='email'
                 required

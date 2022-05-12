@@ -1,13 +1,13 @@
 import React from 'react';
 import {Navigate} from 'react-router-dom';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import AuthForm from '../../components/auth-form/AuthForm';
 
 const LoginPage = ({isAuthenticated}) => {
   if (isAuthenticated) {
-    return <Navigate to='/' />;
+    return <Navigate to='/questions' />;
   }
 
   return (
@@ -25,8 +25,8 @@ LoginPage.propTypes = {
   isAuthenticated: PropTypes.bool,
 };
 
-// const mapStateToProps = (state) => ({
-//   isAuthenticated: state.auth.isAuthenticated,
-// });
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default LoginPage;
+export default connect(mapStateToProps, null)(LoginPage);

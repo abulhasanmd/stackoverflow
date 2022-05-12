@@ -2,48 +2,53 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import {connect} from 'react-redux';
-// import PropTypes from 'prop-types';
-// import {logout} from '../../redux/auth/auth.actions';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {logout} from '../../redux/auth/auth.actions';
 import { BsFillInboxFill } from 'react-icons/bs';
 import { FaCircle } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { ReactComponent as Search } from '../../assets/Search.svg';
 import { ReactComponent as Logo } from '../../assets/LogoMd.svg';
 import { ReactComponent as SmallLogo } from '../../assets/LogoGlyphMd.svg';
-// import Spinner from '../spinner/Spinner';
-// import LinkButton from '../link-button/LinkButton';
+import Spinner from '../Spinner/Spinner';
+import LinkButton from '../link-button/LinkButton';
 import MobileSideBar from '../mobile-sidebar/MobileSideBar';
 
 import './Header.styles.css';
 
-// {auth: {isAuthenticated, loading, user}, logout}
-const Header = () => {
+// 
+const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 	let history = useNavigate();
 	const [searchState, setSearchState] = useState(false);
 
-	const user = {
-		username: 'John Doe',
-		gravatar:
-			'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
-	};
+	// const user = {
+	// 	username: 'John Doe',
+	// 	gravatar:
+	// 		'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+	// };
 
-	const logout = () => {};
 
 	const authLinks = (
 		<div className="btns">
-			{/* {loading || user === null ? (
-        <Spinner width='50px' height='50px' />
-      ) : ( */}
-
-			{/* ) */}
-			{/* } */}
-			<Link to="/userprofile"></Link>
+			{loading || user === null ? (
+				<Spinner width='50px' height='50px' />
+			) : (
+				<Link to={`/users/${user?.userId}`} title={user?.username}>
+				<img
+					alt='user-logo'
+					className='logo'
+					src='https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50'
+				/>
+						{/* {user?.username} */}
+				</Link>
+			)}
+			{/* <Link to="/userprofile"></Link> */}
 			<Link
-				to={`/users/${user.id}`}
-				title={user.username}
+				to={`/users/${user?.userId}`}
+				title={user?.username}
 			>
-				<img alt="user-logo" className="logo" src={user.gravatar} />
+				{/* <img alt="user-logo" className="logo" src={user.gravatar} /> */}
 			</Link>
 			{'  '}
 			<Link to='/userprofile'>
@@ -68,7 +73,7 @@ const Header = () => {
 				text={'Log out'}
 				to={'/login'}
 				type={'s-btn__filled'}
-				handleClick={logout}
+				onClick={logout}
 			>
 				<FiLogOut style={{ marginTop:"5px", fontSize: '18px', color: "#fff" }} />
 			</Link>
@@ -83,26 +88,26 @@ const Header = () => {
 		</div>
 	);
 
-	// const guestTabs = (
-	//   <div className='s-navigation'>
-	//     <Link to='/' className='s-navigation--item is-selected'>
-	//       Products
-	//     </Link>
-	//     <Link to='/' className='s-navigation--item not-selected'>
-	//       Customers
-	//     </Link>
-	//     <Link to='/' className='s-navigation--item not-selected'>
-	//       Use cases
-	//     </Link>
-	//   </div>
-	// );
+	const guestTabs = (
+	<div className='s-navigation'>
+	<Link to='/' className='s-navigation--item is-selected'>
+	Products
+	</Link>
+	<Link to='/' className='s-navigation--item not-selected'>
+		Customers
+	</Link>
+	<Link to='/' className='s-navigation--item not-selected'>
+		Use cases
+	</Link>
+	</div>
+	);
 
-	// const guestLinks = (
-	//   <div className='btns'>
-	//     <LinkButton text={'Log in'} link={'/login'} type={'s-btn__primary'} />
-	//     <LinkButton text={'Sign up'} link={'/register'} type={'s-btn__filled'} />
-	//   </div>
-	// );
+	const guestLinks = (
+	<div className='btns'>
+	<LinkButton text={'Log in'} link={'/login'} type={'s-btn__primary'} />
+	<LinkButton text={'Sign up'} link={'/register'} type={'s-btn__filled'} />
+	</div>
+	);
 
 	const SearchBar = () => {
 		return (
@@ -123,9 +128,7 @@ const Header = () => {
 		);
 	};
 
-	// loading ? ('') :
-	// <Fragment>{isAuthenticated ? authTabs : guestTabs}</Fragment>
-	// <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+
 	return (
 		<Fragment>
 			<nav className="navbar fixed-top navbar-expand-lg navbar-light bs-md">
@@ -137,9 +140,7 @@ const Header = () => {
 						<Logo className="full-logo" />
 						<SmallLogo className="glyph-logo" />
 					</Link>
-					{/* {!loading && ( */}
-					<Fragment>{authTabs}</Fragment>
-					{/* )} */}
+            <Fragment>{isAuthenticated ? authTabs : guestTabs}</Fragment>
 				</div>
 				<div className="header-search-div">
 					<form
@@ -165,9 +166,7 @@ const Header = () => {
 						className="search-icon"
 						onClick={() => setSearchState(!searchState)}
 					/>
-					{/* {!loading && ( */}
-					<Fragment>{authLinks}</Fragment>
-					{/* )} */}
+            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
 				</div>
 			</nav>
 			{searchState && <SearchBar />}
@@ -175,13 +174,13 @@ const Header = () => {
 	);
 };
 
-// Header.propTypes = {
-//   logout: PropTypes.func.isRequired,
-//   auth: PropTypes.object.isRequired,
-// };
-
-// const mapStateToProps = (state) => ({
-//   auth: state.auth,
-// });
-
-export default Header;
+Header.propTypes = {
+	logout: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+  };
+  
+  const mapStateToProps = (state) => ({
+	auth: state.auth,
+  });
+  
+  export default connect(mapStateToProps, {logout})(Header);

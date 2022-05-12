@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1120.0",
+    "bcrypt": "^5.0.1",
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
     "express": "~4.16.1",
+    "jsonwebtoken": "^8.5.1",
     "kafkajs": "^1.16.0",
     "lodash": "^4.17.21",
     "mongoose": "^6.3.1",

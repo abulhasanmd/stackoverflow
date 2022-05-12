@@ -36,7 +36,7 @@ import './CommentCell.styles.css';
     console.log("Answer id is",answerId);
 
       useEffect(() => {
-        getComments(answerId);
+        getComments(answerId, "answer");
         // eslint-disable-next-line
       }, [getComments]);
    ("comment is",comment);
@@ -85,7 +85,7 @@ import './CommentCell.styles.css';
               // <Spinner width='25px' height='25px' />
               // ) :
                 (
-              comment?.comments?.data?.map((comment, index) => (
+              comment?.answerComments?.data?.map((comment, index) => (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>
                     <div className='comment-body'>
