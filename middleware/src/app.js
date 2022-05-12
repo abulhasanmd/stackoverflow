@@ -15,6 +15,7 @@ const tagRouter = require('./routes/tagRouter');
 const postRouter = require('./routes/postRouter');
 const healthRouter = require('./routes/healthRouter');
 const miscRouter = require('./routes/miscRouter');
+const logsRouter = require('./routes/logsRouter');
 
 const corsOptions = {
 	origin: true,
@@ -45,6 +46,7 @@ app.use('/vote', voteRouter);
 app.use('/tag', tagRouter);
 app.use('/posts', postRouter);
 app.use('/health', healthRouter);
+app.use('/logs', logsRouter);
 
 async function initRedis() {
 	const client = redis.createClient({
