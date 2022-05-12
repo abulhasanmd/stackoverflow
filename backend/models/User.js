@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const {
+	Schema,
+} = require('./mongooseConnection');
 
 const tagsInformationSchema = new mongoose.Schema({
 	name: {
@@ -16,6 +19,22 @@ const tagsInformationSchema = new mongoose.Schema({
 		default: 0,
 	},
 });
+
+// const badgeSchema = new mongoose.Schema({
+// 	type: {
+// 		type: String,
+// 		default: 0,
+// 	},
+// 	name: {
+// 		type: String,
+// 		maxLength: 20,
+// 	},
+// 	level: {
+// 		type: String,
+// 		maxLength: 10,
+// 	},
+// });
+
 const userSchema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -87,28 +106,7 @@ const userSchema = new mongoose.Schema({
 		maxLength: 20,
 	},
 	badges: {
-		_id: {
-			type: {
-				type: String,
-				default: 0,
-			},
-			name: {
-				type: String,
-				maxLength: 20,
-			},
-			createdBy: {
-				type: String,
-				maxLength: 20,
-			},
-			score: {
-				type: Number,
-				default: 0,
-			},
-			level: {
-				type: String,
-				maxLength: 10,
-			},
-		},
+		type: Schema.Types.Mixed,
 	},
 	bookmarks: {
 		type: Array,
