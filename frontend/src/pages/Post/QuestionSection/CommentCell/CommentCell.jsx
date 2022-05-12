@@ -32,7 +32,7 @@ import './CommentCell.styles.css';
     post: {post},
   }) => {
 // const CommentCell = ({ comment: {comment} ,post: {post}}) => {
-    // console.log("post id is",post._id);
+    console.log("post id is",post);
 
     
       useEffect(() => {

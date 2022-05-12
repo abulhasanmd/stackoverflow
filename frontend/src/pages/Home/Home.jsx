@@ -7,7 +7,7 @@ const Home = () => {
       <>
 <section class="hero">
     <div class="hero-content">
-        <h1 class="hero-title">We <span>3</span> people who code</h1>
+        <h1 class="hero-title">We <span style={{color: "red"}}>❤️</span> people who code</h1>
         <p class="hero-paragraph">
             We build products that empower developers and connect them to solutions that enable productivity, growth, and discovery.
         </p>
