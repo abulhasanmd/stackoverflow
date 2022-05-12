@@ -10,9 +10,10 @@ const getMessages = async (body) => {
                 console.log('Unsuccessful in getting messages from the database')
                 resolve( {
                     error: {
-                        message: 'Unsuccessful in getting messages from the database'
+                        message: 'Unsuccessful in getting messages from the database '
                     }
                 })
+                return
             }
 
             console.log('successful in getting messages from the database')

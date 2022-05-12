@@ -12,6 +12,8 @@ import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 import AdminAnalytics from './components/admin-analytics/AdminAnalytics';
 import Post from './pages/Post/Post';
 import Home from './pages/Home/Home';
+import ChatBody from './components/chatBody/ChatBody';
+
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
 // const Register = withPageTitle({
@@ -67,6 +69,7 @@ const RoutesTree = () => {
 				element={<AdminAnalyticsComponent />}
 			/>
 			<Route path="*" element={<NotFoundPage />} />
+			<Route path="/messages" element={<ChatBody/>} />
 		</Routes>
 	);
 };
