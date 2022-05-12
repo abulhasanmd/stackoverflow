@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 // useEffect, useState
 import moment from 'moment';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 // import {Link} from 'react-router-dom';
-// import {
-//   getComments,
-//   deleteComment,
-//   addComment,
-// } from '../../../../redux/comments/comments.actions';
+import {
+  getComments,
+  // deleteComment,
+  // addComment,
+} from '../../../../redux/comments/comments.actions';
 
 // import Spinner from '../../../../components/spinner/Spinner';
 import TagBadge from '../../../../components/TagBadge/TagBadge.component';
@@ -25,11 +25,19 @@ import './CommentCell.styles.css';
 // post: {post},
 // }
 
-const CommentCell = () => {
-  // useEffect(() => {
-  //   getComments(post.id);
-  //   // eslint-disable-next-line
-  // }, [getComments]);
+// const PostCell = ({post: {post}}) => {
+  const CommentCell = ({
+    getComments,
+    comment,
+    post: {post},
+  }) => {
+// const CommentCell = ({ comment: {comment} ,post: {post}}) => {
+    // console.log("post id is",post._id);
+  useEffect(() => {
+    getComments(post._id);
+    // eslint-disable-next-line
+  }, [getComments]);
+  console.log("comment is",comment);
 
   // const [formData, setFormData] = useState({
   //   body: '',
@@ -48,22 +56,22 @@ const CommentCell = () => {
   //   });
   // };
 
-  const comment = {
-    body: '',
-    created_at: '',
-    user: {
-      name: '',
-      avatar: '',
-    },
-    comments: [
-      {
-        body: 'comment1',
-        created_at: '2020-11-11',
-        username: 'user1',
+  // const comment1 = {
+  //   body: '',
+  //   created_at: '',
+  //   user: {
+  //     name: '',
+  //     avatar: '',
+  //   },
+  //   comments: [
+  //     {
+  //       body: 'comment1',
+  //       created_at: '2020-11-11',
+  //       username: 'user1',
 
-      }
-    ]
-  }
+  //     }
+  //   ]
+  // }
 
   return (
     <Fragment>
@@ -75,24 +83,24 @@ const CommentCell = () => {
               // <Spinner width='25px' height='25px' />
               // ) :
                 (
-              comment.comments.map((comment, index) => (
+              comment?.comments?.data?.map((comment, index) => (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>
                     <div className='comment-body'>
-                      <span className='body'>{comment.body}</span>
+                      <span className='body'>{comment?.comment}</span>
                       &nbsp;&ndash;&nbsp;
                       <TagBadge
-                        tag_name={comment.username}
+                        tag_name={comment?.createdBy?.name? comment?.createdBy.name : "user name missing"}
                         size={'s-tag'}
-                        link={`/users/${comment.user_id}`}
+                        link={`/users/${comment?.createdBy?._id}`}
                         display={'inline'}
                       />
                       <span
-                        title={moment(comment.created_at).fromNow(true)}
+                        title={moment(comment?.created_at).fromNow(true)}
                         style={{color: '#959ca3 !important'}}
                         className='date fs-body1'
                       >
-                        {moment(comment.created_at).fromNow(true)} ago
+                        {moment(comment?.created_at).fromNow(true)} ago
                       </span>
                     </div>
                     {/* {!auth.loading &&
@@ -158,6 +166,7 @@ const CommentCell = () => {
   );
 };
 
+
 CommentCell.propTypes = {
   auth: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
@@ -167,13 +176,14 @@ CommentCell.propTypes = {
   comment: PropTypes.object.isRequired,
 };
 
-// const mapStateToProps = (state) => ({
-//   auth: state.auth,
-//   post: state.post,
-//   comment: state.comment,
-// });
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  post: state.post,
+  comment: state.comment,
+});
 
-
-// connect(mapStateToProps, { deleteComment, getComments,addComment,})
-
-export default (CommentCell);
+export default connect(mapStateToProps, {
+  // deleteComment,
+  getComments,
+  // addComment,
+})(CommentCell);

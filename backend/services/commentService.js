@@ -1,10 +1,21 @@
 const Comment = require('../models/Comment');
+const User = require('../models/User');
+var _ = require('lodash');
 
 const getCommentsByResourceId = async (params) => {
   console.log('Entering commentService.getCommentsByResourceId');
   try {
-    const commentsResponse = await Comment.find({ resourceId: params.resourceId }).exec();
-    console.log(`get comment response :${commentsResponse}`);
+    var commentsResponse = await Comment.find({ resourceId: params.resourceId }).lean();
+    var uniqUserIds = _.uniq(_.map(commentsResponse, 'createdBy._id'));
+    let userInfo = await User.find({$in: uniqUserIds}).lean();
+    let usersHashMap = _.keyBy(userInfo, '_id');
+
+    commentsResponse = _.map(commentsResponse, (comment) => {
+      let userId = comment.createdBy._id.toString();
+      comment.createdBy = usersHashMap[userId];
+      return comment;
+  });
+    console.log(`get comment response :${JSON.stringify(commentsResponse)}`);
     return { data: commentsResponse };
   } catch (e) {
     console.error('Exception occurred while getting comments', e);
