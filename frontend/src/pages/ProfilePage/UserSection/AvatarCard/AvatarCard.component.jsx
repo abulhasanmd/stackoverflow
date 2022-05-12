@@ -1,8 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import './AvatarCard.styles.scss';
-
+import './AvatarCard.styles.css';
+//gravatar
 const AvatarCard = ({ id, gravatar, views }) => (
   <div className='img-card'>
     <div className='avatar-card'>
@@ -18,9 +18,9 @@ const AvatarCard = ({ id, gravatar, views }) => (
       </div>
       <div className='title'>
         <div className='grid fc-black-800'>
-          {views}
+          {views.slice(0,10)}
           &nbsp;
-          <span className='fc-light'>PROFILE VIEWS</span>
+          <span className='fc-light'>Last Seen</span>
         </div>
       </div>
     </div>

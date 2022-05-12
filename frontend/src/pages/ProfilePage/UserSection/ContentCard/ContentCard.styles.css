@@ -1,0 +1,65 @@
+.content-card {
+  box-sizing: border-box;
+  margin: 12px;
+  flex: 1 auto !important;
+}
+.content-card .content-grid {
+  margin: -8px;
+  display: flex;
+  flex-direction: column;
+}
+.content-card .content-grid .info-cell {
+  margin: 8px;
+  padding-right: 16px !important;
+  flex: 1 auto;
+  color: #242729;
+}
+.content-card .content-grid .info-cell .info {
+  display: flex;
+  flex-direction: column !important;
+}
+.content-card .content-grid .info-cell .info .details {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.content-card .content-grid .info-cell .info .details h2 {
+  word-break: break-all !important;
+  color: #e7e8eb !important;
+  font-size: 27px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.content-card .content-grid .info-cell .info .date {
+  margin-top: 16px;
+  margin-bottom: 4px;
+  color: #acb2b8 !important;
+  font-size: 15px;
+}
+.content-card .content-grid .stats-cell {
+  margin: 8px;
+  padding-right: 24px !important;
+}
+.content-card .content-grid .stats-cell .count-sec {
+  color: #3c4146 !important;
+  margin-bottom: 16px !important;
+}
+.content-card .content-grid .stats-cell .count-sec .counts {
+  margin: -6px;
+  display: flex;
+}
+.content-card .content-grid .stats-cell .count-sec .counts .cells {
+  margin: 6px;
+}
+.content-card .content-grid .stats-cell .count-sec .counts .cells .column-grid {
+  display: flex;
+  flex-direction: column;
+}
+.content-card .content-grid .stats-cell .count-sec .counts .cells .column-grid .head {
+  font-weight: 700 !important;
+  font-size: 17px;
+  text-align: center;
+}
+.content-card .content-grid .stats-cell .count-sec .counts .cells .column-grid .foot {
+  font-size: 13px;
+}

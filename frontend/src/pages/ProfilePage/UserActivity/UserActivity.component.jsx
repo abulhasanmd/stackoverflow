@@ -2,7 +2,7 @@ import React from "react";
 
 import TagBadge from "../../../components/TagBadge/TagBadge.component";
 
-import './UserActivity.styles.scss';
+import './UserActivity.styles.css';
 
 const UserActivity = () => (
   <div className='grid-cell2'>

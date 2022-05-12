@@ -12,23 +12,37 @@ import Pagination from "../../components/Pagination/Pagination.component";
 
 import './AllUsersPage.styles.css';
 
-const itemsPerPage = 16;
+
 
 const AllUsersPage = ({getUsers, user: {users, loading}}) => {
+  console.log("asass");
+
   useEffect(() => {
     getUsers();
   }, [getUsers]);
 
   const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(16);
   const [fetchSearch, setSearch] = useState('');
-  const [sortType, setSortType] = useState('Popular');
+  const [sortType, setSortType] = useState('Reputation');
 
   const handlePaginationChange = (e, value) => setPage(value);
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSearch(e.target.value);
-    setPage(1)
+    if(e.target.value.length >=3 )
+    {
+      setSearch(e.target.value);
+      setPage(1);
+      setItemsPerPage(5)
+    }else if(e.target.value.length ==0)
+    {
+      setSearch(e.target.value);
+      setPage(1);
+      setItemsPerPage(16)
+    }
+    
+    
   };
 
   return loading || users === null ? (
@@ -49,7 +63,7 @@ const AllUsersPage = ({getUsers, user: {users, loading}}) => {
             width={'200px'}
           />
           <ButtonGroup
-            buttons={['Popular', 'Name', 'Active', 'New Users']}
+            buttons={['Reputation', 'New Users']}
             selected={sortType}
             setSelected={setSortType}
           />
@@ -58,7 +72,7 @@ const AllUsersPage = ({getUsers, user: {users, loading}}) => {
           <div className='grid-layout'>
             {users
               .filter((user) =>
-                user.username.toLowerCase().includes(fetchSearch.toLowerCase())
+                user.name.toLowerCase().includes(fetchSearch.toLowerCase())
               )
               ?.sort(handleSorting(sortType, 'users'))
               .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
@@ -69,7 +83,7 @@ const AllUsersPage = ({getUsers, user: {users, loading}}) => {
         </div>
         <Pagination
           page={page}
-          itemList={users.filter((user) => user.username.toLowerCase().includes(fetchSearch.toLowerCase()))}
+          itemList={users.filter((user) => user.name.toLowerCase().includes(fetchSearch.toLowerCase()))}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />
