@@ -1,8 +1,9 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-// import {setAlert} from '../../redux/alert/alert.actions';
+// import {Redirect} from 'react-router-dom';
+import {setAlert} from '../../redux/alert/alert.actions';
 
 import Caption from './caption/Caption';
 import AuthForm from '../../components/auth-form/AuthForm';
@@ -31,5 +32,8 @@ RegisterPage.propTypes = {
   isAuthenticated: PropTypes.bool,
 };
 
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default RegisterPage;
+export default connect(mapStateToProps, {setAlert})(RegisterPage);
