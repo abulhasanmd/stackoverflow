@@ -6,29 +6,30 @@ import {deleteAnswer} from '../../../../redux/answers/answers.actions';
 
 import {ReactComponent as UpVote} from '../../../../assets/ArrowUpLg.svg';
 import {ReactComponent as DownVote} from '../../../../assets/ArrowDownLg.svg';
-import UserCard from '../../../../components/UserCard/UserCard.component';
+// import UserCard from '../../../../components/UserCard/UserCard.component';
 
 import './AnswerItem.styles.css';
 
-// {
-//   deleteAnswer,
-//   answer: {body, user_id, gravatar, id, created_at, username},
-//   post: {post},
-//   auth,
-// }
 
-const AnswerItem =({post: {post}, answer}) => {
-console.log("answer is", answer, "posts is ",post);
-  const answer1 = {
-    body: 'This is body',
-    user_id: 'asdfasdf',
-    gravatar: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
-    id: 'asdfasdf',
-    created_at: '2020-01-01',
-    username: 'johndoe',
-  }
 
-  const {body, user_id, gravatar, created_at, username} = answer1;
+const AnswerItem =({
+  // deleteAnswer,
+  answer,
+  // answer: {body, user_id, gravatar, vote, id, created_at, username},
+  // post: {post},
+  // auth,
+}) => {
+// console.log("answer is", , "posts is ",post);
+  // const answer1 = {
+  //   body: 'This is body',
+  //   user_id: 'asdfasdf',
+  //   gravatar: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+  //   id: 'asdfasdf',
+  //   created_at: '2020-01-01',
+  //   username: 'johndoe',
+  // }
+
+  // const {answer, user_id, gravatar, created_at, username} = answer1;
 
   return (
     <Fragment>
@@ -41,7 +42,7 @@ console.log("answer is", answer, "posts is ",post);
             >
               <UpVote className='icon' />
             </button>
-            <div className='vote-count fc-black-500'>0</div>
+            <div className='vote-count fc-black-500'>{answer?.vote}</div>
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
@@ -51,7 +52,7 @@ console.log("answer is", answer, "posts is ",post);
           </div>
         </div>
         <div className='answer-item'>
-          <div className='answer-content fc-black-800' dangerouslySetInnerHTML={{__html: body}}>
+          <div className='answer-content fc-black-800' dangerouslySetInnerHTML={{__html: answer?.answer}}>
           </div>
           <div className='answer-actions'>
             <div className='action-btns'>
@@ -85,14 +86,14 @@ console.log("answer is", answer, "posts is ",post);
                   )} */}
               </div>
             </div>
-            <UserCard
-              created_at={created_at}
+            {/* <UserCard
+              created_at={answer?.createdBy}
               user_id={user_id}
               gravatar={gravatar}
               username={username}
               dateType={'answered'}
               backgroundColor={'transparent'}
-            />
+            /> */}
           </div>
         </div>
       </div>

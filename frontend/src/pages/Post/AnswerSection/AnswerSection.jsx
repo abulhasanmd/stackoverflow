@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // import React, {Fragment, useState} from 'react';
 import React, {Fragment, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
@@ -38,7 +39,7 @@ console.log("Answer section is", answer, "post id is",post._id);
         <div className='answer-header fc-black-800'>
           <div className='answer-sub-header'>
             <div className='answer-headline'>
-              <h2>1 Answers</h2>
+              <h2>{answer?.answers?.data?.length} Answer {answer?.answers?.data?.length > 1 ? 's': ''} </h2>
             </div>
             <ButtonGroup
               buttons={['Newest', 'Oldest']}
@@ -59,7 +60,7 @@ console.log("Answer section is", answer, "post id is",post._id);
         {console.log("Answers are ", answer)}
         {/* <AnswerItem /> */}
         {/* <div className='add-answer'>
-          <AnswerForm/>
+          // <AnswerForm/>
         </div> */}
       </div>
     </Fragment>
@@ -73,7 +74,7 @@ AnswerSection.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  answer: state.answers,
+  answer: state.answer,
   post: state.post,
 });
 
