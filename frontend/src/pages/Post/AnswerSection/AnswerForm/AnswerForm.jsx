@@ -17,9 +17,23 @@ const AnswerForm = ({addAnswer, auth, post: {post}}) => {
 
   const {text} = formData;
 
+
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    addAnswer(post.id, {text});
+    addAnswer({
+      "questionId": post._id,
+      "answer": text,
+      "score":  0,
+      "vote": 0,
+      "isBestAnswer": false,
+      "createdBy": {
+        "_id": auth.user.userId,
+        "imageUrl": "j"
+      }
+    });
+
     setFormData({
       text: '',
     });

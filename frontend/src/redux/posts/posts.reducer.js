@@ -7,7 +7,9 @@ import {
   DELETE_POST,
   ADD_POST,
   ADD_POST_TO_BOOKMARK,
-  ADD_POST_TO_BOOKMARK_ERROR
+  ADD_POST_TO_BOOKMARK_ERROR,
+  ADD_VOTE_TO_POST,
+  ADD_VOTE_TO_POST_ERROR
 } from "./posts.types"
 
 const initialState = {
@@ -22,6 +24,8 @@ export default function posts(state = initialState, action) {
     case GET_POSTS:
     case ADD_POST_TO_BOOKMARK:
     case ADD_POST_TO_BOOKMARK_ERROR:
+    case ADD_VOTE_TO_POST:
+    case ADD_VOTE_TO_POST_ERROR:
     case GET_TOP_POSTS:
     case GET_TAG_POSTS:
       return {

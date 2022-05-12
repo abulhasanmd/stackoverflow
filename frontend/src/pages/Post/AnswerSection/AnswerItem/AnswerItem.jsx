@@ -100,7 +100,7 @@ const handleVote = (id, type) => {
             </div>
             <UserCard
               created_at={answer?.createdOn}
-              user_id={answer.createdBy._id}
+              user_id={answer?.createdBy?._id}
               gravatar="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
               username={answer?.createdBy?.name}
               float={'right'}

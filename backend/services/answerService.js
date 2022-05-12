@@ -3,6 +3,7 @@ const Answer = require('../models/Answer');
 const Question = require('../models/Question');
 const Event = require('../models/Event');
 const User = require('../models/User');
+let utils = require('../utils.js');
 
 const bestAnswerScore = 15;
 
@@ -43,6 +44,7 @@ const addAnswer = async (body) => {
 		};
 		const answerResponse = await Answer.create(answer);
 		console.log(`add answer response :${answerResponse}`);
+		await utils.log('answer', body.answer, body.createdBy._id, body.questionId)
 		// let event = {
 		//   type: upvote/downvote/marked-as-best,
 		//   outcome: 10,

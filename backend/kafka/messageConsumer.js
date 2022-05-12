@@ -32,7 +32,7 @@ const actionHandler = async (message) => {
         break;
 
       case 'POST-MESSAGES':
-        respnse = await messageService.postMessage(messageJSON)
+        response = await messageService.postMessage(messageJSON)
         break;
 
       default:

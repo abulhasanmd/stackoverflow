@@ -14,7 +14,7 @@ import { BsBookmarkStar } from 'react-icons/bs'
 import {MdOutlineHistory} from 'react-icons/md';
 import { useParams } from 'react-router';
 import {Link} from 'react-router-dom'
-import {addPostToBookmark} from '../../../redux/posts/posts.actions';
+import {addPostToBookmark, addVoteToPost} from '../../../redux/posts/posts.actions';
 //   {
 //   post: {
 //     post: {answer_count, comment_count, tags},
@@ -22,7 +22,7 @@ import {addPostToBookmark} from '../../../redux/posts/posts.actions';
 // }
 
 
-const QuestionSection = ({addPostToBookmark, post: {post}, auth}) => {
+const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth}) => {
   
   let {id} = useParams();
 
@@ -43,6 +43,14 @@ const QuestionSection = ({addPostToBookmark, post: {post}, auth}) => {
     const handleVote = ((type) => {
       console.log("type is",type);
       console.log("vote clicked");
+      addVoteToPost({
+        createdBy: post?.createdBy._id,
+        resourceType:"ques",
+        resourceId: id,
+        score:type == "up" ? 10 : -10,
+        votes: type == "up" ? 1 : -1,
+      })
+      
       });
 
       const handleBookmark = ((questionId, userId) => {
@@ -125,6 +133,7 @@ QuestionSection.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   addPostToBookmark: PropTypes.func.isRequired,
+  addVoteToPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -132,4 +141,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {addPostToBookmark})(QuestionSection);
+export default connect(mapStateToProps, {addPostToBookmark, addVoteToPost})(QuestionSection);

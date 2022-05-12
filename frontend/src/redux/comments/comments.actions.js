@@ -35,7 +35,7 @@ export const getComments = (id, type="question") => async (dispatch) => {
 };
 
 // Add COMMENT
-export const addComment = (postId, formData) => async (dispatch) => {
+export const addComment = (formData) => async (dispatch) => {
   const config_headers = {
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const addComment = (postId, formData) => async (dispatch) => {
 
   try {
     const res = await axios.post(
-      config.BASE_URL + `/api/posts/comments/${postId}`,
+      config.BASE_URL + `/comment/post-comment`,
       formData,
       config_headers
     );
@@ -56,10 +56,10 @@ export const addComment = (postId, formData) => async (dispatch) => {
 
     dispatch(setAlert(res.data.message, 'success'));
 
-    dispatch(getComments(postId));
+    dispatch(getComments(formData.resourceId));
   } catch (err) {
-    dispatch(setAlert(err.response.data.message, 'danger'));
-
+    // dispatch(setAlert(err.response.data.message, 'danger'));
+    console.log("error is",err);
     dispatch({
       type: COMMENT_ERROR,
       payload: {msg: err.response.statusText, status: err.response.status},

@@ -8,7 +8,7 @@ import handleSorting from '../../../services/handleSorting';
 
 import AnswerItem from './AnswerItem/AnswerItem';
 import Spinner from '../../../components/Spinner/Spinner';
-// import AnswerForm from './AnswerForm/AnswerForm';
+import AnswerForm from './AnswerForm/AnswerForm';
 import ButtonGroup from '../../../components/ButtonGroup/ButtonGroup.component';
 
 import './AnswerSection.styles.css';
@@ -63,9 +63,9 @@ console.log("Answer section is", answer, "post id is",post._id);
         {console.log("Answers are ", answer)}
 
         {/* <AnswerItem /> */}
-        {/* <div className='add-answer'>
-          // <AnswerForm/>
-        </div> */}
+        <div className='add-answer'>
+           <AnswerForm/>
+        </div>
       </div>
     </Fragment>
   );

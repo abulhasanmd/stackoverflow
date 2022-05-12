@@ -46,7 +46,9 @@ const postMessage = async (body) => {
 			}
 
 			console.log('successful in inserting message into database');
-			resolve('successful');
+			resolve(
+                {data:'successful'}
+            );
 		});
 	});
 };

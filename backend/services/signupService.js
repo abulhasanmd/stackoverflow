@@ -4,7 +4,7 @@ const AnswerModel = require('../models/Answer');
 const QuestionsModel = require('../models/Question');
 var _ = require('lodash')
 var uuid = require('uuidv4');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var saltRounds = 10;
 
 async function signUp(data) {

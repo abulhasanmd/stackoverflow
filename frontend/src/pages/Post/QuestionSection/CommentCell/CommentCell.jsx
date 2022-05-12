@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import {
   getComments,
   deleteComment,
-  // addComment,
+  addComment,
 } from '../../../../redux/comments/comments.actions';
 
 import Spinner from '../../../../components/Spinner/Spinner';
@@ -27,6 +27,7 @@ import './CommentCell.styles.css';
 
 // const PostCell = ({post: {post}}) => {
   const CommentCell = ({
+    addComment,
     getComments,
     comment,
     auth,
@@ -54,7 +55,18 @@ import './CommentCell.styles.css';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // addComment(post.id, {body});
+    console.log("data is ",post._id,body);
+    let payload = {
+      "createdBy": {
+        "_id": auth?.user?.userId,
+        "imageUrl": "h"
+    },
+      "resourceType": "ques" ,
+        "resourceId":post?._id,
+        "comment": body
+    }  
+    addComment(payload);
+    
     setFormData({
       body: '',
     });
@@ -133,8 +145,8 @@ import './CommentCell.styles.css';
                     className='title-input s-input'
                     type='text'
                     name='body'
-                    // value={body}
-                    // onChange={(e) => handleChange(e)}
+                    value={body}
+                    onChange={(e) => handleChange(e)}
                     id='title'
                     placeholder='Leave a comment'
                   />
@@ -189,5 +201,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   // deleteComment,
   getComments,
-  // addComment,
+  addComment,
 })(CommentCell);

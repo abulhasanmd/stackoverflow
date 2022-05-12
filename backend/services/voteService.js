@@ -2,9 +2,10 @@ const Vote = require('../models/Vote');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const User = require('../models/User');
+const Event = require('../models/Event');
 
 const addVote = async (body) => {
-	console.log(`Entering voteService.addVote,payload is ${body}`);
+	console.log(`Entering voteService.addVote,payload is ${JSON.stringify(body)}`);
 	try {
 		const vote = {
 			...body,
@@ -16,6 +17,8 @@ const addVote = async (body) => {
 				createdBy: body.createdBy,
 			}],
 		});
+		let affectedUser;
+		console.log("vote record is ", voteRecord);
 		if (!voteRecord.length) {
 			const voteResponse = await Vote.create(vote);
 			console.log(`add vote response :${voteResponse}`);
@@ -28,7 +31,9 @@ const addVote = async (body) => {
 						votes: vote.votes,
 					},
 				});
-				console.log(`update question response :${questionResponse}`);
+				const question = await Question.findById(body.resourceId);
+				affectedUser = question.createdBy._id;
+				console.log(`update question response :${JSON.stringify(questionResponse)}`);
 			} else if (vote.resourceType === 'ans') {
 				const answerResponse = await Answer.updateOne({
 					_id: body.resourceId,
@@ -39,6 +44,8 @@ const addVote = async (body) => {
 					},
 				});
 				console.log(`update answer response :${answerResponse}`);
+				const answer = await Answer.findById(body.resourceId);
+				affectedUser = answer.createdBy._id;
 			}
 			const userResponse = await User.updateOne({
 				_id: body.createdBy,
@@ -47,6 +54,14 @@ const addVote = async (body) => {
 					reputation: vote.score,
 				},
 			});
+			const eventResponse = await Event.create({
+				type: vote.score > 0 ? "upvote" : "downvote", // should handle marked-as-best in mark best api
+				outcome: vote.score, 
+				createdBy: vote.createdBy,
+				affectedUser: affectedUser,
+				articleType: vote.resourceType === "ans" ? "answer" : "question",
+				articleId: vote.resourceId,
+				});
 			if (voteResponse) {
 				return {
 					data: {
@@ -54,7 +69,7 @@ const addVote = async (body) => {
 					},
 				};
 			}
-		} else if ((voteRecord.score > 0 && vote.score < 0) || (voteRecord.score < 0 && vote.score > 0)) {
+		} else if (voteRecord.length > 0 && ((voteRecord[0].score > 0 && vote.score < 0) || (voteRecord[0].score < 0 && vote.score > 0))) {
 			const voteResponse = await Vote.updateOne({
 				_id: voteRecord[0]._id,
 			}, {
@@ -92,6 +107,14 @@ const addVote = async (body) => {
 					reputation: vote.score * 2,
 				},
 			});
+			const eventResponse = await Event.create({
+				type: vote.score > 0 ? "upvote" : "downvote", // should handle marked-as-best in mark best api
+				outcome: vote.score, 
+				createdBy: vote.createdBy,
+				affectedUser: affectedUser,
+				articleType: vote.resourceType === "ans" ? "answer" : "question",
+				articleId: vote.resourceId,
+				});
 			if (voteResponse) {
 				return {
 					data: {
@@ -99,7 +122,7 @@ const addVote = async (body) => {
 					},
 				};
 			}
-		} else if ((voteRecord.score > 0 && vote.score > 0) || (voteRecord.score < 0 && vote.score < 0)) {
+		} else if (voteRecord.length > 0 && ((voteRecord[0].score > 0 && vote.score > 0) || (voteRecord[0].score < 0 && vote.score < 0))) {
 			return {
 				error: {
 					message: 'Vote already exists',
