@@ -18,6 +18,22 @@ async function getTags(tagIds) {
 const postQuestion = async (body) => {
 	try {
 		const question = await new Question(body).save();
+		const user = User.findById(body.createdBy._id);
+		if (body.tags && body.tags.length > 0 && user) {
+			const tagsObj = user.tagsInformation;
+			body.tags.forEach((tag) => {
+				if (!tagsObj[tag.name]) {
+					tagsObj[tag.name] = {
+						score: 0,
+						posts: 0,
+					};
+				}
+				tagsObj[tag.name].posts += 1;
+			});
+			User.findByIdAndUpdate(body.createdBy._id, {
+				tagsInformation: tagsObj,
+			});
+		}
 		return {
 			data: question,
 		};

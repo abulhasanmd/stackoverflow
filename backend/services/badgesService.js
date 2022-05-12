@@ -124,6 +124,13 @@ const badgeRules = {
 		},
 	},
 };
+
+/**
+ * @param {*} userId - User's ID
+ * @param {*} metric - What metric is being used to calculate? e.g. numberOfUpvotes. Metric is 'score' for tag based badges.
+ * @param {*} value - Value for the above metric
+ * @param {*} tag - Name of the tag if the badge is tag based and not something like 'Curious'. Null otherwise.
+ */
 const updateBadges = async (userId, metric, value, tag) => {
 	const user = await User.findById(userId);
 	const badgesObj = user.badges || {};
