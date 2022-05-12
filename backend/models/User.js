@@ -38,11 +38,11 @@ const {
 const userSchema = new mongoose.Schema({
 	name: {
 		type: String,
-		maxLength: 20,
+		maxLength: 50,
 	},
 	emailId: {
 		type: String,
-		maxLength: 20,
+		maxLength: 50,
 	},
 	role: {
 		type: String,

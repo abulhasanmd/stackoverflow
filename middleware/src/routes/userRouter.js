@@ -4,6 +4,8 @@ const redis = require('redis');
 const {
 	sendMessage,
 } = require('../kafka/producer');
+let signupService = require('../../../backend/services/signupService.js');
+let loginService = require('../../../backend/services/loginService.js');
 
 const router = express.Router();
 
@@ -11,6 +13,18 @@ const router = express.Router();
 /* GET users listing. */
 router.get('/', (req, res, next) => {
 	res.send('respond with a resource');
+});
+
+router.post('/signup', async (req, res, next) => {
+	var {body, params, query} = req;
+	var result = await signupService.signUp({body, params, query})
+	return res.send(result.response).status(result.statusCode);
+});
+
+router.post('/login', async (req, res, next) => {
+	var {body, params, query} = req;
+	var result = await loginService.login({body, params, query})
+	return res.send(result.response).status(result.statusCode);
 });
 
 router.get('/get-all-users', (req, res, next) => {
