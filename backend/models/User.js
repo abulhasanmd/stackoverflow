@@ -3,22 +3,22 @@ const {
 	Schema,
 } = require('./mongooseConnection');
 
-const tagsInformationSchema = new mongoose.Schema({
-	name: {
-		type: String,
-	},
-	descr: {
-		type: String,
-	},
-	score: {
-		type: Number,
-		default: 0,
-	},
-	posts: {
-		type: Number,
-		default: 0,
-	},
-});
+// const tagsInformationSchema = new mongoose.Schema({
+// 	name: {
+// 		type: String,
+// 	},
+// 	descr: {
+// 		type: String,
+// 	},
+// 	score: {
+// 		type: Number,
+// 		default: 0,
+// 	},
+// 	posts: {
+// 		type: Number,
+// 		default: 0,
+// 	},
+// });
 
 // const badgeSchema = new mongoose.Schema({
 // 	type: {
@@ -72,7 +72,9 @@ const userSchema = new mongoose.Schema({
 		type: Number,
 		default: 0,
 	},
-	tagsInformation: [tagsInformationSchema],
+	tagsInformation: {
+		type: Schema.Types.Mixed,
+	},
 	questionsAsked: {
 		type: Number,
 		default: 0,
