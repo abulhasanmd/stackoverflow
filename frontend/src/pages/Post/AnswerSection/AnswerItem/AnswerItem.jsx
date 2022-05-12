@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {deleteAnswer} from '../../../../redux/answers/answers.actions';
-// import { FcCheckmark } from 'react-icons/fc'
+import { FcCheckmark } from 'react-icons/fc'
 import {ReactComponent as UpVote} from '../../../../assets/ArrowUpLg.svg';
 import {ReactComponent as DownVote} from '../../../../assets/ArrowDownLg.svg';
 // import UserCard from '../../../../components/UserCard/UserCard.component';
@@ -51,10 +51,11 @@ const AnswerItem =({
             >
               <DownVote className='icon' />
             </button>
+            {answer?.isBestAnswer ? <FcCheckmark style={{ fontSize: "30px", marginLeft: "3px" }} /> : null }
           </div>
         </div>
         {/* <div className ='vote-cell'> */}
-          {/* <FcCheckmark style={{fontSize: "30px"}} /> */}
+          {/* /> */}
         {/* </div> */}
         <div className='answer-item' style={{marginLeft: "20px"}}>
           <div className='answer-content fc-black-800' dangerouslySetInnerHTML={{__html: answer?.answer}}>
