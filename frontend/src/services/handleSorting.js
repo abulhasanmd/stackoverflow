@@ -13,7 +13,7 @@ const handleSorting = (sortType, page = '') => {
     case 'New':
       return (a, b) => new Date(b.created_at) - new Date(a.created_at);
     case 'New Users':
-      return (a, b) => new Date(b.created_at) - new Date(a.created_at);
+      return (a, b) => new Date(b.createdOn) - new Date(a.createdOn);
     case 'Top':
       return (a, b) =>
         b.answer_count + b.comment_count - (a.answer_count + a.comment_count);
@@ -26,6 +26,8 @@ const handleSorting = (sortType, page = '') => {
       return (a, b) => new Date(a.created_at) - new Date(b.created_at);
     case 'Popular':
       return (a, b) => b.posts_count - a.posts_count;
+    case 'Reputation':
+      return (a, b) => b.reputation - a.reputation;
     case 'Name':
       return (a, b) => a.name.localeCompare(b.name);
     case 'Username':

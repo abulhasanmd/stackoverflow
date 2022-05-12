@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-import './ContentCard.styles.scss';
+import './ContentCard.styles.css';
 
 const ContentCard = ({ username, answers_count, posts_count, comments_count, tags_count, created_at }) => (
   <div className='content-card'>

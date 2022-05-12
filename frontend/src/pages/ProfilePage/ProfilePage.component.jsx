@@ -1,20 +1,21 @@
 import React, {useEffect, Fragment} from 'react';
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import PropTypes from 'prop-types';
 import { getProfile } from '../../redux/users/users.actions';
 
 import UserSection from "./UserSection/UserSection.component";
 import PageTitle from '../../components/PageTitle/PageTitle.component';
-import Spinner from '../../components/Spinner/Spinner.component';
-import ExternalUserDetails from "./ExternalUserDetails/ExternalUserDetails.component";
+import Spinner from '../../components/Spinner/Spinner';
+//import ExternalUserDetails from "./ExternalUserDetails/ExternalUserDetails.component";
 import UserActivity from "./UserActivity/UserActivity.component";
 
-import './ProfilePage.styles.scss';
+import './ProfilePage.styles.css';
 
-const ProfilePage = ({getProfile, user: {user, loading}, match}) => {
+const ProfilePage = ({getProfile, user: {user, loading}}) => {
+  const { id } = useParams();
   useEffect(() => {
-    getProfile(match.params.id);
+    getProfile(id);
     // eslint-disable-next-line
   }, [getProfile]);
 
@@ -22,7 +23,7 @@ const ProfilePage = ({getProfile, user: {user, loading}, match}) => {
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>
-      <PageTitle title={`User ${user.username} - CLONE Stack Overflow`} />
+      <PageTitle title={`User ${user.name} - CLONE Stack Overflow`} />
       <div id='mainbar' className='user-main-bar pl24 pt24'>
         <div className='user-card'>
           <div className='grid--cell s-navigation mb16'>
@@ -40,7 +41,7 @@ const ProfilePage = ({getProfile, user: {user, loading}, match}) => {
           <UserSection user={user}/>
         </div>
         <div className='row-grid'>
-          <ExternalUserDetails/>
+          {/* <ExternalUserDetails/> */}
           <UserActivity/>
         </div>
       </div>

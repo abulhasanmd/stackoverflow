@@ -12,7 +12,7 @@ export const SideBarData = [
     text: 'Tags',
   },
   {
-    link: '/users',
+    link: '/allusers',
     text: 'Users',
   },
   {

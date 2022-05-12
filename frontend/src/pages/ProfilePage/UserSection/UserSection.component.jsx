@@ -3,22 +3,22 @@ import React from "react";
 import AvatarCard from "./AvatarCard/AvatarCard.component";
 import ContentCard from "./ContentCard/ContentCard.component";
 
-import './UserSection.styles.scss';
+import './UserSection.styles.css';
 
 const UserSection = ({ user }) => (
   <div className='grid'>
     <AvatarCard
       id={user.id}
-      gravatar={user.gravatar}
-      views={user.views}
+      gravatar="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+      views={user.lastSeen}
     />
     <ContentCard
-      username={user.username}
-      answers_count={user.answers_count}
-      posts_count={user.posts_count}
-      comments_count={user.comments_count}
-      tags_count={user.tags_count}
-      created_at={user.created_at}
+      username={user.name}
+      answers_count={user.questionsAnswered}
+      posts_count={user.questionsAsked}
+      comments_count={user.commentsGiven}
+      tags_count="12"
+      created_at={user.createdOn}
     />
   </div>
 )

@@ -13,13 +13,13 @@ import Pagination from "../../components/Pagination/Pagination.component";
 import './AllTagsPage.styles.css';
 import AdminAddTag from '../../components/admin-add-tag/AdminAddTag';
 
-const itemsPerPage = 12;
+
 
 const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
   useEffect(() => {
     getTags();
   }, [getTags]);
-
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   const [page, setPage] = useState(1);
   const [fetchSearch, setSearch] = useState('');
   const [sortType, setSortType] = useState('Popular');
@@ -27,8 +27,20 @@ const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSearch(e.target.value);
-    setPage(1)
+  
+    if(e.target.value.length >=3)
+    {
+      setSearch(e.target.value);
+      setPage(1);
+      setItemsPerPage(5);
+    }else if(e.target.value.length ==0)
+    {
+      setSearch(e.target.value);
+      setPage(1);
+      setItemsPerPage(16);
+    }
+
+
   };
 
   const handlePaginationChange = (e, value) => setPage(value);
