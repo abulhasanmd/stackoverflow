@@ -7,7 +7,6 @@ const {
 
 const router = express.Router();
 
-const redisClient = redis.createClient(6379);
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
@@ -15,7 +14,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/get-all-users', (req, res, next) => {
-	redisClient.get('users', (err, data) => {
+	global.redisClient.get('users', (err, data) => {
 		if (err) throw err;
 		if (data !== null) {
 			res.status(200).json(data);
@@ -29,7 +28,7 @@ router.get('/get-all-users', (req, res, next) => {
 		'GET-ALL-USERS',
 		(error, data) => {
 			if (data) {
-				redisClient.setEx('users', 3600, data);
+				global.redisClient.setEx('users', 3600, data);
 				res.status(200).json(data);
 			} else {
 				res.status(400).json(error);
@@ -116,8 +115,16 @@ router.get('/profile/:userId', async (req, res, next) => {
 });
 
 router.get('/:userId/posts', async (req, res, next) => {
-	let {body, params, query} = req;
-	let data = {body, params, query}
+	let {
+		body,
+		params,
+		query
+	} = req;
+	let data = {
+		body,
+		params,
+		query
+	}
 	const {
 		userId,
 	} = req.params;
@@ -134,8 +141,16 @@ router.get('/:userId/posts', async (req, res, next) => {
 });
 
 router.put('/profile', async (req, res, next) => {
-	let {body, params, query} = req;
-	let data = {body, params, query}
+	let {
+		body,
+		params,
+		query
+	} = req;
+	let data = {
+		body,
+		params,
+		query
+	}
 	const {
 		userId,
 	} = req.params;
