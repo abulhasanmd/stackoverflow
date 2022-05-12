@@ -5,7 +5,7 @@ const config = {
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   config.BASE_URL =
-    "https://d856-2600-1700-65aa-d910-247f-d015-ed79-5090.ngrok.io"
+    "http://28e8-2600-1700-65aa-d910-8070-2137-b6b-332f.ngrok.io"
 }
 
 export default config
