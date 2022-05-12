@@ -1,11 +1,12 @@
 import React, { Component,  createRef} from "react";
 import axios from 'axios';
+import {connect} from 'react-redux'
 
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
 import config from "../../config/"
 
-export default class ChatContent extends Component {
+class ChatContent extends Component {
   messagesEndRef = createRef(null);
   chatItms = [
     
@@ -29,16 +30,14 @@ export default class ChatContent extends Component {
   }
 
   changeUsername = (e) => {
-      this.setState({username:e.target.value})
-      console.log(e.target.value)
-      console.log(process.env.NODE_ENV)
-      this.chatItms = []
+    this.setState({username:e.target.value})
+    this.chatItms = []
     this.setState({ chat: [...this.chatItms] });
     this.setState({userExists : this.state.username})
     axios.get(config.BASE_URL + '/messages/getMessages', {
             
         params: {
-            sender:"p1",
+            sender:this.props.auth.user.username,
             receiver:e.target.value
         }
         
@@ -63,7 +62,7 @@ export default class ChatContent extends Component {
   sendMessage = (e) =>{
     console.log(e)
     var data = {
-        senderId : "p1",
+        senderId : this.props.auth.user.username,
         receiverId: this.state.username,
         messageText: this.state.msg
     }
@@ -112,27 +111,42 @@ export default class ChatContent extends Component {
     window.addEventListener("keydown", (e) => {
       if (e.keyCode == 13) {
         if (this.state.msg != "") {
-          this.chatItms.push({
-            key: 1,
-            type: "",
-            msg: this.state.msg,
-            image:
-              "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-          });
-          this.setState({ chat: [...this.chatItms] });
-          this.scrollToBottom();
-          this.setState({ msg: "" });
+        var data = {
+            senderId : this.props.auth.user.username,
+            receiverId: this.state.username,
+            messageText: this.state.msg
         }
+
+        axios.post(config.BASE_URL + '/messages/putMessages',data)
+        .then(response => {
+            console.log(response);
+            if (this.state.msg != "") {
+                this.chatItms.push({
+                  key: 1,
+                  type: "",
+                  msg: this.state.msg
+                });
+                this.setState({ chat: [...this.chatItms] });
+                this.scrollToBottom();
+                
+              }
+        })
+          
+        this.setState({ msg: "" });
+        }   
       }
     });
     this.scrollToBottom();
   }
+
+
+
   onStateChange = (e) => {
+    console.log(this.props.auth.user.username)
     this.setState({ msg: e.target.value });
   };
 
   render() {
-      console.log(this.state.userList)
     this.items = []
     for(let i=0;i<this.state.userList.length;i++)
         this.items.push(<option key={this.state.userList[i]} value={this.state.userList[i]}>{this.state.userList[i]}</option>)
@@ -200,3 +214,9 @@ export default class ChatContent extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+    auth: state.auth
+  });
+
+  export default connect(mapStateToProps, null)(ChatContent);
