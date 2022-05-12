@@ -7,7 +7,7 @@ import AuthForm from '../../components/auth-form/AuthForm';
 
 const LoginPage = ({isAuthenticated}) => {
   if (isAuthenticated) {
-    return <Navigate to='/' />;
+    return <Navigate to='/questions' />;
   }
 
   return (

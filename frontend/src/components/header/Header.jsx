@@ -73,7 +73,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 				text={'Log out'}
 				to={'/login'}
 				type={'s-btn__filled'}
-				handleClick={logout}
+				onClick={logout}
 			>
 				<FiLogOut style={{ marginTop:"5px", fontSize: '18px', color: "#fff" }} />
 			</Link>
@@ -128,10 +128,8 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 		);
 	};
 
-	// 
-	// <Fragment>{isAuthenticated ? authTabs : guestTabs}</Fragment>
-	// <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-	return loading ? ('') : (
+
+	return (
 		<Fragment>
 			<nav className="navbar fixed-top navbar-expand-lg navbar-light bs-md">
 				<div className="hamburger">
@@ -142,9 +140,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 						<Logo className="full-logo" />
 						<SmallLogo className="glyph-logo" />
 					</Link>
-					{!loading && (
             <Fragment>{isAuthenticated ? authTabs : guestTabs}</Fragment>
-          )}
 				</div>
 				<div className="header-search-div">
 					<form
@@ -170,9 +166,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 						className="search-icon"
 						onClick={() => setSearchState(!searchState)}
 					/>
-					{!loading && (
             <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-          )}
 				</div>
 			</nav>
 			{searchState && <SearchBar />}
