@@ -18,6 +18,7 @@
 		"eol-last": "off",
 		"function-call-argument-newline": "off",
 		"function-paren-newline": "off",
-		"allow-indentation-tabs": "off"
+		"allow-indentation-tabs": "off",
+		"max-len": "off"
 	}
 }
