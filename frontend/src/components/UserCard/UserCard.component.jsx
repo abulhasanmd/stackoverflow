@@ -18,7 +18,7 @@ const UserCard = ({
     <Fragment>
       <div
         className='owner'
-        style={{float: float, backgroundColor: "#dde8f7d9", paddingLeft: "5px"  }}
+        style={{float: float, backgroundColor: "#dde8f7d9", paddingLeft: "5px" }}
       >
         <div className='user-block fc-black-500'>
           <div className='action-time'>
