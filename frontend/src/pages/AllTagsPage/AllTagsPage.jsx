@@ -26,6 +26,7 @@ const AllTagsPage = ({getTags, tag: {tags, loading},auth}) => {
   const [sortType, setSortType] = useState('Popular');
   const [isModalOpen,setIsModalOpen] = useState(false);
 
+  
   const handleChange = (e) => {
     e.preventDefault();
   
@@ -46,9 +47,7 @@ const AllTagsPage = ({getTags, tag: {tags, loading},auth}) => {
 
   const handlePaginationChange = (e, value) => setPage(value);
 
-  const handleModalOpen = ()=>{
-    setIsModalOpen(true);
-  }
+  
 
   const handleModalClose = (isChanged)=>{
     console.log(isChanged)
@@ -81,12 +80,7 @@ const AllTagsPage = ({getTags, tag: {tags, loading},auth}) => {
             handleChange={handleChange}
             width={'200px'}
           />
-           {auth.user && auth.user.isAdmin &&
-             <button
-              className={'s-btn s-btn__primary addtag-btn'}
-              onClick = {()=>handleModalOpen(true)}
-            >Add Tag</button>
-           }
+          
           {isModalOpen && <AdminAddTag handleModalClose={handleModalClose}/>}
            
           <ButtonGroup

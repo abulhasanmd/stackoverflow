@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from 'react-router-dom';
 import TagBadge from "../../../components/TagBadge/TagBadge.component";
 
 import './UserActivity.styles.css';
@@ -23,8 +23,12 @@ const tagDiv = userTgs?.map((item, index) => {
                     <div className='score'>
                       <div className='score-txt'>
                         <div className='score-tab'>
-                          <span className='txt fc-light'>Question Count</span>
+                          <span className='txt fc-light'>Posts</span>
                           <span className='number fc-black-800'>{item.questionsCount}</span>
+                        </div>
+                        <div className='score-tab'>
+                          <span className='txt fc-light'>Score</span>
+                          <span className='number fc-black-800'>{item.score}</span>
                         </div>
                       </div>
                     </div>
@@ -47,6 +51,7 @@ const tagDiv = userTgs?.map((item, index) => {
       <div className='top-tags-sec'>
         {tagDiv}
       </div>
+      <NavLink to="/tags"><h3 className='fw-bold fc-dark bc-black-3'>View All Tags</h3> </NavLink>
     </div>
   </div>
   )
