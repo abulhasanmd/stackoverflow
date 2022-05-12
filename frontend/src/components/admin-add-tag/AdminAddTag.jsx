@@ -45,11 +45,13 @@ export default function AdminAddTag({ handleModalClose }) {
       .then((res) => res.json())
       .then((jsonresp) => {
         console.log(jsonresp);
-        if(jsonresp.data){
-            handleModalClose();
-
-        }else{
-            console.log('error occurred while adding tag',jsonresp.error.message)
+        if (jsonresp.data) {
+          handleModalClose();
+        } else {
+          console.log(
+            "error occurred while adding tag",
+            jsonresp.error.message
+          );
         }
       })
       .catch();
@@ -58,22 +60,41 @@ export default function AdminAddTag({ handleModalClose }) {
   return (
     <Modal isOpen="true" style={customStyles} contentLabel="Example Modal">
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Tag Name</label>
-          <input name="tag-name" value={tagName} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Tag Description</label>
-          <input name="tag-descr" value={tagDescr} onChange={handleChange} />
-        </div>
-        <div>
-          <button
-            className="s-btn s-btn__primary"
-            disabled={tagName == "" || tagDescr == ""}
-          >
-            Add Tag
-          </button>
-          <button className="s-btn s-btn__secondary" onClick={handleModalClose}>Close</button>
+        <div className="modal__container">
+          <div className="modal__header">Add Tag Here</div>
+          <div className="tagform__input">
+            <label htmlFor="tag-name">Tag Name</label>
+            <input
+            type="text"
+              name="tag-name"
+              id="tag-name"
+              value={tagName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="tagform__input">
+            <label htmlFor="tag-descr">Tag Description</label>
+            <textarea
+              name="tag-descr"
+              id="tag-descr"
+              value={tagDescr}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="tagform__buttons">
+            <button
+              className="s-btn s-btn__primary tagform_button"
+              disabled={tagName == "" || tagDescr == ""}
+            >
+              Add Tag
+            </button>
+            <button
+              className="s-btn s-btn__secondary"
+              onClick={handleModalClose}
+            >
+              Close
+            </button>
+          </div>
         </div>
       </form>
     </Modal>
