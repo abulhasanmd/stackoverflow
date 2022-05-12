@@ -34,6 +34,14 @@ const handleSorting = (sortType, page = '') => {
       return (a, b) => a.username.localeCompare(b.username);
     case 'Popular users':
       return (a, b) => b.views - a.views;
+    case 'Hot':
+      return (a, b) => b.views - a.views;
+    case 'Score':
+      return (a, b) => b.score - a.score;
+    case 'Interesting':
+      return (a, b) => new Date(b.modifiedOn) - new Date(a.modifiedOn);
+    case 'Unanswered':
+        return (a, b) => b.views - a.views;
     default:
       break;
   }

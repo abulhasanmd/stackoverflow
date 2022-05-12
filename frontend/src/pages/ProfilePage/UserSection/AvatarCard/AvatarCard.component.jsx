@@ -10,7 +10,7 @@ const AvatarCard = ({ id, gravatar, views }) => (
         <Link className='avatar-link' to={`/users/${id}`}>
           <div className='logo-wrapper'>
             <img
-              src={gravatar}
+              src={gravatar ? gravatar : "https://secure.gravatar.com/avatar/64?s=164&d=identicon"}
               alt='user-logo'
             />
           </div>

@@ -65,7 +65,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
 // ]
 
   const [page, setPage] = useState(1);
-  const [sortType, setSortType] = useState('Newest');
+  const [sortType, setSortType] = useState('Score');
   let searchQuery = "";
 
   const handlePaginationChange = (e, value) => setPage(value);
@@ -113,7 +113,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
             {new Intl.NumberFormat('en-IN').format(posts.length)} questions
           </span>
           <ButtonGroup
-            buttons={['Newest', 'Top', 'Views', 'Oldest']}
+            buttons={['Score', 'Hot', 'Views', 'Unanswered']}
             selected={sortType}
             setSelected={setSortType}
           />
