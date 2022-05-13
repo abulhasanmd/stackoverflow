@@ -11,8 +11,7 @@ const UserActivityTabQuestions = ({user}) => {
 	return (
 		<div className='questions'>
           <h1>Questions Asked</h1>
-          {user.topUserQuestions?.filter((post) => post.title.toLowerCase())  ///.includes(searchQuery ? searchQuery : '')
-            .map((post, index) => (
+          {user.topUserQuestions?.map((post, index) => (
               <PostItemProfile key={index} post={post} />
             ))}
         </div>

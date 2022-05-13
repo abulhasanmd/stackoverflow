@@ -22,6 +22,7 @@ const PostItemProfile = ({
     views,
     createdOn,
     tags,
+    reviewStatus,
     isAdmin
   },
 }) => {
@@ -62,6 +63,7 @@ const PostItemProfile = ({
       <div className='summary'>
         <h3>
           {isAdmin?<Link to={`/admin/pending-questions/${_id}`}>{title}</Link>:<Link to={`/questions/${_id}`}>{title}</Link>}
+          {reviewStatus=='pending' && <button className='s-btn s-btn__filled s-btn__danger' style={{marginLeft:'20px'}}>Pending Admin Review</button>}
         </h3>
         {/* <div className='brief' dangerouslySetInnerHTML={{__html: injectEllipsis(htmlSubstring(descr, 200))}}></div> */}
         {tags?.map((tag, index) => (
