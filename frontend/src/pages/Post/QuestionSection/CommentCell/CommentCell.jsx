@@ -55,10 +55,10 @@ import './CommentCell.styles.css';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data is ",post._id,body);
+    // console.log("data is ",post._id,body, " testing created by ",auth?.user);
     let payload = {
       "createdBy": {
-        "_id": auth?.user?.userId,
+        "_id": auth?.user?._id,
         "imageUrl": "h"
     },
       "resourceType": "ques" ,
@@ -99,7 +99,7 @@ import './CommentCell.styles.css';
               <Spinner width='25px' height='25px' />
               ) :
                 (
-                  comment?.comments?.data?.map((comment, index) => (
+                  comment?.comments?.map((comment, index) => (
                 (comment.resourceId === post._id) ? (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>

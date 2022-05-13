@@ -5,7 +5,7 @@ const questionSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
-		maxlength: 50,
+		maxlength: 1000,
 	},
 	descr: {
 		type: String,
@@ -36,7 +36,7 @@ const questionSchema = new mongoose.Schema({
 		},
 		imageUrl: {
 			type: String,
-			maxLength: 100,
+			maxLength: 500,
 		},
 	},
 	createdOn: {

@@ -10,7 +10,6 @@ const commentSchema = new mongoose.Schema({
 		},
 		imageUrl: {
 			type: String,
-			maxLength: 100,
 			required: true,
 		},
 	},

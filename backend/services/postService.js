@@ -107,7 +107,7 @@ let getTagsOnMatch = async (key, value) => {
 }
 
 let getQuestionsMatchCnd = (key, value) => {
-	let matchCnd = {}
+	let matchCnd = {reviewStatus: 'approved'}
 	if (value) {
 		matchCnd[key] = { $regex: value, $options: 'i' }
 	}
@@ -137,7 +137,7 @@ async function getRawPosts(searchq = '', filter, inputTagIds = []) {
 			self.searchTitle = `Results for Query '${query}' questioned by '${value}'`;
 			let usersInfo = await getUsersOnMatch(key, value)
 			let userIds = _.map(usersInfo, '_id');
-			QuestionsP = QuestionsModel.find({title: { $regex: query, $options: 'i'}, createdBy: { $in: userIds }})
+			QuestionsP = QuestionsModel.find({reviewStatus: 'approved', title: { $regex: query, $options: 'i'}, createdBy: { $in: userIds }})
 			addSortFilter(QuestionsP, filter)
 			posts = await QuestionsP.lean()
 			break;
@@ -147,35 +147,12 @@ async function getRawPosts(searchq = '', filter, inputTagIds = []) {
 			let tags = await getTagsOnMatch(key, value) 
 			self.searchDescription = _.get(tags, '0.descr')
 			let tagIds = _.map(tags, '_id')
-			QuestionsP = QuestionsModel.find({title: { $regex: query, $options: 'i'}, tags: { $in: tagIds }})
+			QuestionsP = QuestionsModel.find({reviewStatus: 'approved', title: { $regex: query, $options: 'i'}, tags: { $in: tagIds }})
 			addSortFilter(QuestionsP, filter)
 			posts = await QuestionsP.lean()
 			break;
 	}
-	return posts
-	// var query = ''
-	// const parseArr = searchq.split(' ');
-	// const key = parseArr[0];
-	// const value = parseArr[1];
-	// console.log("####getQueryMatchCond : ",parseArr, key, value)
-	// const tagNames = parseTagNames(searchq);
-	// self.searchTitle = '';
-	// self.searchDescription = '';
-	// if (tagNames.length) {
-	// 	self.searchTitle = `Results for Query ${searchq} tagged with ${tagNames[0]}`;
-	// 	const tagRecords = await TagsModel.find({ name: { $regex: `^${tagNames[0]}$`, $options: 'i'} }, { _id: 1, name: 1, descr: 1}).lean();
-	// 	let tagIds = _.map(tagRecords, '_id');
-	// 	_.map(tagRecords, (tag) => {
-	// 		self.searchDescription += `${tag.descr}\n`;
-	// 	});
-	// 	tagIds = _.uniq(tagIds.concat(inputTagIds));
-	// 	return {
-	// 		tags: {
-	// 			$in: tagIds,
-	// 		},
-	// 	};
-	// }
-
+	return posts;
 }
 
 

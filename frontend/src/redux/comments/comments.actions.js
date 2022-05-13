@@ -23,12 +23,12 @@ export const getComments =
       if (type === "answer") {
         dispatch({
           type: GET_ANSWER_COMMENTS,
-          payload: res.data.data,
+          payload: res.data.data.data,
         })
       } else {
         dispatch({
           type: GET_COMMENTS,
-          payload: res.data.data,
+          payload: res.data.data.data,
         })
       }
     } catch (err) {
@@ -58,7 +58,7 @@ export const addComment = (formData) => async (dispatch) => {
       type: ADD_COMMENT,
       payload: res.data.data,
     })
-
+    console.log("Add Comment", res.data.data)
     dispatch(setAlert(res.data.message, "success"))
 
     dispatch(getComments(formData.resourceId))
