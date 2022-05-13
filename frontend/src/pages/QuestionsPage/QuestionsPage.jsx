@@ -90,7 +90,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading }, auth }) => {
             setSelected={setSortType}
           />
         </div>
-        <div className="questions">
+          <div className="questions">
           {/* {searchQuery ? () : ()} */}
           {posts &&
             (sortType == "Unanswered"
