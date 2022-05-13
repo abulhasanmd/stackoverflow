@@ -21,7 +21,7 @@ const AllTagsPage = ({getTags, tag: {tags, loading},auth}) => {
     getTags();
   }, [getTags]);
 
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const [fetchSearch, setSearch] = useState('');
   const [sortType, setSortType] = useState('Popular');

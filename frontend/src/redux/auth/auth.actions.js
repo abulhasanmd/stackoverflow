@@ -2,7 +2,7 @@ import axios from "axios";
 
 import config from "../../config";
 // import setAuthToken from "./auth.utils"
-import { setAlert } from "../alert/alert.actions";
+// import { setAlert } from "../alert/alert.actions";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -113,9 +113,8 @@ export const login =
 
 //LOGOUT
 export const logout = () => (dispatch) => {
-  dispatch(setAlert("User has logged out", "success"));
+  localStorage.removeItem("persist:root");
+  // dispatch(setAlert("User has logged out", "success"));
   console.log("first logout action");
-  localStorage.removeItem("token");
-
   dispatch({ type: LOGOUT });
 };
