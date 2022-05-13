@@ -140,17 +140,15 @@ async function tagsUsedByUser(userId) {
 	}).lean();
 	// console.log("tagsUsedByUser: ##### tags:", tags);
 	questions = _.map(questions, (ques) => {
-		ques.tags = _.map(ques.tags, (tagId) => tagId.toString())
+		ques.tags = _.map(ques.tags, (tagId) => tagId.toString());
 		return ques;
-	})
-	let tagsScore = {};
-	let tagPostsCount = {};
+	});
+	const tagsScore = {};
+	const tagPostsCount = {};
 	_.forEach(tagIds, (tagId) => {
-		tagId = tagId.toString()
-		tagsScore[tagId] = _.sumBy(questions, (question) => {
-			return _.includes(question.tags, tagId) && question.votes || 0
-		});
-		tagPostsCount[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId.toString())?0: 1)
+		tagId = tagId.toString();
+		tagsScore[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId) && question.votes || 0);
+		tagPostsCount[tagId] = _.sumBy(questions, (question) => (_.includes(question.tags, tagId.toString()) ? 0 : 1));
 	});
 	// console.log("$$$$ tagPostsCount : ", tagPostsCount)
 	tags = _.map(tags, (tag) => {
@@ -167,15 +165,19 @@ const getUserProfile = async (userId) => {
 	try {
 		const userDetails = await User.findOne({
 			_id: userId,
-		}).populate('bookmarks').lean();
+		}).populate({
+			path: 'bookmarks.tags',
+		}).lean();
 		const questionsAsked = await Question.count({
 			'createdBy._id': userId,
 		}).lean();
 		let topUserQuestions = await Question.find({
 			'createdBy._id': userId,
-		}).sort({votes: -1}).limit(10).lean();
-		topUserQuestions = await utils.resolveTags(topUserQuestions)
-		questionsUserAnswered = await utils.getQuestionsUserAnswered(userId)
+		}).sort({
+			votes: -1,
+		}).limit(10).lean();
+		topUserQuestions = await utils.resolveTags(topUserQuestions);
+		const questionsUserAnswered = await utils.getQuestionsUserAnswered(userId);
 		const questionsAnswered = await Answer.count({
 			'createdBy._id': userId,
 		}).lean();
@@ -185,7 +187,7 @@ const getUserProfile = async (userId) => {
 			questionsAnswered,
 			questionsAsked,
 			topUserQuestions,
-			questionsUserAnswered
+			questionsUserAnswered,
 		});
 		return userDetails;
 	} catch (e) {
