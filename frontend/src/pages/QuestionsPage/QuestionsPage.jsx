@@ -18,7 +18,7 @@ import './QuestionsPage.styles.css';
 
 const itemsPerPage = 10;
 
-const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
+const QuestionsPage = ({ getPosts, post: { posts, loading },auth }) => {
   
 // const [searchQuery, setSearchQuery] = useState('');
 
@@ -65,13 +65,13 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
           <h3 className='questions-headline'>
             {searchQuery ? 'Search Results' : 'All Questions'}
           </h3>
-          <div className='questions-btn'>
+          {auth && auth.user && auth.isAuthenticated && <div className='questions-btn'>
             <LinkButton
               text={'Ask Question'}
               link={'/add/question'}
               type={'s-btn__primary'}
             />
-          </div>
+          </div>}
         </div>
         {searchQuery ? (
           <div className='search-questions'>
@@ -120,6 +120,7 @@ QuestionsPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   post: state.post,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {getPosts})(QuestionsPage);
