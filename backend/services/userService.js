@@ -139,11 +139,14 @@ async function tagsUsedByUser(userId) {
 	}).lean();
 	// console.log("tagsUsedByUser: ##### tags:", tags);
 	const tagsScore = {};
+	const tagPostsCount = {};
 	_.forEach(tagIds, (tagId) => {
 		tagsScore[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId) && question.votes || 0);
+		tagPostsCount[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId)?1: 0);
 	});
 	tags = _.map(tags, (tag) => {
 		tag.score = tagsScore[tag._id] || 0;
+		tag.questionsCount = tagPostsCount[tag._id];
 		return tag;
 	});
 	_.sortBy(tags, (tag) => -tag.score); // sorted in descending order
