@@ -4,7 +4,7 @@ import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {
   getComments,
   // deleteComment,
@@ -12,7 +12,7 @@ import {
 } from '../../../../redux/comments/comments.actions';
 
 import Spinner from '../../../../components/Spinner/Spinner';
-import TagBadge from '../../../../components/TagBadge/TagBadge.component';
+// import TagBadge from '../../../../components/TagBadge/TagBadge.component';
 import LinkButton from '../../../../components/link-button/LinkButton';
 
 import './CommentCell.styles.css';
@@ -110,13 +110,13 @@ import './CommentCell.styles.css';
                   <div className='comment-text fc-black-800'>
                     <div className='comment-body'>
                       <span className='body'>{comment?.comment}</span>
-                      &nbsp;&ndash;&nbsp;
-                      <TagBadge
+                      &nbsp;&ndash;&nbsp;<Link to={ "/users/" + comment?.createdBy?._id}>{comment?.createdBy.name }</Link>
+                      {/* <TagBadge
                         tag_name={comment?.createdBy?.name? comment?.createdBy.name : "user name missing"}
                         size={'s-tag'}
                         link={`/users/${comment?.createdBy?._id}`}
                         display={'inline'}
-                        />
+                        /> */}
                         {console.log("comment resourceId", comment.resourceId)}
                         {console.log("comment answerId", answerId)}
                       <span
