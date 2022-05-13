@@ -4,14 +4,7 @@ import ReactDOM from 'react-dom/client';
 import '@stackoverflow/stacks-icons';
 import '@stackoverflow/stacks/dist/css/stacks.css';
 import '@stackoverflow/stacks/dist/js/stacks';
-// import './index.css';
 import App from './App';
-// import PostQuestion from './components/post-question/PostQuestion';
-// import UserProfile from './components/user-profile/UserProfile';
-// import UserActivityTab from './components/user-activity-tab/UserActivityTab';
-// import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
-// import UserBadgesActivity from './components/user-activity-tab-badges/UserBadgesActivity';
-// import UserBookmarksActivity from './components/user-activity-tab-bookmarks/UserBookmarksActivity';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
