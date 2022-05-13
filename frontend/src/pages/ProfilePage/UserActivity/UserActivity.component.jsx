@@ -7,7 +7,7 @@ import './UserActivity.styles.css';
 const UserActivity = ({userTgs}) => {
 console.log(userTgs);
 
-const tagDiv = userTgs?.map((item, index) => {
+const tagDiv = Object.keys(userTgs)?.map((item) => {
       console.log(item);
         return (
               <>
@@ -15,8 +15,8 @@ const tagDiv = userTgs?.map((item, index) => {
                 <div className='top-cell'>
                   <div className='tag-cell bg-black-025'>
                     <TagBadge
-                    key={index}
-                      tag_name={item.name}
+                    // key={}
+                      tag_name={item}
                       size={'s-tag s-tag__lg'}
                       float={'left'}
                     />
@@ -24,11 +24,11 @@ const tagDiv = userTgs?.map((item, index) => {
                       <div className='score-txt'>
                         <div className='score-tab'>
                           <span className='txt fc-light'>Posts</span>
-                          <span className='number fc-black-800'>{item.questionsCount}</span>
+                          <span className='number fc-black-800'> {userTgs[item].posts}</span>
                         </div>
                         <div className='score-tab'>
                           <span className='txt fc-light'>Score</span>
-                          <span className='number fc-black-800'>{item.score}</span>
+                          <span className='number fc-black-800'>{userTgs[item].score}</span>
                         </div>
                       </div>
                     </div>
