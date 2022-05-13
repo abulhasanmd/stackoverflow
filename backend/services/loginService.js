@@ -5,14 +5,6 @@ const UserModel = require('../models/User');
 const AnswerModel = require('../models/Answer');
 const QuestionsModel = require('../models/Question');
 
-async function getUserShopDetails(userId) {
-    var shopInstance = ModelFactory.getShopInstance()
-    let userShopDetails = await shopInstance.findOne({ createdBy: userId });
-    if(userShopDetails) {
-        return userShopDetails;
-    } return {}
-}
-
 async function login(data) {
     let {body, params, query} = data
     const emailId = body.email;
@@ -22,6 +14,7 @@ async function login(data) {
         let user = await UserModel.findOne({emailId});
         console.log("#### users :", user, emailId)
         if (user) {
+            delete user.password;
             let userObj = user;
             var userId = userObj._id;
             let isValidPassword = bcrypt.compareSync(password, userObj.password); // true
@@ -30,20 +23,14 @@ async function login(data) {
                 statusCode = 401
                 return {response, statusCode}
             }
+            user.userId = user._id
             const token = jwt.sign({
-                data: {
-                    userId: userId,
-                    username: userObj.name,
-                    emailId: userObj.emailId,
-                }
+                data: user
             }, 'my-secret-key-0001xx01212032432', { expiresIn: '24h' });
             response = {
                 token: token,
                 msg: 'LoggedIn successfully',
-                data: {
-                    username: userObj.name,
-                    userId: userObj._id,
-                }
+                data: user
             }
             statusCode = 200
             return {response, statusCode};
