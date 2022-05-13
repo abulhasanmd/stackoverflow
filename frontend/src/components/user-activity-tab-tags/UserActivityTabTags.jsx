@@ -5,35 +5,42 @@ import './UserActivityTabTags.css';
 const UserActivityTabTags = ({ user }) => {
 	const renderTags = (tagsInformation) => {
 		const content = [];
-		tagsInformation.forEach((tag) => {
+		Object.keys(tagsInformation).forEach((tag) => {
 			content.push(
-				<div className="d-flex ai-center jc-space-between gs16 fw-wrap">
-					<div className="flex--item ws-nowrap">
-						<a
-							href="/search?q=user:8380272+[r]"
-							className="post-tag js-gps-track"
-							rel="tag"
-						>
-							{Object.keys(tag)[0]}
-						</a>
-					</div>
-					<div className="flex--item">
-						<div className="d-flex gsx gs16">
-							<div className="flex--item d-flex ai-center">
-								<div className="fs-body3 mr4">{tag.score}</div>
-								<div className="fc-light tt-lowercase">
-									Score
+				<div className="p12 bb bc-black-075">
+					<div className="d-flex ai-center jc-space-between gs16 fw-wrap">
+						<div className="flex--item ws-nowrap">
+							<a
+								href="/search?q=user:8380272+[r]"
+								className="post-tag js-gps-track"
+								rel="tag"
+							>
+								tag
+							</a>
+						</div>
+						<div className="flex--item">
+							<div className="d-flex gsx gs16">
+								<div className="flex--item d-flex ai-center">
+									<div className="fs-body3 mr4">
+										{tagsInformation[tag].score}
+									</div>
+									<div className="fc-light tt-lowercase">
+										Score
+									</div>
 								</div>
-							</div>
-							<div className="flex--item d-flex ai-center">
-								<div className="fs-body3 mr4">{tag.posts}</div>
-								<div className="fc-light">posts</div>
+								<div className="flex--item d-flex ai-center">
+									<div className="fs-body3 mr4">
+										{tagsInformation[tag].posts}
+									</div>
+									<div className="fc-light">posts</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>,
 			);
 		});
+		return content;
 	};
 	return (
 		<div className="user-activity-tab-tags">
@@ -50,39 +57,7 @@ const UserActivityTabTags = ({ user }) => {
 				</div>
 
 				<div className="ba bc-black-100 bar-md">
-					<div className="p12 bb bc-black-075">
-						{renderTags(user.tagsInformation)}
-						<div className="d-flex ai-center jc-space-between gs16 fw-wrap">
-							<div className="flex--item ws-nowrap">
-								<a
-									href="/search?q=user:8380272+[r]"
-									className="post-tag js-gps-track"
-									title="show questions tagged 'r'"
-									rel="tag"
-								>
-									r
-								</a>
-							</div>
-							<div className="flex--item">
-								<div className="d-flex gsx gs16">
-									<div className="flex--item d-flex ai-center">
-										<div className="fs-body3 mr4">
-											2,848
-										</div>
-										<div className="fc-light tt-lowercase">
-											Score
-										</div>
-									</div>
-									<div className="flex--item d-flex ai-center">
-										<div className="fs-body3 mr4">
-											2,012
-										</div>
-										<div className="fc-light">posts</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					{renderTags(user.tagsInformation)}
 				</div>
 			</div>
 		</div>
@@ -90,7 +65,7 @@ const UserActivityTabTags = ({ user }) => {
 };
 
 const mapStateToProps = (state) => ({
-	user: state.user.user,
+	user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(UserActivityTabTags);
