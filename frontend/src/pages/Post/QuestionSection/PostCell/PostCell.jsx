@@ -89,7 +89,7 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
                   </Link>
                   {!auth.loading &&
                     auth.isAuthenticated &&
-                    user_id === auth.user._id && (
+                    post?.createdBy?._id === auth?.user?._id && (
                       <Link
                         className="s-link s-link__danger"
                         style={{ paddingLeft: "4px" }}

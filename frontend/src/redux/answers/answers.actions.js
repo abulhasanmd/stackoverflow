@@ -28,23 +28,27 @@ export const getAnswers = (questionId) => async (dispatch) => {
   }
 }
 
-// export const chooseBestAnswer = (answerId) => async (dispatch) => {
-//   try {
-//     const res = await axios.post(
-//       config.BASE_URL + `/answer/choose-best-answer/${answerId}`
-//     )
-//     console.log("Choose best answer res is", res.data.data)
-//     dispatch({
-//       type: GET_ANSWERS,
-//       payload: res.data.data,
-//     })
-//   } catch (err) {
-//     dispatch({
-//       type: ANSWER_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status },
-//     })
-//   }
-// }
+export const chooseBestAnswer =
+  (answerId, questionId, createdBy) => async (dispatch) => {
+    try {
+      const res = await axios.put(config.BASE_URL + `/answer/best-answer`, {
+        answerId: answerId,
+        questionId: questionId,
+        createdBy: createdBy,
+      })
+      console.log("Choose best answer res is", res.data.data)
+      dispatch(getAnswers(questionId))
+      // dispatch({
+      //   type: GET_ANSWERS,
+      //   payload: res.data.data,
+      // })
+    } catch (err) {
+      dispatch({
+        type: ANSWER_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      })
+    }
+  }
 
 // Add Answer
 export const addAnswer = (formData) => async (dispatch) => {
@@ -67,7 +71,7 @@ export const addAnswer = (formData) => async (dispatch) => {
     })
 
     // dispatch(setAlert(res.data.message, 'success'));
-    dispatch(setAlert("Answer created successfully!", 'success'));
+    dispatch(setAlert("Answer created successfully!", "success"))
 
     dispatch(getAnswers(formData.questionId))
   } catch (err) {

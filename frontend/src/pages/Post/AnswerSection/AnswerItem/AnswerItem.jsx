@@ -1,9 +1,10 @@
-// import React, {Fragment, useEffect} from 'react';
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
+// import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+// import config from '../../../../config';
 import {Link} from 'react-router-dom';
-// import {deleteAnswer} from '../../../../redux/answers/answers.actions';
+import {chooseBestAnswer} from '../../../../redux/answers/answers.actions';
 import { FcCheckmark } from 'react-icons/fc'
 // import {ReactComponent as UpVote} from '../../../../assets/ArrowUpLg.svg';
 // import {ReactComponent as DownVote} from '../../../../assets/ArrowDownLg.svg';
@@ -14,6 +15,7 @@ import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
 // addPostToBookmark
 import './AnswerItem.styles.css';
 import { setAlert } from '../../../../redux/alert/alert.actions';
+// import axios from 'axios';
 
 
 const AnswerItem =({
@@ -24,10 +26,11 @@ const AnswerItem =({
   // answer: {body, user_id, gravatar, vote, id, created_at, username},
   post: {post},
   auth,
+  chooseBestAnswer
 }) => {
   console.log("answer is");
   // const [voted, setVoted] = React.useState(false);
-  // const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
+  const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
   const userId = auth?.user?._id;
   const authorId = answer?.createdBy?._id;
   // const answerId = answer?.id;
@@ -38,6 +41,18 @@ const AnswerItem =({
   // if (userId === post?.createdBy._id) { 
   //   setIsQuestionAuthor(true);
   // }
+
+  useEffect(() => {
+    if (auth?.user?._id) {
+      if (post?.createdBy?._id == auth?.user?._id) { 
+        setIsQuestionAuthor(true);
+      } else {
+        setIsQuestionAuthor(false);
+      }
+    } else {
+      console.log("No user logged in");
+    }
+   }, [auth?.user?._id, post?.createdBy?._id]);
 
   // useEffect(() => {
   //   getPost(post?._id);
@@ -65,17 +80,25 @@ const handleVote = (id, type) => {
     console.log("author clicked the vote button");
   }
 }
-console.log("answer vote", answer);
-  // const handleBestAnswer = (answerId) => {
-  //   console.log("answerId is",answerId);
-  // }
+  console.log("answer vote", answer);
+  
+
+  const handleBestAnswer = (answerId) => {
+    chooseBestAnswer(answerId, post?._id, authorId);
+    // console.log("answerId is", answerId);
+    // axios.put(`${config.BASE_URL} + /answer/best-answer`, {answerId, }).then(res => { 
+    //   console.log("res is", res);
+    // }).catch(err => { 
+    //   console.log("err is", err);
+    // })
+  }
   
   return (
     <Fragment>
       <div className='answer-layout'>
-        {/* {isQuestionAuthor && (
-          <button className='s-btn s-btn__primary' onClick={() => handleBestAnswer}>Choose as Best Answer</button>  
-        )} */}
+        {isQuestionAuthor && (
+          <button className='s-btn s-btn__primary' onClick={() => handleBestAnswer(answer?._id)}>Choose as Best Answer</button>  
+        )}
         <div className='vote-cell'>
           <div className='vote-container'>
             <button
@@ -177,4 +200,4 @@ const mapStateToProps = (state) => ({
 });
 
 // export default connect(mapStateToProps, {deleteAnswer, addVoteToPost})(AnswerItem);
-export default connect(mapStateToProps, {setAlert, addVoteToPost})(AnswerItem);
+export default connect(mapStateToProps, {setAlert, addVoteToPost, chooseBestAnswer})(AnswerItem);

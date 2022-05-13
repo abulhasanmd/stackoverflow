@@ -20,14 +20,17 @@ const Post = ({getPost, post: {post, loading}}) => {
   // const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
   useEffect(() => {
     getPost(id);
+    // if (auth?.user?._id) {
+    //   if (post?.createdBy?._id == auth?.user?._id) { 
+    //     setIsQuestionAuthor(true);
+    //   } 
+    // } else {
+    //   console.log("No user logged in");
+    // }
+      
   }, [getPost]);
 
   console.log(post, "post is");
-
-  // if (post?.createdBy?._id == auth?.user?._id) { 
-  //   setIsQuestionAuthor(true);
-  // }
-
 
   return  (
     loading || post === null ? (
@@ -61,7 +64,7 @@ const Post = ({getPost, post: {post, loading}}) => {
           </div>
           </div>
         <div className='question-main pl24 pt16'>
-            <QuestionSection/>
+            <QuestionSection />
             <AnswerSection />
         </div>
       </div>
