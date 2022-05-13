@@ -100,99 +100,95 @@ export default function UserReputationActivity({ user }) {
 				);
 			});
 			content.push(
-				<div className="js-post-expandable-body s-expandable--content bg-black-025 bb bc-black-075 js-loaded">
-					<div className=" js-post-expandable">
-						<div className="d-flex g4 p8 py2 md:p6 fw-wrap bb bc-black-075">
-							<div className="d-flex g4 ai-center jc-end fs-caption wmn1 md:fd-row-reverse fc-black-500">
-								<span>{postEvents.length + ' events'}</span>
-							</div>
-							<div className="d-flex g4 fw-nowrap fl-grow1 break-word fs-body2 wmx100">
-								<button
-									className="s-btn s-btn__xs s-btn__icon p6 mr2 js-post-expandable-control as-start"
-									data-load-url="/ajax/users/6309/rep/expand/1651881600/1651968000?postId=72120005"
-									data-controller="s-expandable-control"
-									aria-expanded="true"
-									aria-controls="expandable-1651881600-72120005"
-									aria-label="toggle 1651881600 reputation change details"
-									onClick={() => {
-										let hiddenIcon = document.querySelector(
-											'.js-post-expandable-hidden',
-										);
-										if (
-											hiddenIcon.classList.contains(
-												'd-none',
-											)
-										) {
-											hiddenIcon.classList.remove(
-												'd-none',
-											);
-										} else {
-											hiddenIcon.classList.add('d-none');
-										}
-										let visibleIcon =
-											document.querySelector(
-												'.js-post-expandable-visible',
-											);
-										if (
-											visibleIcon.classList.contains(
-												'd-none',
-											)
-										) {
-											visibleIcon.classList.remove(
-												'd-none',
-											);
-										} else {
-											visibleIcon.classList.add('d-none');
-										}
-									}}
-								>
-									<span className="js-post-expandable-hidden d-none">
-										<svg
-											aria-hidden="true"
-											className="svg-icon iconArrowRightSm"
-											width="14"
-											height="14"
-											viewBox="0 0 14 14"
-										>
-											<path d="M5 11V3l4 4-4 4Z"></path>
-										</svg>
-									</span>
-									<span className="js-post-expandable-visible">
-										<svg
-											aria-hidden="true"
-											className="svg-icon iconArrowDownSm"
-											width="14"
-											height="14"
-											viewBox="0 0 14 14"
-										>
-											<path d="M3 5h8L7 9 3 5Z"></path>
-										</svg>
-									</span>
-								</button>
-								<div className="flex--item as-center fs-body2 mt2 md:mt0">
-									<a
-										href="/questions/40050774/github-commits-pile-up-after-squash-merge-of-pull-request/72120005#72120005"
-										className="answer-hyperlink "
+				<div className=" js-post-expandable">
+					<div className="d-flex g4 p8 py2 md:p6 fw-wrap bb bc-black-075">
+						<div className="d-flex g4 ai-center jc-end fs-caption wmn1 md:fd-row-reverse fc-black-500">
+							<span>{postEvents.length + ' events'}</span>
+						</div>
+						<div className="d-flex g4 fw-nowrap fl-grow1 break-word fs-body2 wmx100">
+							<button
+								className="s-btn s-btn__xs s-btn__icon p6 mr2 js-post-expandable-control as-start"
+								data-load-url="/ajax/users/6309/rep/expand/1651881600/1651968000?postId=72120005"
+								data-controller="s-expandable-control"
+								aria-expanded="true"
+								aria-controls="expandable-1651881600-72120005"
+								aria-label="toggle 1651881600 reputation change details"
+								onClick={() => {
+									let hiddenIcon = document.querySelector(
+										'.js-post-expandable-hidden',
+									);
+									if (
+										hiddenIcon.classList.contains('d-none')
+									) {
+										hiddenIcon.classList.remove('d-none');
+									} else {
+										hiddenIcon.classList.add('d-none');
+									}
+									let visibleIcon = document.querySelector(
+										'.js-post-expandable-visible',
+									);
+									if (
+										visibleIcon.classList.contains('d-none')
+									) {
+										visibleIcon.classList.remove('d-none');
+									} else {
+										visibleIcon.classList.add('d-none');
+									}
+								}}
+							>
+								<span className="js-post-expandable-hidden d-none">
+									<svg
+										aria-hidden="true"
+										className="svg-icon iconArrowRightSm"
+										width="14"
+										height="14"
+										viewBox="0 0 14 14"
 									>
-										github commits pile up after squash
-										merge of pull request
-									</a>
-								</div>
+										<path d="M5 11V3l4 4-4 4Z"></path>
+									</svg>
+								</span>
+								<span className="js-post-expandable-visible">
+									<svg
+										aria-hidden="true"
+										className="svg-icon iconArrowDownSm"
+										width="14"
+										height="14"
+										viewBox="0 0 14 14"
+									>
+										<path d="M3 5h8L7 9 3 5Z"></path>
+									</svg>
+								</span>
+							</button>
+							<div className="flex--item as-center fs-body2 mt2 md:mt0">
+								<a
+									href={
+										'/questions/' + postEvents[0].articleId
+									}
+									className="answer-hyperlink "
+								>
+									{postEvents[0].articleName}
+								</a>
 							</div>
 						</div>
-						<div
-							className="s-expandable is-expanded"
-							id="expandable-1651881600-72120005"
-						>
-							<div className="js-post-expandable-body s-expandable--content bg-black-050 js-loaded">
-								{innerContent}
-							</div>
+					</div>
+					<div
+						className="s-expandable is-expanded"
+						id="expandable-1651881600-72120005"
+					>
+						<div className="js-post-expandable-body s-expandable--content bg-black-050 js-loaded">
+							{innerContent}
 						</div>
 					</div>
 				</div>,
 			);
 		});
-		return content;
+		const parentContent = [];
+		parentContent.push(
+			<div className="js-post-expandable-body s-expandable--content bg-black-025 bb bc-black-075 js-loaded">
+				{content}
+			</div>,
+		);
+		return parentContent;
 	};
 	const renderEventGroups = (eventsData) => {
 		const content = [];
