@@ -1,23 +1,43 @@
 .modal__header{
     font-size: 28px;
+    display: flex;
+    justify-content: center;
 }
 .modal__container{
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: 1fr 3fr 1fr;
+
+}
+.modal__error{
+    color:red
+}
+
+.modal__sucess{
+    color: green;
 }
 .tagform__input{
     /* height: 25px; */
     margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto;
+    margin-left: 100x;
+    margin-right: 150px;
 }
 #tag-name{
     height: 30px;
     border-radius: 5px;
+    width: 150px;
 }
 textarea{
     height: 50px;
     width: 400px;
     border-radius: 5px;
+    margin-top: 25px;
+}
+.label2{
+    margin-top: 25px;
+}
+.label1{
+    grid-column: 1;
 }
 .tagform__buttons{
     margin-top: 20px;

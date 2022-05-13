@@ -19,6 +19,7 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
     "kafkajs": "^1.16.0",
+    "lodash": "^4.17.21",
     "morgan": "~1.9.1",
     "package.json": "^2.0.1",
     "passport": "^0.5.2",

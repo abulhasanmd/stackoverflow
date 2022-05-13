@@ -16,6 +16,8 @@ import Home from './pages/Home/Home';
 import ChatBody from './components/chatBody/ChatBody';
 import AllUsersPage from './pages/AllUsersPage/AllUsersPage.component';
 import ProfilePage from './pages/ProfilePage/ProfilePage.component';
+import AllPendingQuestions from './pages/AllPendingQuestionsPage/AllPendingQuestions';
+import UserActivityTabTags from './components/user-activity-tab-tags/UserActivityTabTags';
 
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
@@ -36,7 +38,7 @@ const QuestionsPageComponent = withPageTitle({
 	title: 'All Questions - Stack Overflow',
 });
 
-const ProfilePageComponent = LayoutWrapper({component: ProfilePage});
+const ProfilePageComponent = LayoutWrapper({ component: ProfilePage });
 
 const QuestionActivityComponent = withPageTitle({
 	component: LayoutWrapper({ component: QuestionActivity }),
@@ -49,13 +51,17 @@ const IndividualPost = withPageTitle({
 });
 
 const AllUsersPageComponent = withPageTitle({
-	component: LayoutWrapper({component: AllUsersPage}),
+	component: LayoutWrapper({ component: AllUsersPage }),
 	title: 'Users - CLONE Stack Overflow',
-  });
-
+});
 
 const AdminAnalyticsComponent = withPageTitle({
 	component: LayoutWrapper({ component: AdminAnalytics }),
+	title: 'Admin Analytics',
+});
+
+const AllPendingQuestionsComponent = withPageTitle({
+	component: LayoutWrapper({ component: AllPendingQuestions }),
 	title: 'Admin Analytics',
 });
 
@@ -69,16 +75,15 @@ const RoutesTree = () => {
 				element={<QuestionsPageComponent />}
 			/>
 			<Route exact path="/add/question" element={<AskQuestionPage />} />
-			<Route
-				exact
-				path="/questions"
-				element={<QuestionsPageComponent />}
-			/>
 			{/* <Route exact path='/tags/:tagname' component={TagPageComponent} /> */}
 			<Route exact path="/questions/:id" element={<IndividualPost />} />
-			<Route exact path="/questions/timeline/:id" element={<QuestionActivityComponent />} />
-			<Route exact path='/users/:id' element={<ProfilePageComponent />} />
-			<Route exact path='/allusers' element={<AllUsersPageComponent />} />
+			<Route
+				exact
+				path="/questions/timeline/:id"
+				element={<QuestionActivityComponent />}
+			/>
+			<Route exact path="/users/:id" element={<ProfilePageComponent />} />
+			<Route exact path="/allusers" element={<AllUsersPageComponent />} />
 			<Route exact path="/tags" element={<AllTagsPageComponent />} />
 			<Route exact path="/register" element={<RegisterPage />} />
 			<Route exact path="/login" element={<LoginPage />} />
@@ -87,8 +92,10 @@ const RoutesTree = () => {
 				path="/admin/analytics"
 				element={<AdminAnalyticsComponent />}
 			/>
+			<Route exact path="/admin/pending-questions" element ={<AllPendingQuestionsComponent/>}/>
 			<Route path="*" element={<NotFoundPage />} />
-			<Route path="/messages" element={<ChatBody/>} />
+			<Route path="/messages" element={<ChatBody />} />
+			<Route path="/tags-activity" element={<UserActivityTabTags />} />
 		</Routes>
 	);
 };

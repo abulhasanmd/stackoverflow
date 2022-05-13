@@ -17,6 +17,8 @@ const customStyles = {
 export default function AdminAddTag({ handleModalClose }) {
   const [tagName, setTagName] = useState("");
   const [tagDescr, setTagDescr] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [msgClass,setMsgClass]  = useState("");
 
   function handleChange(event) {
     if (event.target.name === "tag-name") {
@@ -46,12 +48,21 @@ export default function AdminAddTag({ handleModalClose }) {
       .then((jsonresp) => {
         console.log(jsonresp);
         if (jsonresp.data) {
-          handleModalClose();
+          setMsgClass("modal__sucess");
+          setErrorMsg(jsonresp.data.message);
+          setTimeout(() => {
+            handleModalClose(true);
+          }, 3000);
         } else {
           console.log(
             "error occurred while adding tag",
             jsonresp.error.message
           );
+          setMsgClass("modal__error");
+          setErrorMsg(jsonresp.error.message)
+          setTimeout(() => {
+            setErrorMsg("")
+          }, 3000);
         }
       })
       .catch();
@@ -62,8 +73,9 @@ export default function AdminAddTag({ handleModalClose }) {
       <form onSubmit={handleSubmit}>
         <div className="modal__container">
           <div className="modal__header">Add Tag Here</div>
+          <div className={msgClass}>{errorMsg}</div>
           <div className="tagform__input">
-            <label htmlFor="tag-name">Tag Name</label>
+            <label htmlFor="tag-name" className="label1">Tag Name</label>
             <input
             type="text"
               name="tag-name"
@@ -71,9 +83,7 @@ export default function AdminAddTag({ handleModalClose }) {
               value={tagName}
               onChange={handleChange}
             />
-          </div>
-          <div className="tagform__input">
-            <label htmlFor="tag-descr">Tag Description</label>
+            <label htmlFor="tag-descr" className="label2">Tag Description</label>
             <textarea
               name="tag-descr"
               id="tag-descr"
@@ -84,12 +94,12 @@ export default function AdminAddTag({ handleModalClose }) {
           <div className="tagform__buttons">
             <button
               className="s-btn s-btn__primary tagform_button"
-              disabled={tagName == "" || tagDescr == ""}
+              disabled={tagName == "" || tagDescr == "" || errorMsg!=""}
             >
               Add Tag
             </button>
             <button
-              className="s-btn s-btn__secondary"
+              className="s-btn s-btn__filled s-btn__danger"
               onClick={handleModalClose}
             >
               Close

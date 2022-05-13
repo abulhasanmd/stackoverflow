@@ -1,17 +1,16 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable no-case-declarations */
-const _ = require('lodash');
 const TagsModel = require('../models/Tag');
 const UserModel = require('../models/User');
 const AnswerModel = require('../models/Answer');
 const QuestionsModel = require('../models/Question');
 const CommentsModel = require('../models/Comment');
+var _ = require('lodash')
 
 function parseTagNames(searchq = '') {
 	const tagRegex = /\[([^\][]*)]/g;
 	const tagNames = [];
-	let
-		m;
+	let m;
 	// eslint-disable-next-line no-cond-assign
 	while (m = tagRegex.exec(searchq)) {
 		tagNames.push(m[1]);
@@ -19,86 +18,167 @@ function parseTagNames(searchq = '') {
 	return tagNames;
 }
 
-async function getQueryMatchCond(searchq = '', inputTagIds = []) {
-	const self = this;
-	if (!searchq) {
-		return {};
-	}
-	const parseArr = searchq.split(':');
-	const key = parseArr[0];
-	const
-		value = parseArr[1];
-	const tagNames = parseTagNames(searchq);
-	self.searchTitle = '';
-	self.searchDescription = '';
-	if (tagNames.length) {
-		self.searchTitle = `Results for Query ${searchq} tagged with ${tagNames[0]}`;
-		const tagRecords = await TagsModel.find({
-			name: {
-				$regex: tagNames[0],
-				$options: 'i',
-			},
-		}, {
-			_id: 1,
-			name: 1,
-			descr: 1,
-		}).lean();
-		let tagIds = _.map(tagRecords, '_id');
-		_.map(tagRecords, (tag) => {
-			self.searchDescription += `${tag.descr}\n`;
-		});
-		tagIds = _.uniq(tagIds.concat(inputTagIds));
-		return {
-			tags: {
-				$in: tagIds,
-			},
-		};
-	}
-	switch (key) {
-	case 'user':
-		const usersRecords = await UserModel.find({
-			name: {
-				$regex: value,
-				$options: 'i',
-			},
-		}, {
-			_id: 1,
-		}).lean();
-		const userIds = _.map(usersRecords, '_id');
-		return {
-			createdBy: {
-				$in: userIds,
-			},
-		};
-	case 'isaccepted':
-		return {
-			reviewStatus: 'approved',
-		};
-	case 'is':
-		return {};
-	default:
-		console.log('##### key', key);
-		return {
-			title: {
-				$regex: key,
-				$options: 'i',
-			},
-		};
-	}
+let addSortFilter = (dbquery, filter) => {
+	switch (filter) {
+		case 'votes':		dbquery.sort({ votes: -1 }); break;
+		case 'newest': 		dbquery.sort({ createdOn: -1 }); break;
+		case 'Interesting': dbquery.sort({ modifiedOn: -1}); break;
+		case 'Hot': 		dbquery.sort({ views: -1 }); break;
+		case 'Score': 		dbquery.sort({ score: -1 }); break;
+		case 'Unanswered':  dbquery.sort({ modifiedOn: -1 }); break;
+		default: 			dbquery.sort({ votes: -1 }); break;
+		}
 }
 
-function getQueryModel(searchq = '') {
-	const parseArr = searchq.split(':');
-	const key = parseArr[0];
-	const
-		value = parseArr[1];
-	if (key === 'is') {
-		if (value === 'answer') {
-			return AnswerModel;
-		}
+let getSearchqModelKeyValue = (searchq) => {
+	searchq = searchq.trim()
+	let searchItems = searchq.split(' ')
+	let standardSearchItems = ['is:question', 'user:', 'isaccepted:yes', 'isaccepted:no', 'is:question', 'is:answer', 'tag']
+	let model, key, value, query;
+	let foundItem = _.get(_.filter(standardSearchItems, (item) => _.startsWith(searchq, item) || (item == 'tag' && _.startsWith(searchItems[0], '[') && _.endsWith(searchItems[0], ']'))), '0')
+    // console.log("fountItem : ", foundItem)
+	switch(foundItem) {
+		case 'is:question':
+            model = 'question'
+			key = 'title'
+			value = searchq.substring('is:question'.length).trim()
+            query = ''
+            break;
+		case 'user:':
+            model = 'user'
+			searchq = searchq.substring('user:'.length).trim()
+			let searchqSplit = searchq.split(' ')
+			key = 'name'
+			value = searchqSplit.shift()
+			query = searchqSplit.join(' ')
+            break;
+		case 'isaccepted:yes':
+            model = 'question'
+			searchq = searchq.substring('isaccepted:yes'.length).trim()
+			key   = 'reviewStatus'
+			value = 'approved',
+            query = searchq
+            break;
+		case 'isaccepted:no':
+            model = 'question'
+			searchq = searchq.substring('isaccepted:no'.length).trim()
+			key   = 'reviewStatus'
+			value = 'rejected'
+            query = searchq
+            break;
+		case 'is:answer':
+            model = 'answer'
+			searchq = searchq.substring('is:answer'.length).trim()
+			key = 'answer'
+			value = searchq
+            break;
+		case 'tag':
+			// console.log("==== tag : ")
+			model = 'tag'
+			key = 'name'
+			value = searchq.substring(searchq.indexOf('[')+1, searchq.indexOf(']')).trim()
+			query = searchq.substr(searchq.indexOf(']')+1)
+			break;
+		default:
+            model = 'question'
+			key = 'title'
+			value = searchq
+			query = undefined
+            break;
 	}
-	return QuestionsModel;
+	query = query && query.trim()
+	key = key.trim()
+	value = value && value.trim()
+	return {model, key, value, query};
 }
+
+let getUsersOnMatch = async (key, value) => {
+	let matchCnd = {}
+	matchCnd[key] = { $regex: `^${value}$`, $options: 'i' }
+	let usersR = await UserModel.find(matchCnd).lean();
+	return usersR;
+}
+
+let getTagsOnMatch = async (key, value) => {
+	let matchCnd = {}
+	matchCnd[key] = { $regex: `^${value}$`, $options: 'i' }
+	let tagsR = await TagsModel.find(matchCnd).lean();
+	return tagsR;
+}
+
+let getQuestionsMatchCnd = (key, value) => {
+	let matchCnd = {}
+	if (value) {
+		matchCnd[key] = { $regex: value, $options: 'i' }
+	}
+	return matchCnd
+}
+
+async function getRawPosts(searchq = '', filter, inputTagIds = []) {
+	const self = this;
+	let {model, key, value, query} = getSearchqModelKeyValue(searchq);
+	console.log("# search : ", model, key, value, query)
+	let matchCnd = {}, posts = [], QuestionsP;
+	self.searchDescription = ''
+	switch(model) {
+		case 'question':
+			self.searchTitle = `Results for Query '${value}' : questions`;
+			QuestionsP = QuestionsModel.find(getQuestionsMatchCnd(key, value))
+			addSortFilter(QuestionsP, filter)
+			posts = await QuestionsP.lean()
+			break;
+		case 'answer':
+			self.searchTitle = `Results for Query '${value}' : answers`;
+			let answersP = AnswerModel.find({answer: { $regex: value, $options: 'i'}})
+			addSortFilter(answersP, filter)
+			posts = await answersP.lean()
+			break;
+		case 'user':
+			self.searchTitle = `Results for Query '${query}' questioned by '${value}'`;
+			let usersInfo = await getUsersOnMatch(key, value)
+			let userIds = _.map(usersInfo, '_id');
+			QuestionsP = QuestionsModel.find({title: { $regex: query, $options: 'i'}, createdBy: { $in: userIds }})
+			addSortFilter(QuestionsP, filter)
+			posts = await QuestionsP.lean()
+			break;
+		case 'tag':
+			self.searchTitle = `Results for Query '${query}' tagged with '${value}'`;
+			matchCnd[key] = { $regex: `^${value}$`, $options: 'i'};
+			let tags = await getTagsOnMatch(key, value) 
+			self.searchDescription = _.get(tags, '0.descr')
+			let tagIds = _.map(tags, '_id')
+			QuestionsP = QuestionsModel.find({title: { $regex: query, $options: 'i'}, tags: { $in: tagIds }})
+			addSortFilter(QuestionsP, filter)
+			posts = await QuestionsP.lean()
+			break;
+	}
+	return posts
+	// var query = ''
+	// const parseArr = searchq.split(' ');
+	// const key = parseArr[0];
+	// const value = parseArr[1];
+	// console.log("####getQueryMatchCond : ",parseArr, key, value)
+	// const tagNames = parseTagNames(searchq);
+	// self.searchTitle = '';
+	// self.searchDescription = '';
+	// if (tagNames.length) {
+	// 	self.searchTitle = `Results for Query ${searchq} tagged with ${tagNames[0]}`;
+	// 	const tagRecords = await TagsModel.find({ name: { $regex: `^${tagNames[0]}$`, $options: 'i'} }, { _id: 1, name: 1, descr: 1}).lean();
+	// 	let tagIds = _.map(tagRecords, '_id');
+	// 	_.map(tagRecords, (tag) => {
+	// 		self.searchDescription += `${tag.descr}\n`;
+	// 	});
+	// 	tagIds = _.uniq(tagIds.concat(inputTagIds));
+	// 	return {
+	// 		tags: {
+	// 			$in: tagIds,
+	// 		},
+	// 	};
+	// }
+
+}
+
+
 async function getTags(tagIds) {
 	const tagsInfo = await TagsModel.find({
 		_id: {
@@ -128,18 +208,21 @@ async function resolveUsers(posts) {
 	}).lean();
 	const usersMap = _.keyBy(userDetails, '_id');
 	posts = _.map(posts, (post) => {
-		post.createdBy = usersMap[post.createdBy._id];
+		// console.log("### post : ", post)
+		if(_.get(post, 'createdBy._id')) {
+			post.createdBy = usersMap[post.createdBy._id];
+		}
 		return post;
 	});
 	return posts;
 }
 
 async function resolveCommentsCount(posts) {
-	const questionIds = _.uniq(_.map(posts, '_id'));
+	const resourceIds = _.uniq(_.map(posts, '_id'));
 	const commentsCounts = await CommentsModel.aggregate([{
 		$match: {
 			resourceId: {
-				$in: questionIds,
+				$in: resourceIds,
 			},
 		},
 	}, {
@@ -151,7 +234,7 @@ async function resolveCommentsCount(posts) {
 		},
 	}]);
 	const commentsCountHmap = _.keyBy(commentsCounts, (result) => result._id);
-	console.log("commentsCounts : ", commentsCounts, commentsCountHmap)
+	// console.log("commentsCounts : ", commentsCounts, commentsCountHmap)
 	posts = _.map(posts, (post) => {
 		post.commentsCount = _.get(commentsCountHmap[post._id], 'count') || 0;
 		return post;
@@ -161,11 +244,12 @@ async function resolveCommentsCount(posts) {
 
 
 async function resolveAnswersCount(posts) {
-	const questionIds = _.uniq(_.map(posts, '_id'));
+	//resourceId can be question/answer
+	const resourceIds = _.uniq(_.map(posts, '_id'));
 	const answersCounts = await AnswerModel.aggregate([{
 		$match: {
 			questionId: {
-				$in: questionIds,
+				$in: resourceIds,
 			},
 		},
 	}, {
@@ -177,7 +261,7 @@ async function resolveAnswersCount(posts) {
 		},
 	}]);
 	const answersCountsHmap = _.keyBy(answersCounts, (result) => result._id);
-	console.log("answersCounts : ", answersCounts, answersCountsHmap)
+	// console.log("answersCounts : ", answersCounts, answersCountsHmap)
 	posts = _.map(posts, (post) => {
 		post.answersCount = _.get(answersCountsHmap[post._id], 'count') || 0;
 		return post;
@@ -187,67 +271,9 @@ async function resolveAnswersCount(posts) {
 
 async function getAllPosts(data) {
 	const self = this;
-	const {
-		body,
-		query,
-		params,
-	} = data;
-	const {
-		searchq,
-		filter,
-		tagIds,
-	} = body;
-	if (false) { // By-Passing redis, considering dynamic search
-		const redisData = await global.redisClient.get('allposts');
-		if (redisData != 'null' && redisData) return JSON.parse(redisData);
-	}
-	let dbquery = getQueryModel(searchq);
-	const searchqMatchCond = await getQueryMatchCond.call(self, searchq, tagIds);
-	if (!searchqMatchCond.tags && tagIds) {
-		searchqMatchCond.tags = {
-			$in: tagIds,
-		};
-	}
-	dbquery = dbquery.find(searchqMatchCond);
-	switch (filter) {
-	case 'votes':
-		dbquery.sort({
-			votes: -1,
-		});
-		break;
-	case 'newest':
-		dbquery.sort({
-			createdOn: -1,
-		});
-		break;
-	case 'Interesting':
-		dbquery.sort({
-			modifiedOn: -1,
-		});
-		break;
-	case 'Hot':
-		dbquery.sort({
-			views: -1,
-		});
-		break;
-	case 'Score':
-		dbquery.sort({
-			score: -1,
-		});
-		break;
-	case 'Unanswered':
-		// TO-DO
-		dbquery.sort({
-			modifiedOn: -1,
-		});
-		break;
-	default:
-		dbquery.sort({
-			votes: 1,
-		});
-		break;
-	}
-	let posts = await dbquery.lean();
+	const { body, query, params } = data;
+	const { searchq, filter, tagIds } = body;
+	let posts = await getRawPosts.call(self, searchq, filter)
 	posts = await resolveTags(posts);
 	posts = await resolveUsers(posts);
 	posts =  await resolveCommentsCount(posts)

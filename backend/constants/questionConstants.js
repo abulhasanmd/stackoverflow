@@ -1,5 +1,5 @@
 module.exports = {
-  PENDING_STATUS: 'P',
-  APPROVED_STATUS: 'A',
-  REJECTED_STATUS: 'R',
+  PENDING_STATUS: 'pending',
+  APPROVED_STATUS: 'accepted',
+  REJECTED_STATUS: 'rejected',
 };
