@@ -40,9 +40,13 @@ const postQuestion = async (body) => {
 			await User.findByIdAndUpdate(body.createdBy._id, {
 				tagsInformation: tagsObj,
 			});
-			badgesService.updateBadges(body.createdBy._id, 'score', null, tagsObj);
+			// badgesService.updateBadges(body.createdBy._id, 'score', null, tagsObj);	
 			await Tag.updateMany({ _id: { $in: tagIds } }, { $inc: { questionsCount: 1 } });
 		}
+		const questionCount = await Question.count({ "createdBy._id": body.createdBy._id }).lean();
+		// console.log("first question count", questionCount);
+		await badgesService.updateBadges(body.createdBy._id, 'numberOfQuestions', questionCount, null);
+
 		return {
 			data: question,
 		};
@@ -105,6 +109,7 @@ const getAllQuestions = async (data) => {
 			question.tags = _.map(question.tags, (tag) => tagsMap[tag._id]);
 			return question;
 		});
+		
 		return {
 			data: que,
 		};
