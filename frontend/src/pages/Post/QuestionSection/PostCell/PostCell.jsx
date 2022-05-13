@@ -40,7 +40,7 @@ console.log("post is", post)
       <div className='post-cell'>
         <div className='post-text fc-black-800' dangerouslySetInnerHTML={{__html: post.descr}}></div>
         <div className='post-tags fc-black-800'>
-          {post.tags.map((tag, index) => (
+          {post?.tags?.map((tag, index) => (
             <TagBadge key={index} tag_name={tag.name} size={'s-tag'} float={'left'} />
           ))}
         </div>

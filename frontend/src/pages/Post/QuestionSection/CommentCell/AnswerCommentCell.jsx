@@ -41,7 +41,7 @@ import './CommentCell.styles.css';
         getComments(answerId, "answer");
         // eslint-disable-next-line
       }, [getComments]);
-   ("comment is",comment);
+   ("comment in answer comment cell is",comment);
 
   const [formData, setFormData] = useState({
     body: '',
@@ -88,6 +88,7 @@ import './CommentCell.styles.css';
               ) :
                 (
               comment?.answerComments?.data?.map((comment, index) => (
+                (comment.resourceId === answerId) ? (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>
                     <div className='comment-body'>
@@ -98,7 +99,9 @@ import './CommentCell.styles.css';
                         size={'s-tag'}
                         link={`/users/${comment?.createdBy?._id}`}
                         display={'inline'}
-                      />
+                        />
+                        {console.log("comment resourceId", comment.resourceId)}
+                        {console.log("comment answerId", answerId)}
                       <span
                         title={moment(comment?.created_at).fromNow(true)}
                         style={{color: '#959ca3 !important'}}
@@ -121,7 +124,7 @@ import './CommentCell.styles.css';
                         </Link>
                       )}
                   </div>
-                </li>
+                </li> ) : null
               ))
             )}
           </ul>

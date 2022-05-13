@@ -110,7 +110,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
         )}
         <div className='questions-tabs'>
           <span>
-            {new Intl.NumberFormat('en-IN').format(posts.length)} questions
+            {new Intl.NumberFormat('en-IN').format(posts?.length)} questions
           </span>
           <ButtonGroup
             buttons={['Score', 'Hot', 'Views', 'Unanswered']}

@@ -17,10 +17,11 @@ const AvatarCard = ({ id, gravatar, views }) => (
         </Link>
       </div>
       <div className='title'>
-        <div className='grid fc-black-800'>
-          {views.slice(0,10)}
+        <div >
+         
           &nbsp;
-          <span className='fc-light'>Last Seen</span>
+          <span className='fc-light'>Last Seen</span> &nbsp;
+          {views.slice(0,10)}
         </div>
       </div>
     </div>

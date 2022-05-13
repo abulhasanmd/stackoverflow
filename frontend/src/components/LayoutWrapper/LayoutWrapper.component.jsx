@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 
 import SideBar from './SideBar/SideBar.component';
-import Footer from "../Footer/Footer.component";
+// import Footer from "../Footer/Footer.component";
 
 const LayoutWrapper = ({component: Component}) => {
   return class DefaultLayoutWrapper extends React.Component {
@@ -15,7 +15,7 @@ const LayoutWrapper = ({component: Component}) => {
               
             </div>
           </div>
-          <Footer/>
+          {/* <Footer/> */}
         </Fragment>
       );
     }

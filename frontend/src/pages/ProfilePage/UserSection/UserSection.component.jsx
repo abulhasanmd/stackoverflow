@@ -16,9 +16,12 @@ const UserSection = ({ user }) => (
       username={user.name}
       answers_count={user.questionsAnswered}
       posts_count={user.questionsAsked}
-      comments_count={user.commentsGiven}
-      tags_count="12"
+      reputation={user.reputation}
+      reach={user.reach}
       created_at={user.createdOn}
+      about = {user.about}
+      location = {user.location}
+      memberSince = {user.createdOn}
     />
   </div>
 )

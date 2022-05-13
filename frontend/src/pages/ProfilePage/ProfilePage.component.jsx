@@ -42,7 +42,8 @@ const ProfilePage = ({getProfile, user: {user, loading}}) => {
         </div>
         <div className='row-grid'>
           {/* <ExternalUserDetails/> */}
-          <UserActivity/>
+          {console.log(user)}
+          <UserActivity userTgs={user?.tagsUsed}/>
         </div>
       </div>
     </Fragment>

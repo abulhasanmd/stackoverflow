@@ -38,6 +38,7 @@ const postMessage = async (body) => {
 		db.query(insert, (err, result) => {
 			if (err) {
 				console.log('Unsuccessful in inserting message into the database');
+				console.log(err)
 				resolve({
 					error: {
 						message: 'Unsuccessful in inserting message into the database',
@@ -46,7 +47,9 @@ const postMessage = async (body) => {
 			}
 
 			console.log('successful in inserting message into database');
-			resolve('successful');
+			resolve(
+                {data:'successful'}
+            );
 		});
 	});
 };

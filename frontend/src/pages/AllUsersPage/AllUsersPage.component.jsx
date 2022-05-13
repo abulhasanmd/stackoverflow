@@ -15,7 +15,7 @@ import './AllUsersPage.styles.css';
 
 
 const AllUsersPage = ({getUsers, user: {users, loading}}) => {
-  console.log("asass");
+  //console.log("asass");
 
   useEffect(() => {
     getUsers();
