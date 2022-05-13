@@ -20,3 +20,15 @@ export const SideBarData = [
     text: 'Jobs',
   }
 ]
+
+export const AdminSideBarData = [
+
+  {
+    link: '/admin/pending-questions',
+    text:'Pending Questions'
+  },
+  {
+    link: '/admin/analytics',
+    text:'Analytics'
+  },
+]

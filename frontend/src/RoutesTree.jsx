@@ -93,7 +93,7 @@ const RoutesTree = () => {
 				path="/admin/analytics"
 				element={<AdminAnalyticsComponent />}
 			/>
-			<Route exact path="/admin/pendingquestions" element ={<AllPendingQuestionsComponent/>}/>
+			<Route exact path="/admin/pending-questions" element ={<AllPendingQuestionsComponent/>}/>
 			<Route path="*" element={<NotFoundPage />} />
 			<Route path="/messages" element={<ChatBody/>} />
 		</Routes>
