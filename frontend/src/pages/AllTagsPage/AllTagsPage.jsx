@@ -108,12 +108,14 @@ const AllTagsPage = ({getTags, tag: {tags, loading},auth}) => {
               ))}
           </div>
         </div>
+        <div className='sof-pagination'>
         <Pagination
           page={page}
           itemList={tags.filter((tag) => tag.name.toLowerCase().includes(fetchSearch.toLowerCase()))}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />
+        </div>
       </div>
     </Fragment>
   );

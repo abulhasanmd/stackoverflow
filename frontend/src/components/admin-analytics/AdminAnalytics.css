@@ -1,5 +1,6 @@
 .analytics-container{
     margin-top: 50px;
+    margin-left: 50px;
 }
 /* .analytics-graphs-container{
     display: flex;
@@ -7,17 +8,19 @@
     justify-content: center;
     margin-top: 50px;
 } */
-
+.admin-analytics-page{
+    margin-left: 50px;
+}
 .analytics-barchart{
     /* height: 600px ; */
-    width: 800px ;
+    width: 1000px ;
     margin-top: 50px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     padding: 20px;
 }
 .analytics-barchart:hover{
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
 }
 .analytics-header{
