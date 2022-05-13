@@ -155,7 +155,7 @@ const getUserProfile = async (userId) => {
 	try {
 		const userDetails = await User.findOne({
 			_id: userId,
-		}).lean();
+		}).populate('bookmarks').lean();
 		const questionsAsked = await Question.count({
 			createdBy: userId,
 		}).lean();
