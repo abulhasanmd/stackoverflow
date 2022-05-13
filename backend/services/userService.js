@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-param-reassign */
 const _ = require('lodash');
+const mongoose = require('mongoose');
 const Tag = require('../models/Tag');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
@@ -54,6 +55,31 @@ const getTagsUsedInQuestions = async (userId) => {
 		return {
 			error: {
 				message: e.message,
+			},
+		};
+	}
+};
+
+const getEvents = async (userId) => {
+	try {
+		const events = await Event.aggregate().match({
+			affectedUser: new mongoose.Types.ObjectId(userId),
+		}).group({
+			_id: {
+				$dateToString: {
+					format: '%Y-%m-%d',
+					date: '$createdOn',
+				},
+			},
+			events: {
+				$push: '$$ROOT',
+			},
+		});
+		return events;
+	} catch (error) {
+		return {
+			error: {
+				message: error.message,
 			},
 		};
 	}
@@ -283,4 +309,5 @@ module.exports = {
 	getUserProfile,
 	getUserPosts,
 	updateUserProfile,
+	getEvents,
 };

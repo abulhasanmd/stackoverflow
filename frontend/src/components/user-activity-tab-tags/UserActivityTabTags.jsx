@@ -11,11 +11,11 @@ const UserActivityTabTags = ({ user }) => {
 					<div className="d-flex ai-center jc-space-between gs16 fw-wrap">
 						<div className="flex--item ws-nowrap">
 							<a
-								href="/search?q=user:8380272+[r]"
+								href="/"
 								className="post-tag js-gps-track"
 								rel="tag"
 							>
-								tag
+								{tag}
 							</a>
 						</div>
 						<div className="flex--item">
