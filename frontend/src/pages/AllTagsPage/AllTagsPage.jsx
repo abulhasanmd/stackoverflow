@@ -76,12 +76,10 @@ const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
             handleChange={handleChange}
             width={'200px'}
           />
-            <div className='addtag-btn'>
             <button
-              className={'s-btn s-btn__primary'}
+              className={'s-btn s-btn__primary addtag-btn'}
               onClick = {()=>handleModalOpen(true)}
             >Add Tag</button>
-          </div>
           {isModalOpen && <AdminAddTag handleModalClose={handleModalClose}/>}
           <ButtonGroup
             buttons={['Popular', 'Name', 'New']}

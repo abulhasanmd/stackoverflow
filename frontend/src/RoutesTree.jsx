@@ -16,6 +16,7 @@ import Home from './pages/Home/Home';
 import ChatBody from './components/chatBody/ChatBody';
 import AllUsersPage from './pages/AllUsersPage/AllUsersPage.component';
 import ProfilePage from './pages/ProfilePage/ProfilePage.component';
+import AllPendingQuestions from './pages/AllPendingQuestionsPage/AllPendingQuestions';
 
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
@@ -59,6 +60,11 @@ const AdminAnalyticsComponent = withPageTitle({
 	title: 'Admin Analytics',
 });
 
+const AllPendingQuestionsComponent = withPageTitle({
+	component: LayoutWrapper({ component: AllPendingQuestions }),
+	title: 'Admin Analytics',
+});
+
 const RoutesTree = () => {
 	return (
 		<Routes>
@@ -87,6 +93,7 @@ const RoutesTree = () => {
 				path="/admin/analytics"
 				element={<AdminAnalyticsComponent />}
 			/>
+			<Route exact path="/admin/pendingquestions" element ={<AllPendingQuestionsComponent/>}/>
 			<Route path="*" element={<NotFoundPage />} />
 			<Route path="/messages" element={<ChatBody/>} />
 		</Routes>
