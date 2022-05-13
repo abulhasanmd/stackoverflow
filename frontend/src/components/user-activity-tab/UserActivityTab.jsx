@@ -4,6 +4,7 @@ import UserReputationActivity from '../user-activity-tab-reputation/UserReputati
 import UserActivityTabTags from '../user-activity-tab-tags/UserActivityTabTags';
 import UserBookmarksActivity from '../user-activity-tab-bookmarks/UserBookmarksActivity';
 import UserActivityTabQuestions from '../user-activity-tab-tags-questions/UserActivityTabQuestions';
+import UserActivityTabAnswers from '../user-activity-tab-tags-answers/UserActivityTabAnswers';
 import './UserActivityTab.css';
 
 export default function UserActivityTab({ user }) {
@@ -16,6 +17,8 @@ export default function UserActivityTab({ user }) {
 			return <UserActivityTabQuestions user={user} />;
 		if (section === 'bookmarks')
 			return <UserBookmarksActivity user={user} />;
+		if (section === 'answers')
+			return <UserActivityTabAnswers user={user} />;
 	};
 
 	const [section, setSection] = useState('tags');
