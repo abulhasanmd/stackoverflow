@@ -10,6 +10,7 @@ import AllTagsPage from './pages/AllTagsPage/AllTagsPage';
 import QuestionsPage from './pages/QuestionsPage/QuestionsPage';
 import QuestionActivity from './pages/QuestionActivity/QuestionActivity';
 import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
+import UpdateQuestionPage from './pages/AskQuestionPage/UpdateQuestionPage';
 import AdminAnalytics from './components/admin-analytics/AdminAnalytics';
 import Post from './pages/Post/Post';
 import Home from './pages/Home/Home';
@@ -83,6 +84,7 @@ const RoutesTree = () => {
 				element={<QuestionsPageComponent />}
 			/>
 			<Route exact path="/add/question" element={<AskQuestionPage />} />
+			<Route exact path="/update/question/:questionId" element={<UpdateQuestionPage />} />
 			{/* <Route exact path='/tags/:tagname' component={TagPageComponent} /> */}
 			<Route exact path="/questions/:id" element={<IndividualPost />} />
 			<Route
