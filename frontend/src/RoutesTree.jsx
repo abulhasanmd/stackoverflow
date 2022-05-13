@@ -75,11 +75,6 @@ const RoutesTree = () => {
 				element={<QuestionsPageComponent />}
 			/>
 			<Route exact path="/add/question" element={<AskQuestionPage />} />
-			<Route
-				exact
-				path="/questions"
-				element={<QuestionsPageComponent />}
-			/>
 			{/* <Route exact path='/tags/:tagname' component={TagPageComponent} /> */}
 			<Route exact path="/questions/:id" element={<IndividualPost />} />
 			<Route
