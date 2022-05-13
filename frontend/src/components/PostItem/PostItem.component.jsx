@@ -1,5 +1,5 @@
 import React from 'react';
-//import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
@@ -83,4 +83,4 @@ PostItem.propTypes = {
 };
 
 //export default connect(null)(PostItem);
-export default PostItem;
+export default connect(null)(PostItem);
