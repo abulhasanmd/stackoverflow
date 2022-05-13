@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import './UserBookmarksActivity.css';
 
-const UserBookmarksActivity = ({ user }) => {
+export default function UserBookmarksActivity({ user }) {
 	const renderBookmarks = () => {
 		const content = [];
 		user.bookmarks.forEach((bookmark) => {
@@ -71,10 +70,4 @@ const UserBookmarksActivity = ({ user }) => {
 			</div>
 		</div>
 	);
-};
-
-const mapStateToProps = (state) => ({
-	user: state.auth.user,
-});
-
-export default connect(mapStateToProps)(UserBookmarksActivity);
+}

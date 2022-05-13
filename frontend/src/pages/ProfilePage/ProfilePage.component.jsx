@@ -54,7 +54,7 @@ const ProfilePage = ({ getProfile, user: { user, loading } }) => {
 						</button>
 					</div>
 					{section === 'profile' && <UserSection user={user} />}
-					{section === 'activity' && <UserActivityTab />}
+					{section === 'activity' && <UserActivityTab user={user} />}
 				</div>
 				{section === 'profile' && (
 					<div className="row-grid">
