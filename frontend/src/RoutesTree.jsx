@@ -20,6 +20,7 @@ import AllPendingQuestions from './pages/AllPendingQuestionsPage/AllPendingQuest
 import UserActivityTabTags from './components/user-activity-tab-tags/UserActivityTabTags';
 import AdminPost from './pages/Admin-Post/AdminPost';
 import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
+import UserBadgesActivity from './components/user-activity-tab-badges/UserBadgesActivity';
 
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
@@ -117,6 +118,7 @@ const RoutesTree = () => {
 				path="/reputation-activity"
 				element={<UserReputationActivity />}
 			/>
+			<Route path="/badges-activity" element={<UserBadgesActivity />} />
 		</Routes>
 	);
 };
