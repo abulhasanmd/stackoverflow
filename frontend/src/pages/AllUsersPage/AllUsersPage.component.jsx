@@ -81,12 +81,14 @@ const AllUsersPage = ({getUsers, user: {users, loading}}) => {
               ))}
           </div>
         </div>
+        <div className='pag-wrapper'>
         <Pagination
           page={page}
           itemList={users.filter((user) => user.name.toLowerCase().includes(fetchSearch.toLowerCase()))}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />
+        </div>
       </div>
     </Fragment>
   );
