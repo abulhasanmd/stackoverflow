@@ -114,10 +114,10 @@ const userSchema = new mongoose.Schema({
 		type: Array,
 		default: [],
 	},
-	isAdmin:{
+	isAdmin: {
 		type: Boolean,
-		default:false
-	}
+		default: false,
+	},
 });
 
 const User = mongoose.model('User', userSchema);
