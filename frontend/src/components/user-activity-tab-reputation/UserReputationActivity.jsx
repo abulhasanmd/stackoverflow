@@ -51,7 +51,10 @@ export default function UserReputationActivity({ user }) {
 								<div className="d-flex g4 fw-nowrap fl-grow1 break-word fs-body2 wmx100">
 									<div className="flex--item as-center fs-body2 mt2 md:mt0">
 										<a
-											href="/questions/3293531/how-to-permanently-remove-few-commits-from-remote-branch/3293592#3293592"
+											href={
+												'/questions/' +
+												postEvents[0].articleId
+											}
 											className="answer-hyperlink "
 										>
 											{postEvents[0].articleName ||
