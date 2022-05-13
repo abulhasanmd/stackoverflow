@@ -44,7 +44,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 				<img
 					alt='user-logo'
 					className='logo'
-					src='https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50'
+					src="https://secure.gravatar.com/avatar/64?s=164&d=identicon"
 				/>
 				</Link>
 			)}
