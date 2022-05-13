@@ -1,11 +1,9 @@
 /* eslint-disable no-debugger */
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-
 import './UserReputationActivity.css';
 import { KAFKA_MIDDLEWARE_URL } from '../../config/configBackend';
 
-const UserReputationActivity = ({ user }) => {
+export default function UserReputationActivity({ user }) {
 	const [events, setEvents] = useState([]);
 	useEffect(() => {
 		(async () => {
@@ -291,13 +289,7 @@ const UserReputationActivity = ({ user }) => {
 			</div>
 		</div>
 	);
-};
-
-const mapStateToProps = (state) => ({
-	user: state.auth.user,
-});
-
-export default connect(mapStateToProps)(UserReputationActivity);
+}
 
 /**
  * 

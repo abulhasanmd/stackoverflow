@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import './UserBadgesActivity.css';
 
-const UserBadgesActivity = ({ user }) => {
+export default function UserBadgesActivity({ user }) {
 	const getBadgeClass = (level) => {
 		if (level === 'Gold') return 1;
 		if (level === 'Silver') return 2;
@@ -58,10 +57,4 @@ const UserBadgesActivity = ({ user }) => {
 			</div>
 		</div>
 	);
-};
-
-const mapStateToProps = (state) => ({
-	user: state.auth.user,
-});
-
-export default connect(mapStateToProps)(UserBadgesActivity);
+}

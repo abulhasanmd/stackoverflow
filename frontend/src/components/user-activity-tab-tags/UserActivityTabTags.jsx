@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import './UserActivityTabTags.css';
 
-const UserActivityTabTags = ({ user }) => {
+export default function UserActivityTabTags({ user }) {
 	const renderTags = (tagsInformation) => {
 		const content = [];
 		Object.keys(tagsInformation).forEach((tag) => {
@@ -62,10 +61,4 @@ const UserActivityTabTags = ({ user }) => {
 			</div>
 		</div>
 	);
-};
-
-const mapStateToProps = (state) => ({
-	user: state.auth.user,
-});
-
-export default connect(mapStateToProps)(UserActivityTabTags);
+}

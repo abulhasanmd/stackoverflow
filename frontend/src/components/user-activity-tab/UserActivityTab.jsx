@@ -5,12 +5,14 @@ import UserActivityTabTags from '../user-activity-tab-tags/UserActivityTabTags';
 import UserBookmarksActivity from '../user-activity-tab-bookmarks/UserBookmarksActivity';
 import './UserActivityTab.css';
 
-export default function UserActivityTab() {
+export default function UserActivityTab({ user }) {
 	const renderSection = () => {
-		if (section === 'tags') return <UserActivityTabTags />;
-		if (section === 'badges') return <UserBadgesActivity />;
-		if (section === 'reputation') return <UserReputationActivity />;
-		if (section === 'bookmarks') return <UserBookmarksActivity />;
+		if (section === 'tags') return <UserActivityTabTags user={user} />;
+		if (section === 'badges') return <UserBadgesActivity user={user} />;
+		if (section === 'reputation')
+			return <UserReputationActivity user={user} />;
+		if (section === 'bookmarks')
+			return <UserBookmarksActivity user={user} />;
 	};
 
 	const [section, setSection] = useState('tags');
