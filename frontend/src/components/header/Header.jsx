@@ -35,7 +35,7 @@ const Header = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   // };
 
   let badgeCount = { Bronze: 0, Silver: 0, Gold: 0 };
-  if (user) {
+  if (user && user.badges) {
     Object.values(user.badges).forEach((badge) => {
       if (badge.level == "Bronze") {
         badgeCount.Bronze += 1;
