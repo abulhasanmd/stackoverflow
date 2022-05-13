@@ -7,6 +7,7 @@ const Tag = require('../models/Tag');
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 const utils = require('../utils');
+const badgesService = require('./badgesService');
 
 async function getTags(tagIds) {
 	const tagsInfo = await Tag.find({
@@ -36,6 +37,7 @@ const postQuestion = async (body) => {
 			await User.findByIdAndUpdate(body.createdBy._id, {
 				tagsInformation: tagsObj,
 			});
+			badgesService.updateBadges(body.createdBy._id, 'score', null, tagsObj);
 		}
 		return {
 			data: question,
@@ -77,7 +79,6 @@ function addSortFunc(que, filter) {
 		break;
 	}
 }
-
 
 const getAllQuestions = async (data) => {
 	const {
@@ -154,12 +155,14 @@ const updateQuestion = async ({
 	}
 };
 
-
-let getUserVote = async (questionId, userId) => {
-	let userVote = await Vote.findOne({resourceId: questionId, createdBy: userId }).lean()
-	let result = _.get(userVote, 'votes')
-	return result? `${result}`: '0'
-}
+const getUserVote = async (questionId, userId) => {
+	const userVote = await Vote.findOne({
+		resourceId: questionId,
+		createdBy: userId,
+	}).lean();
+	const result = _.get(userVote, 'votes');
+	return result ? `${result}` : '0';
+};
 
 const getQuestionById = async (msg) => {
 	const {
@@ -167,7 +170,7 @@ const getQuestionById = async (msg) => {
 		query,
 		params,
 	} = msg;
-	let authUserId = _.get(query, 'userId');
+	const authUserId = _.get(query, 'userId');
 	const {
 		questionId,
 	} = params;
@@ -192,7 +195,7 @@ const getQuestionById = async (msg) => {
 		const userDetails = await User.findById(userId).lean();
 		Object.assign(queDetails.createdBy, userDetails);
 		// end
-		queDetails.voted = await getUserVote(questionId, authUserId)
+		queDetails.voted = await getUserVote(questionId, authUserId);
 		return queDetails;
 	} catch (e) {
 		console.error('Exception occurred while while getting question by ID', e);
