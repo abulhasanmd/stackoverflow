@@ -54,7 +54,7 @@ const addVote = async (body) => {
 				articleName = answer.questionId.title;
 			}
 			const userResponse = await User.updateOne({
-				_id: body.createdBy,
+				_id: affectedUser,
 			}, {
 				$inc: {
 					reputation: vote.score,
@@ -112,7 +112,7 @@ const addVote = async (body) => {
 				affectedUser = answer.createdBy._id;
 			}
 			const userResponse = await User.updateOne({
-				_id: body.createdBy,
+				_id: affectedUser,
 			}, {
 				$inc: {
 					reputation: vote.score * 2,
