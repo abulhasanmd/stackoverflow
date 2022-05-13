@@ -122,7 +122,7 @@ import './CommentCell.styles.css';
                     </div>
                     {!auth.loading &&
                       auth.isAuthenticated &&
-                      comment.user_id === auth.user.userId && (
+                      comment.user_id === auth.user._id && (
                         <Link
                           className='s-tag s-tag__moderator'
                           style={{marginTop: '4px'}}

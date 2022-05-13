@@ -65,7 +65,7 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
           </div>
         ) : (
           <div className="post-actions fc-black-800">
-            (
+            
             <div className="post-actions-extended">
               <div className="post-btns">
                 <div className="post-menu">
@@ -106,7 +106,7 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
                 username={username}
               />
             </div>
-            )
+            
           </div>
         )}
       </div>

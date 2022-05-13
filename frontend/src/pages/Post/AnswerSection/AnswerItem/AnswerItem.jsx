@@ -18,6 +18,7 @@ import './AnswerItem.styles.css';
 
 const AnswerItem =({
   deleteAnswer,
+  addVoteToPost,
   answer,
   // answer: {body, user_id, gravatar, vote, id, created_at, username},
   post: {post},
@@ -62,7 +63,7 @@ const handleVote = (id, type) => {
     console.log("author clicked the vote button");
   }
 }
-
+console.log("answer vote", answer);
   // const handleBestAnswer = (answerId) => {
   //   console.log("answerId is",answerId);
   // }
@@ -86,7 +87,7 @@ const handleVote = (id, type) => {
                 color: '#808080',
               }} />
             </button>
-            <div className='vote-count fc-black-500'>{answer?.vote}</div>
+            <div className='vote-count fc-black-500'>{answer?.votes ? answer?.votes : 0}</div>
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
@@ -159,6 +160,7 @@ AnswerItem.propTypes = {
   post: PropTypes.object.isRequired,
   answer: PropTypes.object.isRequired,
   deleteAnswer: PropTypes.func.isRequired,
+  addVoteToPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -166,4 +168,4 @@ const mapStateToProps = (state) => ({
   post: state.post,
 });
 
-export default connect(mapStateToProps, {deleteAnswer})(AnswerItem);
+export default connect(mapStateToProps, {deleteAnswer, addVoteToPost})(AnswerItem);
