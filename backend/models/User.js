@@ -110,10 +110,11 @@ const userSchema = new mongoose.Schema({
 	badges: {
 		type: Schema.Types.Mixed,
 	},
-	bookmarks: {
-		type: Array,
+	bookmarks: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Question',
 		default: [],
-	},
+	}],
 	isAdmin: {
 		type: Boolean,
 		default: false,
