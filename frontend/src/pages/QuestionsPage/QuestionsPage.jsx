@@ -55,7 +55,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading },auth }) => {
     <Fragment>
       {searchQuery ? (
         <PageTitle
-          title={`Search Results for ${searchQuery} - CLONE Stack Overflow`}
+          title={`Search Results for ${searchQuery} - Stack Overflow`}
         />
       ) : (
         ''

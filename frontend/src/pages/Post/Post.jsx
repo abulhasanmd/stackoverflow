@@ -18,10 +18,7 @@ import './Post.styles.css';
 const Post = ({getPost, post: {post, loading}}) => {
   const { id } = useParams();
   // const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
-  console.log(post, "post is vvvvv");
-
   useEffect(() => {
-    console.log(post, "post is vvvvv");
     getPost(id);
   }, [getPost]);
 
@@ -37,7 +34,7 @@ const Post = ({getPost, post: {post, loading}}) => {
       <Spinner type='page' width='75px' height='200px' />
     ) :
     <Fragment>
-      <PageTitle title={`${post.title} - CLONE Stack Overflow`} />
+      <PageTitle title={`${post.title} - Stack Overflow`} />
       <div id='mainbar' className='post'>
         <div className='question-header fc-black-800 pl24'>
           <h1>{post.title}</h1>
