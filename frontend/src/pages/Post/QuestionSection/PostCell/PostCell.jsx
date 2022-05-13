@@ -33,7 +33,10 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
     "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200&d=mm&r=g";
   const created_at = post.createdOn;
   const user_id = post?.createdBy?._id;
+  const postIdPath = `/update/question/${post?._id}`;
+  console.log("post id path is", postIdPath);
   const username = post?.createdBy?.name;
+  console.log("delete post",deletePost);
   // const { descr, tags, gravatar, user_id, username, created_at } = post1;
 
   return (
@@ -86,17 +89,29 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
                   </Link>
                   {!auth.loading &&
                     auth.isAuthenticated &&
-                    user_id === auth.user.userId && (
+                    user_id === auth.user._id && (
                       <Link
                         className="s-link s-link__danger"
                         style={{ paddingLeft: "4px" }}
-                        title="Delete the post"
-                        onClick={() => deletePost(post.id)}
+                        title="Edit the post"
+                        // onClick={() => deletePost(post.id)}
+                        to={postIdPath}
+                      >
+                        edit
+                      </Link>
+                    )}
+                    {/* {!auth.loading &&
+                    auth.isAuthenticated &&
+                    user_id === auth.user._id && (
+                      <Link
+                        className="s-link s-link__danger"
+                        style={{ paddingLeft: "4px" }}
+                        title="Edit the post"
                         to="/questions"
                       >
                         delete
                       </Link>
-                    )}
+                    )} */}
                 </div>
               </div>
 
@@ -119,7 +134,7 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
 PostCell.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  deletePost: PropTypes.func.isRequired,
+  // deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

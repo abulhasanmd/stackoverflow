@@ -118,22 +118,14 @@ const getAllQuestions = async (data) => {
 	}
 };
 
-const updateQuestion = async ({
-	params,
-	body,
-}) => {
-	const {
-		userId,
-	} = body;
-	const {
-		questionId,
-	} = params;
-	console.log(`Entering questionService.updateQuestion with params: ${params} && payload:${body}`);
+const updateQuestion = async (data) => {
+	const { userId, questionId } = data;
+	console.log(`Entering questionService.updateQuestion with params: && payload:${data}`);
 	try {
 		const questionResponse = await Question.updateOne({
-			_id: params.questionId,
+			_id: questionId,
 		}, {
-			$set: body,
+			$set: data,
 		}).exec();
 		console.log(`update question response :${questionResponse}`);
 		if (questionResponse) {
