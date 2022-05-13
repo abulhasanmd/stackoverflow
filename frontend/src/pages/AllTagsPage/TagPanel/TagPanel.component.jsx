@@ -22,7 +22,7 @@ const TagPanel = ({tag: {name, descr, questionsCount, noOfQuestionsInSevenDays, 
           added {moment(createdOn).fromNow(false)}
         </div> */}
         <div className="flex--item s-anchors s-anchors__inherit">
-         {numberOfQuestionsByDate} 11 asked today, {noOfQuestionsInSevenDays} this week
+         {numberOfQuestionsByDate} asked today, {noOfQuestionsInSevenDays} this week
         </div>
         {/* <div className="flex--item">{questionsCountThisWeek} this week</div> */}
       </div>

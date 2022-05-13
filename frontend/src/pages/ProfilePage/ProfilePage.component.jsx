@@ -23,7 +23,7 @@ const ProfilePage = ({getProfile, user: {user, loading}}) => {
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>
-      <PageTitle title={`User ${user.name} - CLONE Stack Overflow`} />
+      <PageTitle title={`User ${user.name} - Stack Overflow`} />
       <div id='mainbar' className='user-main-bar pl24 pt24'>
         <div className='user-card'>
           <div className='grid--cell s-navigation mb16'>

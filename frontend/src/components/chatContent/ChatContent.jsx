@@ -32,12 +32,13 @@ class ChatContent extends Component {
   changeUsername = (e) => {
     this.setState({username:e.target.value})
     this.chatItms = []
+    console.log(this.props.auth.user.name)
     this.setState({ chat: [...this.chatItms] });
     this.setState({userExists : this.state.username})
     axios.get(config.BASE_URL + '/messages/getMessages', {
             
         params: {
-            sender:this.props.auth.user.username,
+            sender:this.props.auth.user.name,
             receiver:e.target.value
         }
         
@@ -62,7 +63,7 @@ class ChatContent extends Component {
   sendMessage = (e) =>{
     console.log(e)
     var data = {
-        senderId : this.props.auth.user.username,
+        senderId : this.props.auth.user.name,
         receiverId: this.state.username,
         messageText: this.state.msg
     }
@@ -112,7 +113,7 @@ class ChatContent extends Component {
       if (e.keyCode == 13) {
         if (this.state.msg != "") {
         var data = {
-            senderId : this.props.auth.user.username,
+            senderId : this.props.auth.user.name,
             receiverId: this.state.username,
             messageText: this.state.msg
         }
@@ -142,7 +143,7 @@ class ChatContent extends Component {
 
 
   onStateChange = (e) => {
-    console.log(this.props.auth.user.username)
+    console.log(this.props.auth.user.name)
     this.setState({ msg: e.target.value });
   };
 

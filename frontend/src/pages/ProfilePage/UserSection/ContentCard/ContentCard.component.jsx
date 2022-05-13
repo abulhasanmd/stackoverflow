@@ -13,7 +13,7 @@ const ContentCard = ({ username, answers_count, posts_count, reputation, reach, 
           </div>
           <div className='date'>
             <p>
-              user created &nbsp;-&nbsp;
+              User Created &nbsp;-&nbsp;
               {moment(created_at).fromNow(false)}
             </p>
           </div>
@@ -24,7 +24,7 @@ const ContentCard = ({ username, answers_count, posts_count, reputation, reach, 
           </div>
           <div className='date'>
             <p>
-              Member Since : {memberSince.slice(0,10)}
+              Member Since : {memberSince?.slice(0,10)}
             </p>
           </div>
           <div className='date'>

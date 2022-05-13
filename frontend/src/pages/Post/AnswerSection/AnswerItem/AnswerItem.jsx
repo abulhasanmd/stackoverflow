@@ -1,38 +1,56 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {deleteAnswer} from '../../../../redux/answers/answers.actions';
 import { FcCheckmark } from 'react-icons/fc'
-import {ReactComponent as UpVote} from '../../../../assets/ArrowUpLg.svg';
-import {ReactComponent as DownVote} from '../../../../assets/ArrowDownLg.svg';
+// import {ReactComponent as UpVote} from '../../../../assets/ArrowUpLg.svg';
+// import {ReactComponent as DownVote} from '../../../../assets/ArrowDownLg.svg';
 import UserCard from '../../../../components/UserCard/UserCard.component';
-
+import { addVoteToPost, getPost } from '../../../../redux/posts/posts.actions';
+import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
+// import { getPosts } from '../../../../redux/posts/posts.actions';
+// addPostToBookmark
 import './AnswerItem.styles.css';
 
 
 
 const AnswerItem =({
-  // deleteAnswer,
+  deleteAnswer,
   answer,
   // answer: {body, user_id, gravatar, vote, id, created_at, username},
   post: {post},
   auth,
 }) => {
-console.log("answer is");
-  // const answer1 = {
-  //   body: 'This is body',
-  //   user_id: 'asdfasdf',
-  //   gravatar: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
-  //   id: 'asdfasdf',
-  //   created_at: '2020-01-01',
-  //   username: 'johndoe',
-  // }
+  console.log("answer is");
+  const [voted, setVoted] = React.useState(false);
+  const userId = auth?.user?._id;
+  const authorId = answer?.createdBy?._id;
 
-  // const {answer, user_id, gravatar, created_at, username} = answer1;
+  useEffect(() => {
+    getPost(post?._id);
+  }, [voted])
+
+  console.log(userId,"userId");
+  console.log(authorId, "authorId");
 
 const handleVote = (id, type) => {
   console.log("vote is", type, id);
+  console.log("type is",type);
+  console.log("vote clicked");
+
+  if (userId !== authorId) {
+    setVoted(prev => !prev);
+    addVoteToPost({
+      createdBy: userId,
+      resourceType:"ans",
+      resourceId: id,
+      score:type == "up" ? 10 : -10,
+      votes: type == "up" ? 1 : -1,
+    })
+  } else {
+    console.log("author clicked the vote button");
+  }
 }
 
   return (
@@ -44,18 +62,24 @@ const handleVote = (id, type) => {
               className='vote-up'
               title='This answer is useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
-              onClick = {() => handleVote(answer?.id, 'up')}
+              onClick = {() => handleVote(answer?._id, 'up')}
             >
-              <UpVote className='icon' />
+              <GoTriangleUp style={{
+                fontSize: "40px",
+                color: '#808080',
+              }} />
             </button>
             <div className='vote-count fc-black-500'>{answer?.vote}</div>
             <button
               className='vote-down'
               title='This answer is not useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
-              onClick = {() => handleVote(answer?.id, 'down')}
+              onClick = {() => handleVote(answer?._id, 'down')}
             >
-              <DownVote className='icon' />
+              <GoTriangleDown style={{
+                fontSize: "40px",
+                color: '#808080',
+              }} />
             </button>
             {answer?.isBestAnswer ? <FcCheckmark style={{ fontSize: "30px", marginLeft: "3px" }} /> : null }
           </div>
@@ -85,7 +109,7 @@ const handleVote = (id, type) => {
                 </Link>
                 {!auth.loading &&
                   auth.isAuthenticated &&
-                  answer?.createdBy?._id === auth.user.userId && (
+                  answer?.createdBy?._id === auth?.user?._id && (
                     <Link
                       className='s-link s-link__danger'
                       style={{paddingLeft: '4px'}}
