@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react';
 
-// import {useLocation} from 'react-router-dom';
+ import {useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getPosts} from '../../redux/posts/posts.actions';
@@ -18,30 +18,28 @@ import './QuestionsPage.styles.css';
 
 const itemsPerPage = 10;
 
+
 const QuestionsPage = ({ getPosts, post: { posts, loading },auth }) => {
   
-// const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery] = useState(new URLSearchParams(useLocation().search).get('search'));
+  console.log();
+  //setSearchQuery(new URLSearchParams(useLocation().search).get('search'));
+   useEffect(() => {
+     if(searchQuery)
+     {
+      getPosts(searchQuery);
+     }else{
+      getPosts();
+     }
 
-
-
-  useEffect(() => {
-    // const params = new URLSearchParams(window.location.search)
-    // let search = params.get('search')
-    // searchQuery = URLSearchParams(useLocation().search).get('search')
-
-    getPosts();
-    // setSearchQuery(URLSearchParams(useLocation().search).get('search'));
   }, [getPosts]);
 
-  // useEffect(() => {
-  //   getPosts(searchQuery);
-  //  }, searchQuery);
 
   console.log(posts)
-
+  
   const [page, setPage] = useState(1);
   const [sortType, setSortType] = useState('Score');
-  let searchQuery = "";
+  //let searchQuery = "";
 
   const handlePaginationChange = (e, value) => setPage(value);
 
@@ -95,7 +93,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading },auth }) => {
         </div>
           <div className='questions'>
             {/* {searchQuery ? () : ()} */}
-          {posts?.filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))
+          {posts?.filter((post) => post.title.toLowerCase())  ///.includes(searchQuery ? searchQuery : '')
             ?.sort(handleSorting(sortType))
             .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
             .map((post, index) => (
