@@ -53,7 +53,17 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
             />
           ))}
         </div>
-        {auth.user.isAdmin == false ? (
+        {auth && auth.user && (auth.user.isAdmin == true) ? (
+          <div className="admin-usercard">
+            {" "}
+            <UserCard
+              created_at={created_at}
+              user_id={user_id}
+              gravatar={gravatar}
+              username={username}
+            />
+          </div>
+        ) : (
           <div className="post-actions fc-black-800">
             (
             <div className="post-actions-extended">
@@ -97,16 +107,6 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
               />
             </div>
             )
-          </div>
-        ) : (
-          <div className="admin-usercard">
-            {" "}
-            <UserCard
-              created_at={created_at}
-              user_id={user_id}
-              gravatar={gravatar}
-              username={username}
-            />
           </div>
         )}
       </div>

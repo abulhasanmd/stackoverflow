@@ -15,7 +15,7 @@ import AdminAddTag from '../../components/admin-add-tag/AdminAddTag';
 
 
 
-const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
+const AllTagsPage = ({getTags, tag: {tags, loading},auth}) => {
   useEffect(() => {
     getTags();
   }, [getTags]);
@@ -81,11 +81,14 @@ const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
             handleChange={handleChange}
             width={'200px'}
           />
-            <button
+           {auth.user && auth.user.isAdmin &&
+             <button
               className={'s-btn s-btn__primary addtag-btn'}
               onClick = {()=>handleModalOpen(true)}
             >Add Tag</button>
+           }
           {isModalOpen && <AdminAddTag handleModalClose={handleModalClose}/>}
+           
           <ButtonGroup
             buttons={['Popular', 'Name', 'New']}
             selected={sortType}
@@ -123,6 +126,7 @@ AllTagsPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   tag: state.tag,
+  auth : state.auth
 });
 
 export default connect(mapStateToProps, {getTags})(AllTagsPage);
