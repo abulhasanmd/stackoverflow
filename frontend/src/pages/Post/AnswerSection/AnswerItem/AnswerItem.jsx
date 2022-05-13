@@ -13,12 +13,13 @@ import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
 // import { getPosts } from '../../../../redux/posts/posts.actions';
 // addPostToBookmark
 import './AnswerItem.styles.css';
-
+import { setAlert } from '../../../../redux/alert/alert.actions';
 
 
 const AnswerItem =({
   // deleteAnswer,
   addVoteToPost,
+  setAlert,
   answer,
   // answer: {body, user_id, gravatar, vote, id, created_at, username},
   post: {post},
@@ -81,7 +82,8 @@ console.log("answer vote", answer);
               className='vote-up'
               title='This answer is useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
-              onClick = {() => handleVote(answer?._id, 'up')}
+              // onClick = {() => handleVote(answer?._id, 'up')}
+              onClick = {() => { (!auth.loading && auth.isAuthenticated) ? (handleVote(answer?._id, 'up'))  :  setAlert("Login to Vote!", 'error')}}
             >
               <GoTriangleUp style={{
                 fontSize: "40px",
@@ -93,7 +95,9 @@ console.log("answer vote", answer);
               className='vote-down'
               title='This answer is not useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
-              onClick = {() => handleVote(answer?._id, 'down')}
+              // onClick = {() => handleVote(answer?._id, 'down')}
+              onClick = {() => { (!auth.loading && auth.isAuthenticated) ? (handleVote(answer?._id, 'down')) :  setAlert("Login to Vote!", 'error')}}
+
             >
               <GoTriangleDown style={{
                 fontSize: "40px",
@@ -162,6 +166,7 @@ AnswerItem.propTypes = {
   answer: PropTypes.object.isRequired,
   // deleteAnswer: PropTypes.func.isRequired,
   addVoteToPost: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -170,4 +175,4 @@ const mapStateToProps = (state) => ({
 });
 
 // export default connect(mapStateToProps, {deleteAnswer, addVoteToPost})(AnswerItem);
-export default connect(mapStateToProps, {addVoteToPost})(AnswerItem);
+export default connect(mapStateToProps, {setAlert, addVoteToPost})(AnswerItem);
