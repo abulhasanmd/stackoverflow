@@ -134,7 +134,7 @@ const badgeRules = {
 const updateBadges = async (userId, metric, value, tag) => {
 	const user = await User.findById(userId);
 	const badgesObj = user.badges || {};
-	if (metric === 'score') {
+	if (metric === 'score' && typeof tag === 'string') {
 		if (!badgesObj[tag]) {
 			badgesObj[tag] = {
 				type: 'tag',
@@ -142,6 +142,21 @@ const updateBadges = async (userId, metric, value, tag) => {
 			};
 		}
 		badgesObj[tag].level = badgeRules[metric].getLevel(value);
+		await User.findByIdAndUpdate(userId, {
+			badges: badgesObj,
+		});
+		return;
+	}
+	if (metric === 'score' && typeof tag !== 'string') {
+		Object.keys(tag).forEach((tagName) => {
+			if (!badgesObj[tagName]) {
+				badgesObj[tagName] = {
+					type: 'tag',
+					name: tagName,
+				};
+			}
+			badgesObj[tagName].level = badgeRules[metric].getLevel(tag[tagName].score);
+		});
 		await User.findByIdAndUpdate(userId, {
 			badges: badgesObj,
 		});
