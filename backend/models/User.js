@@ -119,6 +119,8 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
+}, {
+	minimize: false,
 });
 
 const User = mongoose.model('User', userSchema);

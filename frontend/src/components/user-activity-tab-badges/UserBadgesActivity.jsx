@@ -10,33 +10,36 @@ export default function UserBadgesActivity({ user }) {
 	const renderBadges = () => {
 		let content = [];
 		console.log(user);
-		Object.keys(user.badges).forEach((badgeName) => {
-			const badge = user.badges[badgeName];
-			content.push(
-				<div className="grid--item">
-					<div className="d-flex ai-center jc-start">
-						<div className="flex--item mbn4">
-							<a
-								href="/help/badges/19/enlightened?userid=2901002"
-								title="silver badge: First to answer and accepted with score of 10 or more"
-								className={
-									badge.type === 'tag'
-										? 'badge-tag '
-										: 'badge '
-								}
-							>
-								<span
+		if (user.badges) {
+			Object.keys(user.badges).forEach((badgeName) => {
+				const badge = user.badges[badgeName];
+				content.push(
+					<div className="grid--item">
+						<div className="d-flex ai-center jc-start">
+							<div className="flex--item mbn4">
+								<a
+									href="/help/badges/19/enlightened?userid=2901002"
+									title="silver badge: First to answer and accepted with score of 10 or more"
 									className={
-										'badge' + getBadgeClass(badge.level)
+										badge.type === 'tag'
+											? 'badge-tag '
+											: 'badge '
 									}
-								></span>
-								&nbsp;{badgeName}
-							</a>
+								>
+									<span
+										className={
+											'badge' + getBadgeClass(badge.level)
+										}
+									></span>
+									&nbsp;{badgeName}
+								</a>
+							</div>
 						</div>
-					</div>
-				</div>,
-			);
-		});
+					</div>,
+				);
+			});
+		}
+
 		return content;
 	};
 	return (
@@ -46,7 +49,11 @@ export default function UserBadgesActivity({ user }) {
 					<div className="flex--item fl-grow1">
 						<div className="d-flex fd-column">
 							<h2 className="flex--item fs-title mb0">
-								{user && Object.keys(user.badges).length} Badges
+								{user.badges
+									? `${
+											Object.keys(user.badges).length
+									  } Badges`
+									: '0 Badges'}
 							</h2>
 						</div>
 					</div>
