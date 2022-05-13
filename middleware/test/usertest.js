@@ -6,111 +6,145 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../src/app');
-const { generateToken } = require('../src/utils/jwtUtil');
-
 const should = chai.should();
 
+before(done => {
+  setTimeout(() => {
+    done();
+
+  }, 10000);
+});
+
 chai.use(chaiHttp);
-describe('/POST LOGIN', () => {
-  it('it should throw error on login', (done) => {
-    chai.request(app)
-      .post('/users/login')
-      .end((err, res) => {
-        res.should.have.status(401);
-        done();
-      });
-  });
-});
 
-describe('/POST LOGIN', () => {
-  it('it should return token on login', (done) => {
-    const user = {
-      email: 'shahrukh@gmail.com',
-      password: 'password',
-    };
+describe('/ADMIN GET-TAGS', () => {
+  it('It should fetch all the tags', (done) => {
     chai.request(app)
-      .post('/users/login')
-      .send(user)
+      .get('/admin/get-tags')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('token');
+        res.body.should.have.property('data');
         done();
       });
   });
 });
 
-describe('/POST REGISTER', () => {
-  it('it should return error on register', (done) => {
-    const user = {
-      email: 'shahrukh@gmail.com',
-      password: 'password',
-    };
+describe('/ADMIN GET-PENDING-QUESTIONS', () => {
+  it('It should fetch all the pending questions', (done) => {
     chai.request(app)
-      .post('/users/register')
-      .send({})
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
-  });
-});
-
-describe('/POST REGISTER', () => {
-  it('it should return token on login', (done) => {
-    const user = {
-      email: `shahrukh@gmail.com${(Math.random() * 1000)}`,
-      password: 'password',
-      fullname: 'ShahRukh Khan',
-    };
-    chai.request(app)
-      .post('/users/register')
-      .send(user)
+      .get('/admin/get-pending-questions')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('token');
+        res.body.should.have.property('data');
         done();
       });
   });
 });
 
-describe('/GET SUPPORTING DATA FOR PROFILE', () => {
-  it('it should return countries and s3 url on GET request', (done) => {
+describe('/ADMIN GET-ANALYTICS', () => {
+  it('It should fetch the admin analytics', (done) => {
     chai.request(app)
-      .get('/users/get')
-      .set('AuthorizatiOn', generateToken(68))
+      .get('/admin/get-analytics')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('countries');
+        res.body.should.have.property('data');
         done();
       });
   });
 });
 
-describe('/GET ALL FAVOURITES FOR A USER', () => {
-  it('it should return all favourites of the user', (done) => {
+describe('/USER GET-ALL-QUESTIONS', () => {
+  it('It should fetch all the questions', (done) => {
     chai.request(app)
-      .get('/favourites/get-all')
-      .set('AuthorizatiOn', generateToken(68))
+      .get('/questions/get-allquestion')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('message');
+        res.body.should.have.property('data');
         done();
       });
   });
 });
 
-describe('/GET Check if an Item is favourite for an user', () => {
-  it('it should return ERROR as item is not favourite for the user', (done) => {
+describe('/USER GET-SPECIFIC-QUESTION', () => {
+  it('It should fetch a specific question detail', (done) => {
     chai.request(app)
-      .get('/favourites/check-favourite?item_id=11111')
-      .set('Authorization', generateToken(68))
+      .get('/questions/get-questionbyid/627de55f33ccb6af3a111724')
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
         done();
       });
   });
 });
+
+describe('/USER FETCH ALL POSTS', () => {
+  it('It should fetch all the Posts of the User', (done) => {
+    chai.request(app)
+      .get('/users/627d97d015a42baf06a52112/posts')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        done();
+      });
+  });
+});
+
+describe('/USER FETCH USER PROFILE', () => {
+  it('It should fetch the user profile of the user', (done) => {
+    chai.request(app)
+      .get('/users/profile/627d97d015a42baf06a52112')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        done();
+      });
+  });
+});
+
+describe('/USER GET REPUTATION ACTIVITY OF THE USER', () => {
+  it('It should fetch the reputation activity of the user', (done) => {
+    chai.request(app)
+      .get('/users/get-reputation-activity/627d97d015a42baf06a52112')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        done();
+      });
+  });
+});
+
+describe('/USER GET BOOKMARKS OF THE USER', () => {
+  it('It should fetch the bookmarks of the user', (done) => {
+    chai.request(app)
+      .get('/users/get-bookmarks/627d97d015a42baf06a52112')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        done();
+      });
+  });
+});
+// //get-tags-used-in-questions/
+
+describe('/USER GET TAGS USED BY USER IN QUESTIONS', () => {
+  it('It should fetch all the tags used by the user in all the questions', (done) => {
+    chai.request(app)
+      .get('/users/get-tags-used-in-questions/627d97d015a42baf06a52112')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        done();
+      });
+  });
+});
+
