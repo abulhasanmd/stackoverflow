@@ -96,6 +96,7 @@ let getUsersOnMatch = async (key, value) => {
 	let matchCnd = {}
 	matchCnd[key] = { $regex: `^${value}$`, $options: 'i' }
 	let usersR = await UserModel.find(matchCnd).lean();
+	// console.log("###getUsersOnMatch : matchCnd : ", matchCnd, usersR);
 	return usersR;
 }
 
@@ -107,7 +108,10 @@ let getTagsOnMatch = async (key, value) => {
 }
 
 let getQuestionsMatchCnd = (key, value) => {
-	let matchCnd = {reviewStatus: 'approved'}
+	let matchCnd = {}
+	if (key !== 'reviewStatus') {
+		matchCnd = {reviewStatus: 'approved'}
+	}
 	if (value) {
 		matchCnd[key] = { $regex: value, $options: 'i' }
 	}
@@ -137,7 +141,11 @@ async function getRawPosts(searchq = '', filter, inputTagIds = []) {
 			self.searchTitle = `Results for Query '${query}' questioned by '${value}'`;
 			let usersInfo = await getUsersOnMatch(key, value)
 			let userIds = _.map(usersInfo, '_id');
-			QuestionsP = QuestionsModel.find({reviewStatus: 'approved', title: { $regex: query, $options: 'i'}, createdBy: { $in: userIds }})
+			matchCnd = {reviewStatus: 'approved', "createdBy._id": { $in: userIds }}
+			if(query) {
+				matchCnd['title'] = { $regex: query, $options: 'i'}
+			}
+			QuestionsP = QuestionsModel.find(matchCnd)
 			addSortFilter(QuestionsP, filter)
 			posts = await QuestionsP.lean()
 			break;

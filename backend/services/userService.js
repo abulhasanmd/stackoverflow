@@ -163,7 +163,7 @@ const getUserProfile = async (userId) => {
 			'createdBy._id': userId,
 		}).lean();
 		const tagsUsed = await tagsUsedByUser(userId);
-		userDetails.tagsUsed = _.cloneDeep(tagsUsed);
+		userDetails.tagsUsed = _.cloneDeep(tagsUsed) || [];
 		Object.assign(userDetails, {
 			questionsAnswered,
 			questionsAsked,
