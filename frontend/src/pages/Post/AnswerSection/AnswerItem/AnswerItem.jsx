@@ -152,6 +152,7 @@ console.log("answer vote", answer);
               username={answer?.createdBy?.name}
               float={'right'}
               backgroundColor={'transparent'}
+              dateType = {'answered'}
             />
           </div>
         </div>
