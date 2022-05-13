@@ -68,7 +68,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 				</div>
 			</Link>
 			<Link
-				to={'/'}
+				to={'/messages'}
 				title={'Messages'}
 				style={{ marginTop:"5px", paddingRight: '20px', color: '#fff' }}
 			>
