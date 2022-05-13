@@ -100,7 +100,7 @@ const AskQuestion = ({ auth }) => {
 									.querySelector('.js-editor')
 									.innerHTML.toString(),
 							);
-							await fetch(
+							const req = await fetch(
 								`${KAFKA_MIDDLEWARE_URL}questions/post-question`,
 								{
 									method: 'POST',
@@ -119,20 +119,22 @@ const AskQuestion = ({ auth }) => {
 											.querySelector('.js-editor')
 											.innerHTML.toString(),
 										reviewStatus: document
-										.querySelector('#editor-container')
-										.querySelector('.js-editor')
-										.innerHTML.toString().includes('<img')?'pending':'approved',
+											.querySelector('#editor-container')
+											.querySelector('.js-editor')
+											.innerHTML.toString()
+											.includes('<img')
+											? 'pending'
+											: 'approved',
 										tags: values.tags,
 										createdBy: {
-											_id:
-												(auth.user &&
-													auth.user.userId) ||
-												'627d97d015a42baf06a52112',
+											_id: auth.user && auth.user._id,
 											imageUrl: 'j',
 										},
 									}),
 								},
 							);
+							const resp = await req.json();
+							window.location.href = `/questions/${resp.data.data._id}`;
 						}}
 					>
 						{({
