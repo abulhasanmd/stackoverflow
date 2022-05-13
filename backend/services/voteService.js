@@ -96,6 +96,7 @@ const addVote = async (body) => {
 					},
 				});
 				console.log(`update question response :${questionResponse}`);
+				affectedUser = question.createdBy._id;
 			} else if (vote.resourceType === 'ans') {
 				const answerResponse = await Answer.updateOne({
 					_id: body.resourceId,
@@ -106,6 +107,7 @@ const addVote = async (body) => {
 					},
 				});
 				console.log(`update answer response :${answerResponse}`);
+				affectedUser = answer.createdBy._id;
 			}
 			const userResponse = await User.updateOne({
 				_id: body.createdBy,
