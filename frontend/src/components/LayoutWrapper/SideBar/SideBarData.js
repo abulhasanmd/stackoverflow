@@ -14,10 +14,6 @@ export const SideBarData = [
   {
     link: '/allusers',
     text: 'Users',
-  },
-  {
-    link: '/jobs',
-    text: 'Jobs',
   }
 ]
 

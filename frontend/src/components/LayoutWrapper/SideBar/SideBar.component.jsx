@@ -22,9 +22,9 @@ const SideBar = ({ user }) => (
             <SideBarItem key={index} link={link} icon={icon} text={text} />
           ))}
       </div>
-      <div className="teams-tabs">
+      {/* <div className="teams-tabs">
         <p className="title fc-light">TEAMS</p>
-      </div>
+      </div> */}
     </div>
   </div>
 );
