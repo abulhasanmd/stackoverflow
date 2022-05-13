@@ -18,6 +18,7 @@ import AllUsersPage from './pages/AllUsersPage/AllUsersPage.component';
 import ProfilePage from './pages/ProfilePage/ProfilePage.component';
 import AllPendingQuestions from './pages/AllPendingQuestionsPage/AllPendingQuestions';
 import UserActivityTabTags from './components/user-activity-tab-tags/UserActivityTabTags';
+import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
 
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
 
@@ -105,6 +106,10 @@ const RoutesTree = () => {
 			<Route path="*" element={<NotFoundPage />} />
 			<Route path="/messages" element={<ChatBody />} />
 			<Route path="/tags-activity" element={<UserActivityTabTags />} />
+			<Route
+				path="/reputation-activity"
+				element={<UserReputationActivity />}
+			/>
 		</Routes>
 	);
 };
