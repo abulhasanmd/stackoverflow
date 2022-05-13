@@ -25,7 +25,7 @@ export const AdminSideBarData = [
 
   {
     link: '/admin/pending-questions',
-    text:'Pending Questions'
+    text:'Review'
   },
   {
     link: '/admin/analytics',

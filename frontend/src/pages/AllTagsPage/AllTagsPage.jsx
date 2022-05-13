@@ -19,6 +19,7 @@ const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
   useEffect(() => {
     getTags();
   }, [getTags]);
+
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [page, setPage] = useState(1);
   const [fetchSearch, setSearch] = useState('');
@@ -49,8 +50,12 @@ const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
     setIsModalOpen(true);
   }
 
-  const handleModalClose = ()=>{
+  const handleModalClose = (isChanged)=>{
+    console.log(isChanged)
     setIsModalOpen(false);
+    if(isChanged===true){
+      getTags();
+    }
   }
 
  
