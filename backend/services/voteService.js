@@ -129,7 +129,7 @@ const addVote = async (body) => {
 			if (voteResponse) {
 				return {
 					data: {
-						message: `Vote ${voteRecord[0]._id} updated Successfully`,
+						message: `Vote updated Successfully`,
 					},
 				};
 			}
