@@ -86,7 +86,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading },auth }) => {
             {new Intl.NumberFormat('en-IN').format(posts?.length)} questions
           </span>
           <ButtonGroup
-            buttons={['Score', 'Hot', 'Views', 'Unanswered']}
+            buttons={['Interesting', 'Hot', 'Score', 'Unanswered']}
             selected={sortType}
             setSelected={setSortType}
           />
