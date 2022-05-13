@@ -74,7 +74,7 @@ const AdminPost = ({ getPost, post: { post, loading } }) => {
     <Spinner type="page" width="75px" height="200px" />
   ) : (
     <Fragment>
-      <PageTitle title={`${post.title} - CLONE Stack Overflow`} />
+      <PageTitle title={`${post.title} - Stack Overflow`} />
       <div id="mainbar" className="post">
         <div className="question-header fc-black-800 pl24">
           <h1>{post.title}</h1>
@@ -82,12 +82,12 @@ const AdminPost = ({ getPost, post: { post, loading } }) => {
         <div className="question-date fc-black-800 pl24">
           <div className="grid-cell">
             <span className="fc-light">Asked</span>
-            <time dateTime={moment(post.created_at).fromNow(true)}>
+            <time dateTime={moment(post.createdOn).fromNow(true)}>
               {moment(post.createdOn).fromNow(true)} ago
             </time>{" "}
             &nbsp;
             <span className="fc-light">Modified</span>
-            <time dateTime={moment(post.created_at).fromNow(true)}>
+            <time dateTime={moment(post.createdOn).fromNow(true)}>
               {moment(post.createdOn).fromNow(true)} ago
             </time>{" "}
             &nbsp;
