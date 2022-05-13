@@ -26,6 +26,8 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
   
   let {id} = useParams();
   console.log("Question Section is",id);
+  const userId = auth?.user?._id;
+  const authorId = post?.createdBy?._id;
   // useEffect(() => {
   //   // let {id} = useParams()
   // }, [])
@@ -45,6 +47,7 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
     const handleVote = ((type) => {
       console.log("type is",type);
       console.log("vote clicked");
+      if (userId !== authorId) {
       addVoteToPost({
         createdBy: auth?.user?._id,
         resourceType:"ques",
@@ -52,6 +55,9 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
         score:type == "up" ? 10 : -10,
         votes: type == "up" ? 1 : -1,
       })
+    }else{
+      console.log("author clicked the vote button");
+    }
       
       });
 

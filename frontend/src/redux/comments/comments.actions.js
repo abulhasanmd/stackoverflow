@@ -10,6 +10,7 @@ import {
   GET_ANSWER_COMMENTS,
   LOADING_COMMENT,
 } from "./comments.types"
+import {getAnswers} from "../answers/answers.actions"
 
 export const getComments =
   (id, type = "question") =>
@@ -61,7 +62,8 @@ export const addComment = (formData) => async (dispatch) => {
     console.log("Add Comment", res.data.data)
     dispatch(setAlert(res.data.message, "success"))
 
-    dispatch(getComments(formData.resourceId))
+    formData.resourceType === "ans" ? dispatch(getAnswers(formData?.questionId)) : dispatch(getComments(formData.resourceId))
+
   } catch (err) {
     // dispatch(setAlert(err.response.data.message, 'danger'));
     console.log("error is", err)
