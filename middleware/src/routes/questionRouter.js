@@ -51,7 +51,7 @@ router.get('/get-allquestion', async (req, res) => {
 	);
 });
 
-router.put('/update-question', async (req, res) => {
+router.put('/update-question/:questionId', async (req, res) => {
 	sendMessage(
 		process.env.QUESTION_TOPIC, {
 			...req.params,
