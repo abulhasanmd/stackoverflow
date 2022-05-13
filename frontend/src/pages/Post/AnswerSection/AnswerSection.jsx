@@ -50,14 +50,16 @@ console.log("Answer section is", answer, "post id is",post._id);
             />
           </div>
         </div>
-        {answer?.loading === null ? (
+        {answer?.loading == true ? (
           <Spinner width='25px' height='25px' />
         ) : (
-          answer?.answers?.sort(handleSorting(sortType)).map((answer, index) => (
+            answer?.answers?.sort(handleSorting(sortType)).map((answer, index) => (
+            (answer.questionId === post._id) ? (
             <div key={index} className='answers'>
               <AnswerItem answer={answer}/>
               <AnswerCommentCell answerId = {answer._id}/>
-            </div>
+                </div>
+            ) : null   
           ))
         )}
         {console.log("Answers are ", answer)}

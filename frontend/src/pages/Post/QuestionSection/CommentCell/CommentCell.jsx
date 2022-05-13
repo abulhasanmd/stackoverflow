@@ -95,7 +95,7 @@ import './CommentCell.styles.css';
         <div className='comments'>
           <ul className='comments-list'>
             {
-              comment.loading === null ? (
+              comment?.loading == true ? (
               <Spinner width='25px' height='25px' />
               ) :
                 (
