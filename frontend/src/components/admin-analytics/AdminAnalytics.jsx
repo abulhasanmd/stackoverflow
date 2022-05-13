@@ -273,7 +273,7 @@ export default function AdminAnalytics() {
   }, []);
 
   return (
-    <div className="mainbar questions-page">
+    <div className="mainbar questions-page admin-analytics-page">
       <PageTitle title='Admin Analytics'/>
       <div className="analytics-header">Admin Analytics</div>
     <div className="analytics-graphs-container">

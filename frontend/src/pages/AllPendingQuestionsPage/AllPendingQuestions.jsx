@@ -83,12 +83,14 @@ export default function AllPendingQuestions() {
               <PostItem key={index} post={{ ...post, isAdmin: true }} />
             ))}
         </div>
+        <div className="admin-pagination">
         {posts.length>0 &&  <Pagination
           page={page}
           itemList={posts}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />}
+        </div>
       </div>
     </Fragment>
   );

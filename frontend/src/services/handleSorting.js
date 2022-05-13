@@ -11,7 +11,7 @@ const handleSorting = (sortType, page = '') => {
     case 'Newest':
       return (a, b) => new Date(b.created_at) - new Date(a.created_at);
     case 'New':
-      return (a, b) => new Date(b.created_at) - new Date(a.created_at);
+      return (a, b) => new Date(b.createdOn) - new Date(a.createdOn);
     case 'New Users':
       return (a, b) => new Date(b.createdOn) - new Date(a.createdOn);
     case 'Top':

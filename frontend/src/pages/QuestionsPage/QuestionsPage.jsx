@@ -102,12 +102,14 @@ const QuestionsPage = ({ getPosts, post: { posts, loading },auth }) => {
               <PostItem key={index} post={post} />
             ))}
         </div>
+        <div className='sof-pagination'>
         <Pagination
           page={page}
           itemList={posts.filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />
+        </div>
       </div>
     </Fragment>
   );
