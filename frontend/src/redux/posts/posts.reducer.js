@@ -29,12 +29,12 @@ export default function posts(state = initialState, action) {
       };
     case ADD_POST_TO_BOOKMARK:
       return state;
-    case GET_POSTS:
     case ADD_POST_TO_BOOKMARK_ERROR:
     case ADD_VOTE_TO_POST:
       return state;
     case ADD_VOTE_TO_POST_ERROR:
     case GET_TOP_POSTS:
+    case GET_POSTS:
     case GET_TAG_POSTS:
       return {
         ...state,
