@@ -57,7 +57,7 @@ console.log("Answer section is", answer, "post id is",post?._id);
             (answer?.questionId === post?._id) ? (
             <div key={index} className='answers'>
               <AnswerItem answer={answer}/>
-              <AnswerCommentCell answerComments = {answer?.comments}/>
+              <AnswerCommentCell answerId = {answer?._id} answerComments = {answer?.comments}/>
                 </div>
             ) : null   
           ))
