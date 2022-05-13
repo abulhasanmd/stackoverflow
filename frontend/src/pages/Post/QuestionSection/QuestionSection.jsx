@@ -22,15 +22,15 @@ import {addPostToBookmark, addVoteToPost} from '../../../redux/posts/posts.actio
 // }
 
 
-const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth, isQuestionAuthor}) => {
+const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth}) => {
   
   let {id} = useParams();
-
+  console.log("Question Section is",id);
   // useEffect(() => {
   //   // let {id} = useParams()
   // }, [])
 
-  console.log(isQuestionAuthor, "from question section")
+  // console.log(isQuestionAuthor, "from question section")
 
   let questionActivityUrl = `/questions/timeline/${id}` ;
 
@@ -123,8 +123,8 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth, 
             commentCount={comment_count}
             tagCount={tags ? tags.length : 0}
           /> */}
-          <PostCell isQuestionAuthor = {isQuestionAuthor} />
-          <CommentCell isQuestionAuthor = {isQuestionAuthor} />
+          <PostCell />
+          <CommentCell />
         </div>
       </div>
     </Fragment>

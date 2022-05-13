@@ -18,9 +18,14 @@ import './Post.styles.css';
 const Post = ({getPost, post: {post, loading}}) => {
   const { id } = useParams();
   // const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
+  console.log(post, "post is vvvvv");
+
   useEffect(() => {
+    console.log(post, "post is vvvvv");
     getPost(id);
   }, [getPost]);
+
+  console.log(post, "post is");
 
   // if (post?.createdBy?._id == auth?.user?._id) { 
   //   setIsQuestionAuthor(true);
