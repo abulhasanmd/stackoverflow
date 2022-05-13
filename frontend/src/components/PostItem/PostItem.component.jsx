@@ -17,7 +17,7 @@ const PostItem = ({
     title,
     // descr,
     createdBy,
-    answer_count,
+    answersCount,
     // comment_count,
     views,
     createdOn,
@@ -25,16 +25,18 @@ const PostItem = ({
     isAdmin
   },
 }) => {
+
+  
   const answerVoteUp = (
     <div className='vote answer'>
-      <span className='vote-count fc-green-500'>5</span>
+      <span className='vote-count fc-green-500'>{answersCount}</span>
       <div className='count-text'>answers</div>
     </div>
   );
 
   const answerVoteDown = (
     <div className='vote'>
-      <span className='vote-count'>5</span>
+      <span className='vote-count'>{answersCount}</span>
       <div className='count-text'>answers</div>
     </div>
   );
@@ -47,7 +49,7 @@ const PostItem = ({
             <span className='vote-count'>{views}</span>
             <span className='count-text'>views</span>
           </div>
-          {answer_count > 0 ? answerVoteUp : answerVoteDown}
+          {answersCount > 0 ? answerVoteUp : answerVoteDown}
           <div className='vote'>
             <span className='vote-count'>{tags.length}</span>
             <div className='count-text'>{tags.length > 1 ? "votes" : "vote" }</div>

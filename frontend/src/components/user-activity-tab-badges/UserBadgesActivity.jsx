@@ -51,9 +51,7 @@ export default function UserBadgesActivity({ user }) {
 							<h2 className="flex--item fs-title mb0">
 								{user.badges
 									? `${
-											Object.keys(user.badges).length
-									  } Badges`
-									: '0 Badges'}
+										Object.keys(user.badges).length } Badges`:'0 Badges'}
 							</h2>
 						</div>
 					</div>
