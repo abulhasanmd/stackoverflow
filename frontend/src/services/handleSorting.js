@@ -41,7 +41,7 @@ const handleSorting = (sortType, page = '') => {
     case 'Interesting':
       return (a, b) => new Date(b.modifiedOn) - new Date(a.modifiedOn);
     case 'Unanswered':
-        return (a, b) => b.views - a.views;
+        return (a, b) => a.answersCount - b.answersCount;
     default:
       break;
   }

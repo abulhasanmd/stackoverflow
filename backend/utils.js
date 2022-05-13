@@ -61,7 +61,19 @@ async function getQuestionsById(questionIds) {
 
 }
 
+let getQuestionsUserAnswered = async (userId) => {
+    // console.log("### getQuestionsUserAnswered : ", userId);
+	const answers = await AnswerModel.find({ "createdBy._id": userId }, { questionId: 1 }).sort({ votes: -1 }).limit(10).lean();
+	const questionIds = _.uniq(_.map(answers, 'questionId'));
+    // console.log("##### questionIds : ", questionIds);
+	const questions = await getQuestionsById(questionIds);
+    // console.log("##### questions : ", questions);
+	return questions;
+};
+
 module.exports = {
     log,
-    getQuestionsById
+    getQuestionsById,
+    resolveTags,
+    getQuestionsUserAnswered
 }

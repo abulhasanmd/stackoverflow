@@ -7,6 +7,7 @@ const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const User = require('../models/User');
 const Event = require('../models/Event');
+const utils = require('../utils');
 
 const questionConstants = require('../constants/questionConstants');
 
@@ -173,6 +174,8 @@ const getUserProfile = async (userId) => {
 		let topUserQuestions = await Question.find({
 			'createdBy._id': userId,
 		}).sort({votes: -1}).limit(10).lean();
+		topUserQuestions = await utils.resolveTags(topUserQuestions)
+		questionsUserAnswered = await utils.getQuestionsUserAnswered(userId)
 		const questionsAnswered = await Answer.count({
 			'createdBy._id': userId,
 		}).lean();
@@ -181,7 +184,8 @@ const getUserProfile = async (userId) => {
 		Object.assign(userDetails, {
 			questionsAnswered,
 			questionsAsked,
-			topUserQuestions
+			topUserQuestions,
+			questionsUserAnswered
 		});
 		return userDetails;
 	} catch (e) {
