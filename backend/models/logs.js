@@ -4,7 +4,7 @@ const mongooseConnection = require('./mongooseConnection');
 const logsSchema = new mongoose.Schema({
 	what: {
 		type: String,
-		required: true
+		required: true,
 	},
 	comment: {
 		type: String,
@@ -17,7 +17,7 @@ const logsSchema = new mongoose.Schema({
 	},
 	createdOn: {
 		type: Date,
-		default: Date.now(),
+		default: Date.now,
 	},
 	resourceId: {
 		type: String,
