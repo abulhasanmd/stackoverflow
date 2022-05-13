@@ -21,7 +21,7 @@ const AvatarCard = ({ id, gravatar, views }) => (
          
           &nbsp;
           <span className='fc-light'>Last Seen</span> &nbsp;
-          {views.slice(0,10)}
+          {views?.slice(0,10)}
         </div>
       </div>
     </div>

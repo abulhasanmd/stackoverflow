@@ -17,17 +17,15 @@ import './Post.styles.css';
 //{getPost, post: {post, loading}, match}
 const Post = ({getPost, post: {post, loading}}) => {
   const { id } = useParams();
+  // const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
   useEffect(() => {
     getPost(id);
-    // eslint-disable-next-line
   }, [getPost]);
 
-  // const post = {
-  //   title: "How to use React Router in React Native?",
+  // if (post?.createdBy?._id == auth?.user?._id) { 
+  //   setIsQuestionAuthor(true);
   // }
 
-
-  
 
   return  (
     loading || post === null ? (
@@ -50,19 +48,19 @@ const Post = ({getPost, post: {post, loading}}) => {
           <div className='grid-cell'>
             <span className='fc-light'>Asked</span>
             <time dateTime={moment(post.created_at).fromNow(true)}>
-              {moment(post.created_at).fromNow(true)} ago
+              {moment(post.createdOn).fromNow(true)} ago
             </time> &nbsp;
             <span className='fc-light'>Modified</span>
             <time dateTime={moment(post.created_at).fromNow(true)}>
-              {moment(post.created_at).fromNow(true)} ago
+              {moment(post.createdOn).fromNow(true)} ago
             </time> &nbsp;
             <span className='fc-light'>Viewed </span>
             <span>{post?.views} times</span>
           </div>
-        </div>
+          </div>
         <div className='question-main pl24 pt16'>
-          <QuestionSection/>
-          <AnswerSection/>
+            <QuestionSection/>
+            <AnswerSection />
         </div>
       </div>
     </Fragment>
@@ -72,10 +70,12 @@ const Post = ({getPost, post: {post, loading}}) => {
 Post.propTypes = {
   getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {getPost})(Post);

@@ -23,13 +23,13 @@ const AnswerForm = ({addAnswer, auth, post: {post}}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     addAnswer({
-      "questionId": post._id,
+      "questionId": post?._id,
       "answer": text,
       "score":  0,
       "vote": 0,
       "isBestAnswer": false,
       "createdBy": {
-        "_id": auth.user.userId,
+        "_id": auth?.user?._id,
         "imageUrl": "j"
       }
     });

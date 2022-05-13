@@ -27,6 +27,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 	let history = useNavigate();
 	const [searchState, setSearchState] = useState(false);
 
+	const id = user?._id;
 	// const user = {
 	// 	username: 'John Doe',
 	// 	gravatar:
@@ -39,24 +40,16 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 			{loading || user === null ? (
 				<Spinner width='50px' height='50px' />
 			) : (
-				<Link to={`/users/${user?.userId}`} title={user?.username}>
+				<Link to={`/users/${id}`}>
 				<img
 					alt='user-logo'
 					className='logo'
 					src='https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50'
 				/>
-						{/* {user?.username} */}
 				</Link>
 			)}
-			{/* <Link to="/userprofile"></Link> */}
-			<Link
-				to={`/users/${user?.userId}`}
-				title={user?.username}
-			>
-				{/* <img alt="user-logo" className="logo" src={user.gravatar} /> */}
-			</Link>
 			{'  '}
-			<Link to='/userprofile'>
+			<Link to={`/users/${id}`}>
 				<div style={{backgroundColor: "", padding:"0px 20px 0px 10px", }}>
 					<span className='navbar-stats'>45 </span>
 					<span> <FaCircle style={{color:"#FFD700", fontSize: "12px" , paddingRight: "5px"}} /> </span>
@@ -87,8 +80,8 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 
 	const authTabs = (
 		<div className="s-navigation">
-			<Link to="/" className="s-navigation--item is-selected">
-				Products
+			<Link to="/questions" className="s-navigation--item is-selected">
+				All Questions
 			</Link>
 		</div>
 	);

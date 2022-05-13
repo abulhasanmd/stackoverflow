@@ -120,8 +120,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
         </div>
           <div className='questions'>
             {/* {searchQuery ? () : ()} */}
-          {posts
-            .filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))
+          {posts?.filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))
             ?.sort(handleSorting(sortType))
             .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
             .map((post, index) => (

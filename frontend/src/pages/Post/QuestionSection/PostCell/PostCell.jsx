@@ -18,17 +18,17 @@ import './PostCell.styles.css';
 // }
 
 //{post: {post: {id=12, post_body, tags, gravatar, user_id, username, created_at} }}
-const PostCell = ({post: {post}}, auth) => {
+const PostCell = ({ deletePost, post: {post}}, auth) => {
 console.log("post is", post)
-  // const post1 = {
-  //   id: 1,
-  //   post_body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lorem ut libero malesuada feugiat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lorem ut libero malesuada feugiat.',
-  //   tags: ['reactjs', 'redux', 'react-redux'],
-  //   gravatar: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200&d=mm&r=g',
-  //   user_id: 1,
-  //   username: 'John Doe',
-  //   created_at: '2020-01-01',
-  // }
+
+  // const [isAuthor, setIsAuthor] = React.useState(false);
+
+  // useEffect(() => {
+  //   if (post.user_id === auth.user.id) {
+  //     setIsAuthor(true);
+  //   }
+  //  }, [post._id]); 
+
   const gravatar = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200&d=mm&r=g';
   const created_at = post.createdOn;
   const user_id = post?.createdBy?._id;
