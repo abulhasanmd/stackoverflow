@@ -1,4 +1,5 @@
-import React, {Fragment, useEffect} from 'react';
+// import React, {Fragment, useEffect} from 'react';
+import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
@@ -23,8 +24,8 @@ const AnswerItem =({
   auth,
 }) => {
   console.log("answer is");
-  const [voted, setVoted] = React.useState(false);
-  const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
+  // const [voted, setVoted] = React.useState(false);
+  // const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
   const userId = auth?.user?._id;
   const authorId = answer?.createdBy?._id;
   // const answerId = answer?.id;
@@ -32,14 +33,14 @@ const AnswerItem =({
   console.log(userId, "userId");
   console.log(authorId, "authorId");
 
-  if (userId === post?.createdBy._id) { 
-    setIsQuestionAuthor(true);
-  }
+  // if (userId === post?.createdBy._id) { 
+  //   setIsQuestionAuthor(true);
+  // }
 
-  useEffect(() => {
-    getPost(post?._id);
-  }, [voted])
-
+  // useEffect(() => {
+  //   getPost(post?._id);
+  // }, [voted])
+  console.log("get post is",getPost(post?._id));
   console.log(userId,"userId");
   console.log(authorId, "authorId");
 
@@ -49,7 +50,7 @@ const handleVote = (id, type) => {
   console.log("vote clicked");
 
   if (userId !== authorId) {
-    setVoted(prev => !prev);
+    // setVoted(prev => !prev);
     addVoteToPost({
       createdBy: userId,
       resourceType:"ans",
@@ -62,16 +63,16 @@ const handleVote = (id, type) => {
   }
 }
 
-  const handleBestAnswer = (answerId) => {
-    console.log("answerId is",answerId);
-  }
+  // const handleBestAnswer = (answerId) => {
+  //   console.log("answerId is",answerId);
+  // }
   
   return (
     <Fragment>
       <div className='answer-layout'>
-        {isQuestionAuthor && (
+        {/* {isQuestionAuthor && (
           <button className='s-btn s-btn__primary' onClick={() => handleBestAnswer}>Choose as Best Answer</button>  
-        )}
+        )} */}
         <div className='vote-cell'>
           <div className='vote-container'>
             <button
