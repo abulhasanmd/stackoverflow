@@ -2,14 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!-- <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> -->
+    <link rel="icon" href="%PUBLIC_URL%/LogoGlyphMd.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/LogoGlyphMd.svg" />
+    <link
+      rel="shortcut icon"
+      href="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico?v=ec617d715196"
+    />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -24,17 +29,27 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <link rel='stylesheet' type='text/css' href='https://cdn.sstatic.net/Shared/stacks.css?v=0ee8a05683e7'>
-    <link rel='stylesheet' type='text/css' href='https://cdn.sstatic.net/Sites/stackoverflow/primary.css?v=c5fdf309f06b'>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.sstatic.net/Shared/stacks.css?v=0ee8a05683e7"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.sstatic.net/Sites/stackoverflow/primary.css?v=c5fdf309f06b"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
     <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-  />
-    <title>Stack Overflow</title>
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <title>
+      Stack Overflow - Where Developers Learn, Share, & Build Careers
+    </title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -49,24 +64,33 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script src='https://unpkg.com/@stackoverflow/stacks-icons'></script>
-    <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+    <script src="https://unpkg.com/@stackoverflow/stacks-icons"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://unpkg.com/@stackoverflow/stacks-icons"></script>
     <script>
       let pageX = $(document).width();
       let pageY = $(document).height();
-      let mouseY=0;
-      let mouseX=0;
+      let mouseY = 0;
+      let mouseX = 0;
 
-      $(document).mousemove(function( event ) {
+      $(document).mousemove(function (event) {
         mouseY = event.pageY;
-        const yAxis = (pageY / 2 - mouseY) / pageY * 300;
+        const yAxis = ((pageY / 2 - mouseY) / pageY) * 300;
         mouseX = event.pageX / -pageX;
         const xAxis = -mouseX * 100 - 100;
 
-        $('.box__ghost-eyes')
-                .css({ 'transform': 'translate('+ xAxis +'%,-'+ yAxis +'%)' });
+        $(".box__ghost-eyes").css({
+          transform: "translate(" + xAxis + "%,-" + yAxis + "%)",
+        });
       });
     </script>
   </body>
