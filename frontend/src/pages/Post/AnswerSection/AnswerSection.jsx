@@ -41,7 +41,7 @@ console.log("Answer section is", answer, "post id is",post?._id);
         <div className='answer-header fc-black-800'>
           <div className='answer-sub-header'>
             <div className='answer-headline'>
-              <h2>{answer?.answers?.data?.length} Answer {answer?.answers?.data?.length > 1 ? 's': ''} </h2>
+              <h2>{answer?.answers?.length} Answer{answer?.answers?.length > 1 ? 's': ''} </h2>
             </div>
             <ButtonGroup
               buttons={['Newest', 'Oldest']}

@@ -15,6 +15,7 @@ import {
   ADD_VOTE_TO_POST,
   ADD_VOTE_TO_POST_ERROR,
   LOADING_POST,
+  GET_QUESTION_LOGS,
 } from "./posts.types"
 
 // Get posts
@@ -57,6 +58,19 @@ export const addPostToBookmark = (body) => async (dispatch) => {
       type: ADD_POST_TO_BOOKMARK_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     })
+  }
+}
+
+export const getQuestionLogs = (questionId) => async (dispatch) => {
+  try {
+    const res = await axios.get(config.BASE_URL + `/logs/${questionId}`)
+    console.log("question logs", res)
+    dispatch({
+      type: GET_QUESTION_LOGS,
+      payload: res.data.data,
+    })
+  } catch (err) {
+    console.log(err)
   }
 }
 

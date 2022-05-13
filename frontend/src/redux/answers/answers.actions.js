@@ -28,6 +28,24 @@ export const getAnswers = (questionId) => async (dispatch) => {
   }
 }
 
+// export const chooseBestAnswer = (answerId) => async (dispatch) => {
+//   try {
+//     const res = await axios.post(
+//       config.BASE_URL + `/answer/choose-best-answer/${answerId}`
+//     )
+//     console.log("Choose best answer res is", res.data.data)
+//     dispatch({
+//       type: GET_ANSWERS,
+//       payload: res.data.data,
+//     })
+//   } catch (err) {
+//     dispatch({
+//       type: ANSWER_ERROR,
+//       payload: { msg: err.response.statusText, status: err.response.status },
+//     })
+//   }
+// }
+
 // Add Answer
 export const addAnswer = (formData) => async (dispatch) => {
   const config_headers = {

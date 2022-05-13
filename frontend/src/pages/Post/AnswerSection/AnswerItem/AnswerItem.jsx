@@ -24,8 +24,17 @@ const AnswerItem =({
 }) => {
   console.log("answer is");
   const [voted, setVoted] = React.useState(false);
+  const [isQuestionAuthor, setIsQuestionAuthor] = React.useState(false);
   const userId = auth?.user?._id;
   const authorId = answer?.createdBy?._id;
+  // const answerId = answer?.id;
+
+  console.log(userId, "userId");
+  console.log(authorId, "authorId");
+
+  if (userId === post?.createdBy._id) { 
+    setIsQuestionAuthor(true);
+  }
 
   useEffect(() => {
     getPost(post?._id);
@@ -53,9 +62,16 @@ const handleVote = (id, type) => {
   }
 }
 
+  const handleBestAnswer = (answerId) => {
+    console.log("answerId is",answerId);
+  }
+  
   return (
     <Fragment>
       <div className='answer-layout'>
+        {isQuestionAuthor && (
+          <button className='s-btn s-btn__primary' onClick={() => handleBestAnswer}>Choose as Best Answer</button>  
+        )}
         <div className='vote-cell'>
           <div className='vote-container'>
             <button
