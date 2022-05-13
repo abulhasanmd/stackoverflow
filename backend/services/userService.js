@@ -124,7 +124,7 @@ const getReputationActivity = async (userId) => {
 };
 
 async function tagsUsedByUser(userId) {
-	const questions = await Question.find({
+	let questions = await Question.find({
 		'createdBy._id': userId,
 	}, {
 		tags: 1,
@@ -138,12 +138,20 @@ async function tagsUsedByUser(userId) {
 		},
 	}).lean();
 	// console.log("tagsUsedByUser: ##### tags:", tags);
-	const tagsScore = {};
-	const tagPostsCount = {};
+	questions = _.map(questions, (ques) => {
+		ques.tags = _.map(ques.tags, (tagId) => tagId.toString())
+		return ques;
+	})
+	let tagsScore = {};
+	let tagPostsCount = {};
 	_.forEach(tagIds, (tagId) => {
-		tagsScore[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId) && question.votes || 0);
-		tagPostsCount[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId)?1: 0);
+		tagId = tagId.toString()
+		tagsScore[tagId] = _.sumBy(questions, (question) => {
+			return _.includes(question.tags, tagId) && question.votes || 0
+		});
+		tagPostsCount[tagId] = _.sumBy(questions, (question) => _.includes(question.tags, tagId.toString())?0: 1)
 	});
+	// console.log("$$$$ tagPostsCount : ", tagPostsCount)
 	tags = _.map(tags, (tag) => {
 		tag.score = tagsScore[tag._id] || 0;
 		tag.questionsCount = tagPostsCount[tag._id];
