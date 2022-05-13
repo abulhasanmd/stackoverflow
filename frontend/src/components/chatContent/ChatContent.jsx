@@ -69,19 +69,17 @@ class ChatContent extends Component {
     }
     
     if (this.state.msg != ""){
+
+        this.chatItms.push({
+            key: 1,
+            type: "",
+            msg: this.state.msg
+          });
+          this.scrollToBottom();
+     this.setState({ chat: [...this.chatItms] });
     axios.post(config.BASE_URL + '/messages/putMessages',data)
             .then(response => {
                 console.log(response);
-                if (this.state.msg != "") {
-                    this.chatItms.push({
-                      key: 1,
-                      type: "",
-                      msg: this.state.msg
-                    });
-                    this.setState({ chat: [...this.chatItms] });
-                    this.scrollToBottom();
-                    
-                  }
             })
         }
         this.setState({ msg: "" });
@@ -112,6 +110,15 @@ class ChatContent extends Component {
     window.addEventListener("keydown", (e) => {
       if (e.keyCode == 13) {
         if (this.state.msg != "") {
+
+            this.chatItms.push({
+                key: 1,
+                type: "",
+                msg: this.state.msg
+              });
+              this.scrollToBottom();
+              this.setState({ chat: [...this.chatItms] });
+
         var data = {
             senderId : this.props.auth.user.name,
             receiverId: this.state.username,
@@ -121,18 +128,8 @@ class ChatContent extends Component {
         axios.post(config.BASE_URL + '/messages/putMessages',data)
         .then(response => {
             console.log(response);
-            if (this.state.msg != "") {
-                this.chatItms.push({
-                  key: 1,
-                  type: "",
-                  msg: this.state.msg
-                });
-                this.setState({ chat: [...this.chatItms] });
-                this.scrollToBottom();
-                
-              }
         })
-          
+        
         this.setState({ msg: "" });
         }   
       }

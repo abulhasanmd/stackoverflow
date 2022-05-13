@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react';
+// import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 // useEffect, useState
 import moment from 'moment';
 import {connect} from 'react-redux';
@@ -38,11 +39,11 @@ import './CommentCell.styles.css';
     // console.log("post id is",post._id);
     console.log("Answer id is",answerId);
 
-      useEffect(() => {
-        getComments(answerId, "answer");
-        // eslint-disable-next-line
-      }, [getComments]);
-   ("comment in answer comment cell is",comment);
+      // useEffect(() => {
+      //   getComments(answerId, "answer");
+      //   // eslint-disable-next-line
+      // }, [getComments]);
+   ("comment in answer comment cell is",comment, getComments);
 
   const [formData, setFormData] = useState({
     body: '',
