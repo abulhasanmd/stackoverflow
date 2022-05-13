@@ -60,7 +60,7 @@ export const addComment = (formData) => async (dispatch) => {
       payload: res.data.data,
     })
     console.log("Add Comment", res.data.data)
-    dispatch(setAlert(res.data.message, "success"))
+    dispatch(setAlert(res?.data?.data?.data?.message, "success"))
 
     formData.resourceType === "ans" ? dispatch(getAnswers(formData?.questionId)) : dispatch(getComments(formData.resourceId))
 
@@ -86,7 +86,7 @@ export const deleteComment = (CommentId) => async (dispatch) => {
       payload: CommentId,
     })
 
-    dispatch(setAlert(res.data.message, "success"))
+    dispatch(setAlert(res?.data?.data?.data?.message, "success"))
   } catch (err) {
     dispatch(setAlert(err.response.data.message, "danger"))
 
