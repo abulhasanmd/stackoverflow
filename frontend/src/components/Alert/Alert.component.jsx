@@ -9,13 +9,13 @@ const Alert = ({ alerts }) => {
     alerts.map((alert, index) => {
       if (alert.alertType === 'success') {
         return (
-          <aside key={index} className="alert s-notice s-notice__success s-notice__important" role="alert">
+          <aside key={index} className="alert s-notice s-notice__success s-notice__important" style={{color: "#fff"}} role="alert">
             {alert.msg}
           </aside>
         )
       } else {
         return (
-          <aside key={index} className="alert s-notice s-notice__danger s-notice__important" role="alert">
+          <aside key={index} className="alert s-notice s-notice__danger s-notice__important" style={{color: "#fff"}} role="alert">
             {alert.msg}
           </aside>
         )

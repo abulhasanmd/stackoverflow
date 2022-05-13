@@ -7,13 +7,14 @@ import {
   LOGIN_FAIL,
   LOGOUT,
 } from "./auth.types"
-import store from '../store';
+import store from "../store"
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
   user: null,
+  message: null,
 }
 
 export default function auth(state = initialState, action) {
@@ -31,8 +32,9 @@ export default function auth(state = initialState, action) {
         ...state,
         // ...action.payload,
         loading: false,
+        message: "success",
       }
-    case LOGIN_SUCCESS:  
+    case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token)
       return {
         ...state,
@@ -48,8 +50,8 @@ export default function auth(state = initialState, action) {
       localStorage.removeItem("token")
       localStorage.removeItem("persist:root")
       console.log("logout dispatch")
-      store.persistor.purge();
-      localStorage.clear();
+      store.persistor.purge()
+      localStorage.clear()
       return {
         token: null,
         isAuthenticated: false,

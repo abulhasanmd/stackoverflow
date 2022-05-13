@@ -32,6 +32,7 @@ const AuthForm = ({register, login, action}) => {
       console.log('Sign in');
       login({email, password});
     }
+    setFormData({username: '', password: '', email: ''});
   };
 
   const signUpLink = (
