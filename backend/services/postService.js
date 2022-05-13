@@ -40,9 +40,8 @@ let getSearchqModelKeyValue = (searchq) => {
 	switch(foundItem) {
 		case 'is:question':
             model = 'question'
-			searchq = searchq.substring('is:question'.length).trim()
 			key = 'title'
-			value = searchq
+			value = searchq.substring('is:question'.length).trim()
             query = ''
             break;
 		case 'user:':
@@ -115,26 +114,27 @@ let getQuestionsMatchCnd = (key, value) => {
 	return matchCnd
 }
 
-
-
-
 async function getRawPosts(searchq = '', filter, inputTagIds = []) {
 	const self = this;
 	let {model, key, value, query} = getSearchqModelKeyValue(searchq);
 	console.log("# search : ", model, key, value, query)
 	let matchCnd = {}, posts = [], QuestionsP;
+	self.searchDescription = ''
 	switch(model) {
 		case 'question':
+			self.searchTitle = `Results for Query '${value}' : questions`;
 			QuestionsP = QuestionsModel.find(getQuestionsMatchCnd(key, value))
-			// addSortFilter(QuestionsP, filter)
+			addSortFilter(QuestionsP, filter)
 			posts = await QuestionsP.lean()
 			break;
 		case 'answer':
+			self.searchTitle = `Results for Query '${value}' : answers`;
 			let answersP = AnswerModel.find({answer: { $regex: value, $options: 'i'}})
 			addSortFilter(answersP, filter)
 			posts = await answersP.lean()
 			break;
 		case 'user':
+			self.searchTitle = `Results for Query '${query}' questioned by '${value}'`;
 			let usersInfo = await getUsersOnMatch(key, value)
 			let userIds = _.map(usersInfo, '_id');
 			QuestionsP = QuestionsModel.find({title: { $regex: query, $options: 'i'}, createdBy: { $in: userIds }})
@@ -142,8 +142,10 @@ async function getRawPosts(searchq = '', filter, inputTagIds = []) {
 			posts = await QuestionsP.lean()
 			break;
 		case 'tag':
+			self.searchTitle = `Results for Query '${query}' tagged with '${value}'`;
 			matchCnd[key] = { $regex: `^${value}$`, $options: 'i'};
 			let tags = await getTagsOnMatch(key, value) 
+			self.searchDescription = _.get(tags, '0.descr')
 			let tagIds = _.map(tags, '_id')
 			QuestionsP = QuestionsModel.find({title: { $regex: query, $options: 'i'}, tags: { $in: tagIds }})
 			addSortFilter(QuestionsP, filter)
@@ -271,7 +273,7 @@ async function getAllPosts(data) {
 	const self = this;
 	const { body, query, params } = data;
 	const { searchq, filter, tagIds } = body;
-	let posts = await getRawPosts(searchq, filter)
+	let posts = await getRawPosts.call(self, searchq, filter)
 	posts = await resolveTags(posts);
 	posts = await resolveUsers(posts);
 	posts =  await resolveCommentsCount(posts)
