@@ -31,6 +31,9 @@ const eventSchema = new mongoose.Schema({
 	articleId: {
 		type: String,
 	},
+	articleName: {
+		type: String,
+	},
 });
 
 const Event = mongooseConnection.model('Event', eventSchema);

@@ -19,7 +19,9 @@ const addVote = async (body) => {
 			}],
 		});
 		let affectedUser;
-		console.log("vote record is ", voteRecord);
+		let
+			articleName;
+		console.log('vote record is ', voteRecord);
 		if (!voteRecord.length) {
 			const voteResponse = await Vote.create(vote);
 			console.log(`add vote response :${voteResponse}`);
@@ -35,6 +37,7 @@ const addVote = async (body) => {
 				});
 				const question = await Question.findById(body.resourceId);
 				affectedUser = question.createdBy._id;
+				articleName = question.title;
 				console.log(`update question response :${JSON.stringify(questionResponse)}`);
 			} else if (vote.resourceType === 'ans') {
 				const answerResponse = await Answer.updateOne({
@@ -46,8 +49,9 @@ const addVote = async (body) => {
 					},
 				});
 				console.log(`update answer response :${answerResponse}`);
-				const answer = await Answer.findById(body.resourceId);
+				const answer = await Answer.findById(body.resourceId).populate('questionId');
 				affectedUser = answer.createdBy._id;
+				articleName = answer.questionId.title;
 			}
 			const userResponse = await User.updateOne({
 				_id: body.createdBy,
@@ -57,13 +61,14 @@ const addVote = async (body) => {
 				},
 			});
 			const eventResponse = await Event.create({
-				type: vote.score > 0 ? "upvote" : "downvote", // should handle marked-as-best in mark best api
-				outcome: vote.score, 
+				type: vote.score > 0 ? 'upvote' : 'downvote', // should handle marked-as-best in mark best api
+				outcome: vote.score,
 				createdBy: vote.createdBy,
-				affectedUser: affectedUser,
-				articleType: vote.resourceType === "ans" ? "answer" : "question",
+				affectedUser,
+				articleName,
+				articleType: vote.resourceType === 'ans' ? 'answer' : 'question',
 				articleId: vote.resourceId,
-				});
+			});
 			if (voteResponse) {
 				return {
 					data: {
@@ -110,13 +115,13 @@ const addVote = async (body) => {
 				},
 			});
 			const eventResponse = await Event.create({
-				type: vote.score > 0 ? "upvote" : "downvote", // should handle marked-as-best in mark best api
-				outcome: vote.score, 
+				type: vote.score > 0 ? 'upvote' : 'downvote', // should handle marked-as-best in mark best api
+				outcome: vote.score,
 				createdBy: vote.createdBy,
-				affectedUser: affectedUser,
-				articleType: vote.resourceType === "ans" ? "answer" : "question",
+				affectedUser,
+				articleType: vote.resourceType === 'ans' ? 'answer' : 'question',
 				articleId: vote.resourceId,
-				});
+			});
 			if (voteResponse) {
 				return {
 					data: {
