@@ -86,6 +86,7 @@ export const addVoteToPost = (body) => async (dispatch) => {
     })
     console.log("body resource type is ", body.resourceType, " & question id is ", body?.questionId)
     body.resourceType === "ans" ? dispatch(getAnswers(body?.questionId)) : dispatch(getPost(body.resourceId))
+    setAlert("Success", "success");
   } catch (err) {
     dispatch({
       type: ADD_VOTE_TO_POST_ERROR,
