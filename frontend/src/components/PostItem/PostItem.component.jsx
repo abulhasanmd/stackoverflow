@@ -22,6 +22,7 @@ const PostItem = ({
     views,
     createdOn,
     tags,
+    isAdmin
   },
 }) => {
   const answerVoteUp = (
@@ -58,7 +59,7 @@ const PostItem = ({
       </div>
       <div className='summary'>
         <h3>
-          <Link to={`/questions/${_id}`}>{title}</Link>
+          {isAdmin?<Link to={`/admin/pending-questions/${_id}`}>{title}</Link>:<Link to={`/questions/${_id}`}>{title}</Link>}
         </h3>
         <div className='brief' dangerouslySetInnerHTML={{__html: injectEllipsis(htmlSubstring(descr, 200))}}></div>
         {tags.map((tag, index) => (

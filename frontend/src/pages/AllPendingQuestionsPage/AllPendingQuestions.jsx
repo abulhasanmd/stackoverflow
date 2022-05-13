@@ -44,9 +44,9 @@ export default function AllPendingQuestions() {
       .then((jsonresp) => {
         console.log(jsonresp);
         if (jsonresp.data) {
-            console.log(jsonresp.data);
-            setPosts(jsonresp.data)
-;        } else {
+          console.log(jsonresp.data);
+          setPosts(jsonresp.data);
+        } else {
           console.log(
             "error occurred while adding tag",
             jsonresp.error.message
@@ -65,10 +65,11 @@ export default function AllPendingQuestions() {
   // loading || posts === null ? (
   //   <Spinner type='page' width='75px' height='200px' />
   // ) :
-  return (<Fragment>
+  return (
+    <Fragment>
       <div id="mainbar" className="questions-page fc-black-800">
         <div className="questions-grid">
-          <h3 className="questions-headline">All Questions</h3>
+          <h3 className="questions-headline">Review Questions</h3>
         </div>
         <div className="questions">
           {/* {searchQuery ? () : ()} */}
@@ -78,7 +79,7 @@ export default function AllPendingQuestions() {
               (page - 1) * itemsPerPage + itemsPerPage
             )
             .map((post, index) => (
-              <PostItem key={index} post={post} />
+              <PostItem key={index} post={{ ...post, isAdmin: true }} />
             ))}
         </div>
         <Pagination
@@ -88,7 +89,8 @@ export default function AllPendingQuestions() {
           handlePaginationChange={handlePaginationChange}
         />
       </div>
-    </Fragment>)
+    </Fragment>
+  );
 }
 
 // const mapStateToProps = (state) => ({
