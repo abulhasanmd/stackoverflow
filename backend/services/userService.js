@@ -168,8 +168,11 @@ const getUserProfile = async (userId) => {
 			_id: userId,
 		}).populate('bookmarks').lean();
 		const questionsAsked = await Question.count({
-			createdBy: userId,
+			'createdBy._id': userId,
 		}).lean();
+		let topUserQuestions = await Question.find({
+			'createdBy._id': userId,
+		}).sort({votes: -1}).limit(10).lean();
 		const questionsAnswered = await Answer.count({
 			'createdBy._id': userId,
 		}).lean();
@@ -178,6 +181,7 @@ const getUserProfile = async (userId) => {
 		Object.assign(userDetails, {
 			questionsAnswered,
 			questionsAsked,
+			topUserQuestions
 		});
 		return userDetails;
 	} catch (e) {

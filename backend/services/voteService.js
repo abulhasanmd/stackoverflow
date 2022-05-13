@@ -96,6 +96,7 @@ const addVote = async (body) => {
 					},
 				});
 				console.log(`update question response :${questionResponse}`);
+				const question = await Question.findById(body.resourceId);
 				affectedUser = question.createdBy._id;
 			} else if (vote.resourceType === 'ans') {
 				const answerResponse = await Answer.updateOne({
@@ -107,6 +108,7 @@ const addVote = async (body) => {
 					},
 				});
 				console.log(`update answer response :${answerResponse}`);
+				const answer = await Answer.findById(body.resourceId).populate('questionId');
 				affectedUser = answer.createdBy._id;
 			}
 			const userResponse = await User.updateOne({
@@ -127,7 +129,7 @@ const addVote = async (body) => {
 			if (voteResponse) {
 				return {
 					data: {
-						message: `Vote ${voteRecord[0]._id} updated Successfully`,
+						message: `Vote updated Successfully`,
 					},
 				};
 			}
