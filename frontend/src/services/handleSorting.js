@@ -9,7 +9,7 @@ const handleSorting = (sortType, page = '') => {
 
   switch (temp) {
     case 'Newest':
-      return (a, b) => new Date(b.created_at) - new Date(a.created_at);
+      return (a, b) => new Date(b.createdOn) - new Date(a.createdOn);
     case 'New':
       return (a, b) => new Date(b.createdOn) - new Date(a.createdOn);
     case 'New Users':
@@ -23,7 +23,7 @@ const handleSorting = (sortType, page = '') => {
     case 'Views':
       return (a, b) => b.views - a.views;
     case 'Oldest':
-      return (a, b) => new Date(a.created_at) - new Date(b.created_at);
+      return (a, b) => new Date(a.createdOn) - new Date(b.createdOn);
     case 'Popular':
       return (a, b) => b.posts_count - a.posts_count;
     case 'Reputation':
