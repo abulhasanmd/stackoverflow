@@ -1,6 +1,7 @@
 /* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
+import { connect } from 'react-redux';
 import { TextField } from '@mui/material';
 import { StacksEditor } from '@stackoverflow/stacks-editor';
 import { Formik } from 'formik';
@@ -11,7 +12,7 @@ import '@stackoverflow/stacks-editor/dist/shared/prosemirror-plugins/image-uploa
 import './AskQuestion.css';
 import { KAFKA_MIDDLEWARE_URL } from '../../config/configBackend';
 
-export default function AskQuestion() {
+const AskQuestion = ({ auth }) => {
 	const [tags, setTags] = useState([]);
 	useEffect(() => {
 		if (!document.querySelector('#editor-container').hasChildNodes()) {
@@ -49,20 +50,25 @@ export default function AskQuestion() {
 		}
 	}, []);
 
-	useEffect(async () => {
-		const req = await fetch(`${KAFKA_MIDDLEWARE_URL}tag/get-tags`, {
-			method: 'GET',
-			mode: 'cors',
-			cache: 'no-cache',
-			credentials: 'same-origin',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			redirect: 'follow',
-			referrerPolicy: 'no-referrer',
-		});
-		const resp = await req.json();
-		setTags(resp.data.data);
+	useEffect(() => {
+		(async () => {
+			const req = await fetch(
+				`${KAFKA_MIDDLEWARE_URL}tag/get-tags-short`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					cache: 'no-cache',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					redirect: 'follow',
+					referrerPolicy: 'no-referrer',
+				},
+			);
+			const resp = await req.json();
+			setTags(resp.data);
+		})();
 	}, []);
 
 	return (
@@ -72,6 +78,7 @@ export default function AskQuestion() {
 			</div>
 			<div className="question-box">
 				<div>
+					{}
 					<Formik
 						initialValues={{
 							title: '',
@@ -112,6 +119,14 @@ export default function AskQuestion() {
 											.querySelector('.js-editor')
 											.innerHTML.toString(),
 										reviewStatus: 'pending',
+										tags: values.tags,
+										createdBy: {
+											_id:
+												(auth.user &&
+													auth.user.userId) ||
+												'627d97d015a42baf06a52112',
+											imageUrl: 'j',
+										},
 									}),
 								},
 							);
@@ -218,7 +233,7 @@ export default function AskQuestion() {
 												option,
 												value,
 											) => option.name === value.name}
-											options={tags}
+											options={tags || []}
 											getOptionLabel={(option) =>
 												option.name
 											}
@@ -228,8 +243,6 @@ export default function AskQuestion() {
 											renderInput={(params) => (
 												<TextField
 													name="tags"
-													// value={[...values.tags]}
-
 													{...params}
 													size="medium"
 													variant="outlined"
@@ -258,4 +271,10 @@ export default function AskQuestion() {
 			</div>
 		</div>
 	);
-}
+};
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+});
+
+export default connect(mapStateToProps)(AskQuestion);

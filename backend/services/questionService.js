@@ -5,7 +5,7 @@ const _ = require('lodash');
 const Question = require('../models/Question');
 const Tag = require('../models/Tag');
 const User = require('../models/User');
-let utils = require('../utils.js');
+const utils = require('../utils');
 
 async function getTags(tagIds) {
 	const tagsInfo = await Tag.find({
@@ -19,9 +19,10 @@ async function getTags(tagIds) {
 const postQuestion = async (body) => {
 	try {
 		const question = await new Question(body).save();
-		const user = User.findById(body.createdBy._id);
+		const user = await User.findById(body.createdBy._id);
 		if (body.tags && body.tags.length > 0 && user) {
-			const tagsObj = user.tagsInformation;
+			console.log(body);
+			const tagsObj = user.tagsInformation || {};
 			body.tags.forEach((tag) => {
 				if (!tagsObj[tag.name]) {
 					tagsObj[tag.name] = {
@@ -31,7 +32,7 @@ const postQuestion = async (body) => {
 				}
 				tagsObj[tag.name].posts += 1;
 			});
-			User.findByIdAndUpdate(body.createdBy._id, {
+			await User.findByIdAndUpdate(body.createdBy._id, {
 				tagsInformation: tagsObj,
 			});
 		}
@@ -114,8 +115,12 @@ const updateQuestion = async ({
 	params,
 	body,
 }) => {
-	let {userId} = body
-	let {questionId} = params 
+	const {
+		userId,
+	} = body;
+	const {
+		questionId,
+	} = params;
 	console.log(`Entering questionService.updateQuestion with params: ${params} && payload:${body}`);
 	try {
 		const questionResponse = await Question.updateOne({
@@ -125,7 +130,7 @@ const updateQuestion = async ({
 		}).exec();
 		console.log(`update question response :${questionResponse}`);
 		if (questionResponse) {
-			await utils.log('edited', 'question', userId, resourceId)
+			await utils.log('edited', 'question', userId, questionId);
 			return {
 				data: {
 					message: 'Question updated Successfully',

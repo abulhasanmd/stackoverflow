@@ -94,6 +94,20 @@ const getTags = async (msg) => {
 	}
 };
 
+const getTagsShort = async () => {
+	try {
+		const tags = await TagsModel.find({});
+		return tags;
+	} catch (error) {
+		return {
+			error: {
+				message: error.message,
+			},
+		};
+	}
+};
+
 module.exports = {
 	getTags,
+	getTagsShort,
 };

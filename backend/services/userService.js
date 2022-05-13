@@ -99,7 +99,7 @@ const getReputationActivity = async (userId) => {
 
 async function tagsUsedByUser(userId) {
 	const questions = await Question.find({
-		"createdBy._id": userId,
+		'createdBy._id': userId,
 	}, {
 		tags: 1,
 		votes: 1,
@@ -124,23 +124,23 @@ async function tagsUsedByUser(userId) {
 	return _.cloneDeep(tags);
 }
 
-let getUserProfile = async (userId) => {
+const getUserProfile = async (userId) => {
 	// console.log("######## IN getUserProfile #######")
 	try {
-		let userDetails = await User.findOne({
+		const userDetails = await User.findOne({
 			_id: userId,
 		}).lean();
-		let questionsAsked = await Question.count({
+		const questionsAsked = await Question.count({
 			createdBy: userId,
 		}).lean();
-		let questionsAnswered = await Answer.count({
+		const questionsAnswered = await Answer.count({
 			'createdBy._id': userId,
 		}).lean();
-		let tagsUsed = await tagsUsedByUser(userId);
+		const tagsUsed = await tagsUsedByUser(userId);
 		userDetails.tagsUsed = _.cloneDeep(tagsUsed);
 		Object.assign(userDetails, {
 			questionsAnswered,
-			questionsAsked
+			questionsAsked,
 		});
 		return userDetails;
 	} catch (e) {
