@@ -15,7 +15,7 @@ import PostItem from "../../components/PostItem/PostItem.component";
 import Pagination from "../../components/Pagination/Pagination.component";
 import { KAFKA_MIDDLEWARE_URL } from "../../config/configBackend";
 import "../QuestionsPage/QuestionsPage.styles.css";
-
+import "./AllPendingQuestions.css";
 const itemsPerPage = 10;
 
 export default function AllPendingQuestions() {
@@ -73,6 +73,7 @@ export default function AllPendingQuestions() {
         </div>
         <div className="questions">
           {/* {searchQuery ? () : ()} */}
+          {posts.length<1 && <h1 className="noquestions">No Questions to be Reviewed</h1>}
           {posts
             .slice(
               (page - 1) * itemsPerPage,
@@ -82,12 +83,12 @@ export default function AllPendingQuestions() {
               <PostItem key={index} post={{ ...post, isAdmin: true }} />
             ))}
         </div>
-        <Pagination
+        {posts.length>0 &&  <Pagination
           page={page}
           itemList={posts}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
-        />
+        />}
       </div>
     </Fragment>
   );

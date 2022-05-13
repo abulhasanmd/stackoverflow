@@ -3,6 +3,7 @@ const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const User = require('../models/User');
 const Event = require('../models/Event');
+const utils = require('../utils');
 
 const addVote = async (body) => {
 	console.log(`Entering voteService.addVote,payload is ${JSON.stringify(body)}`);
@@ -22,6 +23,7 @@ const addVote = async (body) => {
 		if (!voteRecord.length) {
 			const voteResponse = await Vote.create(vote);
 			console.log(`add vote response :${voteResponse}`);
+			await utils.log('vote', 'added', body.createdBy, body.resourceId);
 			if (vote.resourceType === 'ques') {
 				const questionResponse = await Question.updateOne({
 					_id: body.resourceId,

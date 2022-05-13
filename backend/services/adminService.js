@@ -84,7 +84,7 @@ const updateReviewStatus = async (updateParams) => {
 		const questions = await Question.updateOne({
 			_id: updateParams._id,
 		}, {
-			reviewStatus: updateParams.action,
+			reviewStatus: updateParams.reviewStatus,
 		}).exec();
 		console.log(JSON.stringify(questions));
 		if (questions.modifiedCount < 1) {
@@ -96,7 +96,7 @@ const updateReviewStatus = async (updateParams) => {
 		}
 		return {
 			data: {
-				message: `Status successfully updated to ${updateParams.action} for the question`,
+				message: `Status successfully updated to ${updateParams.reviewStatus} for the question`,
 			},
 		};
 	} catch (e) {
