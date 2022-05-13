@@ -75,7 +75,7 @@ const addAnswer = async (body) => {
 		const questionResponse = await Question.updateOne({
 			_id: body.questionId,
 		}, {
-			$set: body,
+			$set: question,
 		}).exec();
 		if (answerResponse && questionResponse) {
 			return answerResponse
