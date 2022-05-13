@@ -67,6 +67,7 @@ export const addAnswer = (formData) => async (dispatch) => {
     })
 
     // dispatch(setAlert(res.data.message, 'success'));
+    dispatch(setAlert("Answer created successfully!", 'success'));
 
     dispatch(getAnswers(formData.questionId))
   } catch (err) {

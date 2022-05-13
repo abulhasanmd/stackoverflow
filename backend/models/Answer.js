@@ -31,7 +31,7 @@ const answerSchema = new mongoose.Schema({
 		type: Number,
 		default: 0,
 	},
-	vote: {
+	votes: {
 		type: Number,
 		default: 0,
 	},

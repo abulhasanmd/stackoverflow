@@ -3,17 +3,41 @@ const Answer = require('../models/Answer');
 const Question = require('../models/Question');
 const Event = require('../models/Event');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 let utils = require('../utils.js');
 
 const bestAnswerScore = 15;
 
+async function resolveUsers(comments) {
+	const userIds = _.uniq(_.map(comments, 'createdBy._id'));
+	const userDetails = await User.find({
+		_id: {
+			$in: userIds,
+		},
+	}).lean();
+	const usersMap = _.keyBy(userDetails, '_id');
+	comments = _.map(comments, (comment) => {
+		// console.log("### post : ", post)
+		let userId = _.get(comment, 'createdBy._id')
+		userId = userId && userId.toString();
+		if(userId) {
+			comment.createdBy = usersMap[userId];
+		}
+		return comment;
+	});
+	return comments;
+}
+
 const getAnswersByQuestionId = async (params) => {
 	console.log('Entering answerService.getAnswersByResourceId');
 	try {
-		console.log('questionId is: ', params.questionId);
 		let answersResponse = await Answer.find({
 			questionId: params.questionId,
 		}).lean();
+		let answerIds = _.map(answersResponse, '_id');
+		let comments = await Comment.find({resourceId: {$in : answerIds}}).lean();
+		comments = await resolveUsers(comments)
+		let commentsHMap = _.groupBy(comments, 'resourceId')
 		const uniqUserIds = _.uniq(_.map(answersResponse, 'createdBy._id'));
 		const userInfo = await User.find({
 			$in: uniqUserIds,
@@ -22,6 +46,7 @@ const getAnswersByQuestionId = async (params) => {
 		answersResponse = _.map(answersResponse, (answer) => {
 			const userId = answer.createdBy._id.toString();
 			answer.createdBy = usersHashMap[userId];
+			answer.comments = commentsHMap[answer._id]
 			return answer;
 		});
 		console.log(`get answer response :${answersResponse}`);
@@ -109,15 +134,16 @@ const bestAnswer = async ({
 	params,
 	body,
 }) => {
+	let { answerId, questionId, createdBy } = body
 	console.log(`Entering answerService.bestAnswer with params: ${params} && payload:${body}`);
 	try {
 		const bestAnswerObj = await Answer.findOne({
-			questionId: body.questionId,
+			questionId: questionId,
 			isBestAnswer: true,
 		}).exec();
 		if (!bestAnswerObj) {
 			const answerResponse = await Answer.updateOne({
-				_id: params.answerId,
+				_id: answerId,
 			}, {
 				$set: {
 					isBestAnswer: true,
@@ -129,7 +155,7 @@ const bestAnswer = async ({
 			}).exec();
 			console.log(`best answer response :${answerResponse}`);
 			const userResponse = await User.updateOne({
-				_id: body.createdBy,
+				_id: createdBy,
 			}, {
 				$inc: {
 					reputation: bestAnswerScore,
@@ -163,7 +189,7 @@ const bestAnswer = async ({
 				},
 			});
 			const markBestAnswerResponse = await Answer.updateOne({
-				_id: params.answerId,
+				_id: answerId,
 			}, {
 				$set: {
 					isBestAnswer: true,
@@ -175,7 +201,7 @@ const bestAnswer = async ({
 			}).exec();
 			console.log(`marked best answer response :${markBestAnswerResponse}`);
 			const userResponse = await User.updateOne({
-				_id: body.createdBy,
+				_id: createdBy,
 			}, {
 				$inc: {
 					reputation: bestAnswerScore,

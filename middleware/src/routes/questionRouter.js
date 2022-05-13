@@ -3,6 +3,7 @@ const express = require('express');
 const {
 	sendMessage,
 } = require('../kafka/producer');
+let questionService = require('../../../backend/services/questionService.js');
 
 const router = express.Router();
 // const redis = require('redis');
@@ -100,6 +101,12 @@ router.get('/get-questionbyid/:questionId', async (req, res) => {
 			}
 		}
 	);
+});
+
+router.get('/get-questions-user-answerd', async (req, res) => {
+	let { query } = req;
+	let questions = await questionService.getQuestionsUserAnswered(query);
+	return res.json({data: questions}).status(200)
 });
 
 module.exports = router;

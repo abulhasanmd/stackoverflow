@@ -18,6 +18,7 @@ import {
   GET_QUESTION_LOGS,
 } from "./posts.types"
 
+import {getAnswers} from "../answers/answers.actions"
 // Get posts
 export const getPosts =
   (searchQuery = "") =>
@@ -53,6 +54,7 @@ export const addPostToBookmark = (body) => async (dispatch) => {
       type: ADD_POST_TO_BOOKMARK,
       payload: res.data.data,
     })
+    dispatch(setAlert(res.data.data.data.message, "success"));
   } catch (err) {
     dispatch({
       type: ADD_POST_TO_BOOKMARK_ERROR,
@@ -83,6 +85,9 @@ export const addVoteToPost = (body) => async (dispatch) => {
       type: ADD_VOTE_TO_POST,
       payload: res.data.data,
     })
+    console.log("body resource type is ", body.resourceType, " & question id is ", body?.questionId)
+    body.resourceType === "ans" ? dispatch(getAnswers(body?.questionId)) : dispatch(getPost(body.resourceId))
+    dispatch(setAlert(res.data.data ? (res.data.data.data ? res.data.data.data.message : res.data.data.error.message) : "", "success"));
   } catch (err) {
     dispatch({
       type: ADD_VOTE_TO_POST_ERROR,

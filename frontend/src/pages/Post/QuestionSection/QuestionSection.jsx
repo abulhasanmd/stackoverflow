@@ -15,6 +15,7 @@ import {MdOutlineHistory} from 'react-icons/md';
 import { useParams } from 'react-router';
 import {Link} from 'react-router-dom'
 import {addPostToBookmark, addVoteToPost} from '../../../redux/posts/posts.actions';
+import { setAlert } from '../../../redux/alert/alert.actions';
 //   {
 //   post: {
 //     post: {answer_count, comment_count, tags},
@@ -22,16 +23,17 @@ import {addPostToBookmark, addVoteToPost} from '../../../redux/posts/posts.actio
 // }
 
 
-const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth}) => {
+const QuestionSection = ({setAlert, addPostToBookmark,addVoteToPost,  post: {post}, auth}) => {
   
   let {id} = useParams();
   console.log("Question Section is",id);
+  const userId = auth?.user?._id;
+  const authorId = post?.createdBy?._id;
   // useEffect(() => {
   //   // let {id} = useParams()
   // }, [])
 
   // console.log(isQuestionAuthor, "from question section")
-
   let questionActivityUrl = `/questions/timeline/${id}` ;
 
     // const createBookmark = async () => {
@@ -45,6 +47,7 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
     const handleVote = ((type) => {
       console.log("type is",type);
       console.log("vote clicked");
+      if (userId !== authorId) {
       addVoteToPost({
         createdBy: auth?.user?._id,
         resourceType:"ques",
@@ -52,8 +55,16 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
         score:type == "up" ? 10 : -10,
         votes: type == "up" ? 1 : -1,
       })
+    }else{
+      console.log("author clicked the vote button");
+    }
       
       });
+
+      // const triggerAlert = () => {
+      //   console.log("alert triggered")
+      //   setAlert("Login to Vote!", 'error')
+      //       };
 
       const handleBookmark = ((questionId, userId) => {
         console.log("questionId is",questionId);
@@ -80,7 +91,8 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
               className='vote-up'
               title='This answer is useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
-              onClick = {() => { (!auth.loading && auth.isAuthenticated) ? (handleVote("up")) : alert("You need to login")}}
+              onClick = {() => { (!auth.loading && auth.isAuthenticated) ? (handleVote("up"))  :  setAlert("Login to Vote!", 'error')
+            }}
             >
               <UpVote className='icon' />
             </button>
@@ -89,7 +101,8 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
               className='vote-down'
               title='This answer is not useful (click again to undo)'
               style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer'}}
-              onClick = {() => { !auth.loading && auth.isAuthenticated ? (handleVote("down")) : alert("You need to login")}}
+              onClick = {() => { !auth.loading && auth.isAuthenticated ? (handleVote("down")) : setAlert("Login to Vote!", 'error')
+            }}
             >
               <DownVote className='icon' />
             </button>
@@ -136,6 +149,7 @@ QuestionSection.propTypes = {
   auth: PropTypes.object.isRequired,
   addPostToBookmark: PropTypes.func.isRequired,
   addVoteToPost: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -143,4 +157,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {addPostToBookmark, addVoteToPost})(QuestionSection);
+export default connect(mapStateToProps, {addPostToBookmark, addVoteToPost, setAlert})(QuestionSection);

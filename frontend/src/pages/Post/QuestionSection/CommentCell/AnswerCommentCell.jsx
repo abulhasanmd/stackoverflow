@@ -4,10 +4,10 @@ import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import {
   getComments,
-  deleteComment,
+  // deleteComment,
   addComment,
 } from '../../../../redux/comments/comments.actions';
 
@@ -32,12 +32,14 @@ import './CommentCell.styles.css';
     addComment,
     comment,
     answerId,
+    answerComments,
     auth,
     post: {post},
   }) => {
 // const CommentCell = ({ comment: {comment} ,post: {post}}) => {
     // console.log("post id is",post._id);
     console.log("Answer id is",answerId);
+    console.log("Answer comments cell is",answerComments);
 
       // useEffect(() => {
       //   getComments(answerId, "answer");
@@ -64,7 +66,9 @@ import './CommentCell.styles.css';
     },
       "resourceType": "ans" ,
         "resourceId":answerId,
-        "comment": body
+        "comment": body,
+        "questionId": post?._id,
+
     }  
     console.log("Add comment payload is",payload);
     addComment(payload);
@@ -100,8 +104,8 @@ import './CommentCell.styles.css';
               <Spinner width='25px' height='25px' />
               ) :
                 (
-              comment?.answerComments?.map((comment, index) => (
-                (comment.resourceId === answerId) ? (
+              answerComments?.map((comment, index) => (
+                // (comment.resourceId === answerId) ? (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>
                     <div className='comment-body'>
@@ -123,7 +127,7 @@ import './CommentCell.styles.css';
                         {moment(comment?.createdOn).fromNow(true)} ago
                       </span>
                     </div>
-                    {!auth.loading &&
+                    {/* {!auth.loading &&
                       auth.isAuthenticated &&
                       comment.user_id === auth.user.userId && (
                         <Link
@@ -135,9 +139,10 @@ import './CommentCell.styles.css';
                         >
                           delete
                         </Link>
-                      )}
+                      )} */}
                   </div>
-                </li> ) : null
+                </li> 
+                // ) : null
               ))
             )}
           </ul>

@@ -33,7 +33,7 @@ import UserBadgesActivity from './components/user-activity-tab-badges/UserBadges
 
 const AllTagsPageComponent = withPageTitle({
 	component: LayoutWrapper({ component: AllTagsPage }),
-	title: 'Tags - CLONE Stack Overflow',
+	title: 'Tags - Stack Overflow',
 });
 
 const QuestionsPageComponent = withPageTitle({
@@ -55,7 +55,7 @@ const IndividualPost = withPageTitle({
 
 const AllUsersPageComponent = withPageTitle({
 	component: LayoutWrapper({ component: AllUsersPage }),
-	title: 'Users - CLONE Stack Overflow',
+	title: 'Users - Stack Overflow',
 });
 
 const AdminAnalyticsComponent = withPageTitle({
