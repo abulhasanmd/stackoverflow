@@ -90,14 +90,25 @@ const QuestionsPage = ({ getPosts, post: { posts, loading }, auth }) => {
             setSelected={setSortType}
           />
         </div>
-          <div className='questions'>
-            {/* {searchQuery ? () : ()} */}
-          {posts?.filter((post) => post.title)                                 ///.includes(searchQuery ? searchQuery : '')
-            ?.sort(handleSorting(sortType))
-            .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
-            .map((post, index) => (
-              <PostItem key={index} post={post} />
-            ))}
+        <div className="questions">
+          {/* {searchQuery ? () : ()} */}
+          {posts &&
+            (sortType == "Unanswered"
+              ? (posts
+                  .filter((post) => post.answersCount==0) ///.includes(searchQuery ? searchQuery : '')
+                  .sort(handleSorting(sortType))
+                  .slice(
+                    (page - 1) * itemsPerPage,
+                    (page - 1) * itemsPerPage + itemsPerPage
+                  )
+                  .map((post, index) => <PostItem key={index} post={post} />))
+              : (posts
+                  .sort(handleSorting(sortType))
+                  .slice(
+                    (page - 1) * itemsPerPage,
+                    (page - 1) * itemsPerPage + itemsPerPage
+                  )
+                  .map((post, index) => <PostItem key={index} post={post} />)))}
         </div>
         <div className="sof-pagination">
           <Pagination
