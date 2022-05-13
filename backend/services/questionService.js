@@ -8,6 +8,7 @@ const Vote = require('../models/Vote');
 const User = require('../models/User');
 const utils = require('../utils');
 const badgesService = require('./badgesService');
+const Answer = require('../models/Answer');
 
 async function getTags(tagIds) {
 	const tagsInfo = await Tag.find({
@@ -254,10 +255,19 @@ const addBookmark = async (body) => {
 	}
 };
 
+let getQuestionsUserAnswered =  async (data) => {
+	let {userId} = data
+	let answers = await Answer.find({createdBy: userId}, {questionId: 1}).sort({votes: -1}).limit(10).lean()
+	let questionIds = _.uniq(_.map(answers, 'questionId'))
+	let questions = await utils.getQuestionsById(questionIds);
+	return questions;
+}
+
 module.exports = {
 	postQuestion,
 	updateQuestion,
 	getAllQuestions,
 	addBookmark,
 	getQuestionById,
+	getQuestionsUserAnswered
 };
