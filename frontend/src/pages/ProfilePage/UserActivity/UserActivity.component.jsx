@@ -7,7 +7,7 @@ import './UserActivity.styles.css';
 const UserActivity = ({userTgs}) => {
 console.log(userTgs);
 
-const tagDiv = Object.keys(userTgs)?.map((item) => {
+const tagDiv = userTgs && Object.keys(userTgs)?.map((item) => {
       console.log(item);
         return (
               <>
