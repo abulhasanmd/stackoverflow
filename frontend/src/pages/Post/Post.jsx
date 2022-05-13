@@ -52,11 +52,11 @@ const Post = ({getPost, post: {post, loading}}) => {
         <div className='question-date fc-black-800 pl24'>
           <div className='grid-cell'>
             <span className='fc-light'>Asked</span>
-            <time dateTime={moment(post.created_at).fromNow(true)}>
+            <time dateTime={moment(post.createdOn).fromNow(true)}>
               {moment(post.createdOn).fromNow(true)} ago
             </time> &nbsp;
             <span className='fc-light'>Modified</span>
-            <time dateTime={moment(post.created_at).fromNow(true)}>
+            <time dateTime={moment(post.modifiedOn).fromNow(true)}>
               {moment(post.createdOn).fromNow(true)} ago
             </time> &nbsp;
             <span className='fc-light'>Viewed </span>

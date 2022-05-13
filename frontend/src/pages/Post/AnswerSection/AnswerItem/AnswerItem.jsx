@@ -3,7 +3,7 @@ import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {deleteAnswer} from '../../../../redux/answers/answers.actions';
+// import {deleteAnswer} from '../../../../redux/answers/answers.actions';
 import { FcCheckmark } from 'react-icons/fc'
 // import {ReactComponent as UpVote} from '../../../../assets/ArrowUpLg.svg';
 // import {ReactComponent as DownVote} from '../../../../assets/ArrowDownLg.svg';
@@ -17,7 +17,7 @@ import './AnswerItem.styles.css';
 
 
 const AnswerItem =({
-  deleteAnswer,
+  // deleteAnswer,
   addVoteToPost,
   answer,
   // answer: {body, user_id, gravatar, vote, id, created_at, username},
@@ -125,7 +125,7 @@ console.log("answer vote", answer);
                 >
                   follow
                 </Link>
-                {!auth.loading &&
+                {/* {!auth.loading &&
                   auth.isAuthenticated &&
                   answer?.createdBy?._id === auth?.user?._id && (
                     <Link
@@ -137,7 +137,7 @@ console.log("answer vote", answer);
                     >
                       delete
                     </Link>
-                  )}
+                  )} */}
               </div>
             </div>
             <UserCard
@@ -159,7 +159,7 @@ AnswerItem.propTypes = {
   auth: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   answer: PropTypes.object.isRequired,
-  deleteAnswer: PropTypes.func.isRequired,
+  // deleteAnswer: PropTypes.func.isRequired,
   addVoteToPost: PropTypes.func.isRequired,
 };
 
@@ -168,4 +168,5 @@ const mapStateToProps = (state) => ({
   post: state.post,
 });
 
-export default connect(mapStateToProps, {deleteAnswer, addVoteToPost})(AnswerItem);
+// export default connect(mapStateToProps, {deleteAnswer, addVoteToPost})(AnswerItem);
+export default connect(mapStateToProps, {addVoteToPost})(AnswerItem);
