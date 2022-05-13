@@ -34,7 +34,7 @@ export default function UserBookmarksActivity({ user }) {
 					<div className="s-post-summary--content">
 						<span>
 							<a
-								href="/questions/69875520/unable-to-negotiate-with-40-74-28-9-port-22-no-matching-host-key-type-found-th"
+								href={'/questions/'+bookmark._id}
 								className="s-post-summary--content-title s-link"
 							>
 								{bookmark.title}

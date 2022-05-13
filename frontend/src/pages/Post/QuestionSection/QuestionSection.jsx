@@ -66,10 +66,10 @@ const QuestionSection = ({setAlert, addPostToBookmark,addVoteToPost,  post: {pos
       //   setAlert("Login to Vote!", 'error')
       //       };
 
-      const handleBookmark = ((questionId, userId) => {
+      const handleBookmark = ((questionId) => {
         console.log("questionId is",questionId);
         console.log("userId is",userId);
-        addPostToBookmark({questionId, userId});
+        addPostToBookmark({questionId, userId:auth['user']._id});
         }); 
 
     // const post = {
@@ -107,7 +107,7 @@ const QuestionSection = ({setAlert, addPostToBookmark,addVoteToPost,  post: {pos
               <DownVote className='icon' />
             </button>
               <div className='vote-count fc-black-500' style={{marginLeft: "10px"}}>
-              <BsBookmarkStar style={{fontSize: "20px", cursor: "pointer"}} onClick = {() => handleBookmark(post._id, post.createdBy._id)} />
+              <BsBookmarkStar style={{fontSize: "20px", cursor: "pointer"}} onClick = {() => handleBookmark(post._id)} />
             </div>
             <button
               className='vote-down'

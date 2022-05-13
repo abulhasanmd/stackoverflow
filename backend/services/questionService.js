@@ -212,7 +212,7 @@ const getQuestionById = async (msg) => {
 };
 
 const addBookmark = async (body) => {
-	const userId = body.createdBy;
+	const { userId } = body;
 	const {
 		questionId,
 	} = body;
@@ -220,22 +220,13 @@ const addBookmark = async (body) => {
 		const userResponse = await User.updateOne({
 				_id: userId,
 			},
-			[{
-				$set: {
-					bookmarks: {
-						$cond: [{
-								$in: [`${questionId}`, '$bookmarks'],
-							},
-							{
-								$setDifference: ['$bookmarks', [`${questionId}`]],
-							},
-							{
-								$concatArrays: ['$bookmarks', [`${questionId}`]],
-							},
-						],
-					},
+			{
+				$addToSet: {
+					bookmarks: questionId,
 				},
-			}]).exec();
+			},
+			).exec();
+		console.log(userResponse);
 		if (userResponse) {
 			return {
 				data: {
