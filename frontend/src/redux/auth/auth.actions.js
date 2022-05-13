@@ -1,8 +1,8 @@
-import axios from "axios"
+import axios from "axios";
 
-import config from "../../config"
+import config from "../../config";
 // import setAuthToken from "./auth.utils"
-import { setAlert } from "../alert/alert.actions"
+import { setAlert } from "../alert/alert.actions";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -11,7 +11,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-} from "./auth.types"
+} from "./auth.types";
 
 // Load User
 // export const loadUser = () => async (dispatch) => {
@@ -41,21 +41,21 @@ export const register =
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-    }
+    };
 
-    const body = JSON.stringify({ username, email, password })
+    const body = JSON.stringify({ username, email, password });
 
     try {
       const res = await axios.post(
         config.BASE_URL + `/users/signup`,
         body,
         config_headers
-      )
-      console.log("register action", res.data)
+      );
+      console.log("register action", res.data);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
-      })
+      });
 
       // dispatch(setAlert(r es.data.message, "success"))
 
@@ -65,9 +65,9 @@ export const register =
 
       dispatch({
         type: REGISTER_FAIL,
-      })
+      });
     }
-  }
+  };
 
 // Login User
 export const login =
@@ -78,22 +78,27 @@ export const login =
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-    }
+    };
 
-    const body = JSON.stringify({ email, password })
+    const body = JSON.stringify({ email, password });
 
     try {
       const res = await axios.post(
         config.BASE_URL + `/users/login`,
         body,
         config_headers
-      )
-      console.log("response from login action", res.data)
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data,
-      })
-
+      );
+      console.log("response from login action", res.data);
+      if (res.data.msg === "Invalid user name or password") {
+        dispatch({
+          type: LOGIN_FAIL,
+        });
+      } else {
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data,
+        });
+      }
       // dispatch(setAlert(res.data.message, "success"))
 
       // dispatch(loadUser())
@@ -102,15 +107,15 @@ export const login =
 
       dispatch({
         type: LOGIN_FAIL,
-      })
+      });
     }
-  }
+  };
 
 //LOGOUT
 export const logout = () => (dispatch) => {
-  dispatch(setAlert("User has logged out", "success"))
-  console.log("first logout action")
-  localStorage.removeItem("token")
+  dispatch(setAlert("User has logged out", "success"));
+  console.log("first logout action");
+  localStorage.removeItem("token");
 
-  dispatch({ type: LOGOUT })
-}
+  dispatch({ type: LOGOUT });
+};
