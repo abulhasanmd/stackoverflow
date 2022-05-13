@@ -173,7 +173,7 @@ export default function UserReputationActivity({ user }) {
 						</div>
 					</div>
 					<div
-						className="s-expandable"
+						className="s-expandable is-expanded"
 						id="expandable-1651881600-72120005"
 					>
 						<div className="js-post-expandable-body s-expandable--content bg-black-050 js-loaded">
