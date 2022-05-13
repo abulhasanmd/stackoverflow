@@ -11,7 +11,7 @@ import {
 } from '../../../../redux/comments/comments.actions';
 
 import Spinner from '../../../../components/Spinner/Spinner';
-import TagBadge from '../../../../components/TagBadge/TagBadge.component';
+// import TagBadge from '../../../../components/TagBadge/TagBadge.component';
 import LinkButton from '../../../../components/link-button/LinkButton';
 
 import './CommentCell.styles.css';
@@ -105,13 +105,14 @@ import './CommentCell.styles.css';
                   <div className='comment-text fc-black-800'>
                     <div className='comment-body'>
                       <span className='body'>{comment?.comment}</span>
-                      &nbsp;&ndash;&nbsp;
-                      <TagBadge
+                    {/* {var userNameLink = "/users/" + comment?.createdBy?._id} */}
+                      &nbsp;&ndash;&nbsp;<Link to={ "/users/" + comment?.createdBy?._id}>{comment?.createdBy.name }</Link>
+                      {/* <TagBadge
                         tag_name={comment?.createdBy?.name? comment?.createdBy.name : "user name missing"}
                         size={'s-tag'}
                         link={`/users/${comment?.createdBy?._id}`}
                         display={'inline'}
-                      />
+                      /> */}
                       <span
                         title={moment(comment?.createdOn).fromNow(true)}
                         style={{color: '#959ca3 !important'}}
