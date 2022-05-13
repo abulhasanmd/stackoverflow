@@ -27,9 +27,9 @@ export default function posts(state = initialState, action) {
         ...state,
         loading: true,
       }
-
-    case GET_POSTS:
     case ADD_POST_TO_BOOKMARK:
+        break;
+    case GET_POSTS:
     case ADD_POST_TO_BOOKMARK_ERROR:
     case ADD_VOTE_TO_POST:
     case ADD_VOTE_TO_POST_ERROR:
