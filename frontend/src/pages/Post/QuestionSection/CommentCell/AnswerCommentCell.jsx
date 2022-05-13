@@ -32,12 +32,14 @@ import './CommentCell.styles.css';
     addComment,
     comment,
     answerId,
+    answerComments,
     auth,
     post: {post},
   }) => {
 // const CommentCell = ({ comment: {comment} ,post: {post}}) => {
     // console.log("post id is",post._id);
     console.log("Answer id is",answerId);
+    console.log("Answer comment cell is",answerComments);
 
       // useEffect(() => {
       //   getComments(answerId, "answer");
@@ -100,7 +102,7 @@ import './CommentCell.styles.css';
               <Spinner width='25px' height='25px' />
               ) :
                 (
-              comment?.answerComments?.map((comment, index) => (
+              answerComments?.map((comment, index) => (
                 (comment.resourceId === answerId) ? (
                 <li key={index} className='comments-item'>
                   <div className='comment-text fc-black-800'>
