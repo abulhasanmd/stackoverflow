@@ -12,13 +12,14 @@ import App from './App';
 // import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
 // import UserBadgesActivity from './components/user-activity-tab-badges/UserBadgesActivity';
 // import UserBookmarksActivity from './components/user-activity-tab-bookmarks/UserBookmarksActivity';
+import UserActivityTabTags from './components/user-activity-tab-tags/UserActivityTabTags';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<BrowserRouter>
-		<App />
+		<UserActivityTabTags />
 	</BrowserRouter>,
 );
 
