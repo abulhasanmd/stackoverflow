@@ -26,6 +26,7 @@ const postQuestion = async (body) => {
 		if (body.tags && body.tags.length > 0 && user) {
 			console.log(body);
 			const tagsObj = user.tagsInformation || {};
+			const tagIds = [];
 			body.tags.forEach((tag) => {
 				if (!tagsObj[tag.name]) {
 					tagsObj[tag.name] = {
@@ -33,12 +34,14 @@ const postQuestion = async (body) => {
 						posts: 0,
 					};
 				}
+				tagIds.push(tag._id);
 				tagsObj[tag.name].posts += 1;
 			});
 			await User.findByIdAndUpdate(body.createdBy._id, {
 				tagsInformation: tagsObj,
 			});
 			badgesService.updateBadges(body.createdBy._id, 'score', null, tagsObj);
+			await Tag.updateMany({ _id: { $in: tagIds } }, { $inc: { questionsCount: 1 } });
 		}
 		return {
 			data: question,
@@ -255,13 +258,13 @@ const addBookmark = async (body) => {
 	}
 };
 
-let getQuestionsUserAnswered =  async (data) => {
-	let {userId} = data
-	let answers = await Answer.find({createdBy: userId}, {questionId: 1}).sort({votes: -1}).limit(10).lean()
-	let questionIds = _.uniq(_.map(answers, 'questionId'))
-	let questions = await utils.getQuestionsById(questionIds);
+const getQuestionsUserAnswered = async (data) => {
+	const { userId } = data;
+	const answers = await Answer.find({ createdBy: userId }, { questionId: 1 }).sort({ votes: -1 }).limit(10).lean();
+	const questionIds = _.uniq(_.map(answers, 'questionId'));
+	const questions = await utils.getQuestionsById(questionIds);
 	return questions;
-}
+};
 
 module.exports = {
 	postQuestion,
@@ -269,5 +272,5 @@ module.exports = {
 	getAllQuestions,
 	addBookmark,
 	getQuestionById,
-	getQuestionsUserAnswered
+	getQuestionsUserAnswered,
 };
