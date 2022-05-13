@@ -51,7 +51,7 @@ const Header = ({auth: {isAuthenticated, loading, user}, logout}) => {
 			{'  '}
 			<Link to={`/users/${id}`}>
 				<div style={{backgroundColor: "", padding:"0px 20px 0px 10px", }}>
-					<span className='navbar-stats'>45 </span>
+					<span className='navbar-stats'>{user?.reputation} </span>
 					<span> <FaCircle style={{color:"#FFD700", fontSize: "12px" , paddingRight: "5px"}} /> </span>
 					<span className='navbar-stats'>1 </span>
 					<span> <FaCircle style={{color:"#a9a9a9", fontSize: "12px", paddingRight: "5px"}} /> </span>
