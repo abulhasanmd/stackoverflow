@@ -129,7 +129,7 @@ const addVote = async (body) => {
 			if (voteResponse) {
 				return {
 					data: {
-						message: `Vote updated Successfully`,
+						message: 'Vote updated Successfully',
 					},
 				};
 			}

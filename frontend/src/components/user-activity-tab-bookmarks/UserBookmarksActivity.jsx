@@ -12,8 +12,8 @@ export default function UserBookmarksActivity({ user }) {
 			content.push(
 				<div className="s-post-summary p12 s-post-summary__minimal">
 					<div className="s-post-summary--stats">
-						<div className="s-post-summary--stats-item has-answers has-accepted-answer">
-							<svg
+						<div className="s-post-summary--stats-item has-answers">
+							{/* <svg
 								aria-hidden="true"
 								className="va-text-bottom svg-icon iconCheckmarkSm"
 								width="14"
@@ -21,7 +21,7 @@ export default function UserBookmarksActivity({ user }) {
 								viewBox="0 0 14 14"
 							>
 								<path d="M13 3.41 11.59 2 5 8.59 2.41 6 1 7.41l4 4 8-8Z"></path>
-							</svg>{' '}
+							</svg>{' '} */}
 							{bookmark.answers.length} answers
 						</div>
 						<div className="s-post-summary--stats-item">
@@ -40,11 +40,11 @@ export default function UserBookmarksActivity({ user }) {
 								{bookmark.title}
 							</a>
 						</span>
-						<div className="s-post-summary--meta">
+						{/* <div className="s-post-summary--meta">
 							<div className="s-post-summary--meta-tags">
 								{tagsContent}
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>,
 			);

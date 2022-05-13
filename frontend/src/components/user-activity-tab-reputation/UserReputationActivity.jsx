@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-debugger */
 import React, { useState, useEffect } from 'react';
 import './UserReputationActivity.css';
@@ -113,9 +114,12 @@ export default function UserReputationActivity({ user }) {
 								aria-expanded="true"
 								aria-controls="expandable-1651881600-72120005"
 								aria-label="toggle 1651881600 reputation change details"
-								onClick={() => {
-									let hiddenIcon = document.querySelector(
+								onClick={(e) => {
+									let hiddenIcon = e.target.querySelector(
 										'.js-post-expandable-hidden',
+									);
+									let visibleIcon = e.target.querySelector(
+										'.js-post-expandable-visible',
 									);
 									if (
 										hiddenIcon.classList.contains('d-none')
@@ -124,9 +128,6 @@ export default function UserReputationActivity({ user }) {
 									} else {
 										hiddenIcon.classList.add('d-none');
 									}
-									let visibleIcon = document.querySelector(
-										'.js-post-expandable-visible',
-									);
 									if (
 										visibleIcon.classList.contains('d-none')
 									) {
@@ -172,7 +173,7 @@ export default function UserReputationActivity({ user }) {
 						</div>
 					</div>
 					<div
-						className="s-expandable is-expanded"
+						className="s-expandable"
 						id="expandable-1651881600-72120005"
 					>
 						<div className="js-post-expandable-body s-expandable--content bg-black-050 js-loaded">
