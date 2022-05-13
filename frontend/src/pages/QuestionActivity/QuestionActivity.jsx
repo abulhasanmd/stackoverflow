@@ -28,7 +28,7 @@ const QuestionActivity = ({post}) => {
   return (
     <div style={{ marginLeft: "30px" }}>
       <h1>Activity for <Link to={`/questions/${id}`}>{post?.title}</Link></h1>
-      <h2><b> 6 events</b></h2>
+      <h2><b> {logs?.length} events</b></h2>
   <table className="table table-bordered table-striped table-sm">
   <thead>
     <tr>

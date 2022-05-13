@@ -47,13 +47,13 @@ export default function auth(state = initialState, action) {
       localStorage.removeItem("token")
       console.log("logout dispatch")
       return {
-        ...state,
         token: null,
         isAuthenticated: false,
         loading: false,
         user: null,
         data: null,
         msg: "",
+        ...state,
       }
     default:
       return state
