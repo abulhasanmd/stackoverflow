@@ -58,6 +58,7 @@ const handleVote = (id, type) => {
       resourceId: id,
       score:type == "up" ? 10 : -10,
       votes: type == "up" ? 1 : -1,
+      questionId: post?._id,
     })
   } else {
     console.log("author clicked the vote button");
