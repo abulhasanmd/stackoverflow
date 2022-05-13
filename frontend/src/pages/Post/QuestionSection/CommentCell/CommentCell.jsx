@@ -113,11 +113,11 @@ import './CommentCell.styles.css';
                         display={'inline'}
                       />
                       <span
-                        title={moment(comment?.created_at).fromNow(true)}
+                        title={moment(comment?.createdOn).fromNow(true)}
                         style={{color: '#959ca3 !important'}}
                         className='date fs-body1'
                       >
-                        {moment(comment?.created_at).fromNow(true)} ago
+                        {moment(comment?.createdOn).fromNow(true)} ago
                       </span>
                     </div>
                     {!auth.loading &&
