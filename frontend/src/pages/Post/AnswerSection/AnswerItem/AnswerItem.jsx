@@ -153,6 +153,7 @@ console.log("answer vote", answer);
               float={'right'}
               backgroundColor={'transparent'}
               dateType = {'answered'}
+              reputation={answer?.createdBy?.reputation}
             />
           </div>
         </div>

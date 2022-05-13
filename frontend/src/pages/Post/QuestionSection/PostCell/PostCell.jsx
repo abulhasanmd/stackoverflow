@@ -61,6 +61,7 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
               user_id={user_id}
               gravatar={gravatar}
               username={username}
+              reputation={post?.createdBy?.reputation}
             />
           </div>
         ) : (
@@ -104,6 +105,7 @@ const PostCell = ({ deletePost, post: { post }, auth }) => {
                 user_id={user_id}
                 gravatar={gravatar}
                 username={username}
+                reputation={post?.createdBy?.reputation}
               />
             </div>
             

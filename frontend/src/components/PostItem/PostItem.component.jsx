@@ -74,6 +74,7 @@ const PostItem = ({
           username={createdBy.name}
           float={'right'}
           backgroundColor={'transparent'}
+          reputation={createdBy.reputation}
         />
       </div>
     </div>
