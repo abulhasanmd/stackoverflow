@@ -127,10 +127,7 @@ const AskQuestion = ({ auth }) => {
 											: 'approved',
 										tags: values.tags,
 										createdBy: {
-											_id:
-												(auth.user &&
-													auth.user.userId) ||
-												'627d97d015a42baf06a52112',
+											_id: auth.user && auth.user._id,
 											imageUrl: 'j',
 										},
 									}),
