@@ -119,6 +119,7 @@ async function getRawPosts(searchq = '', filter, inputTagIds = []) {
 	let {model, key, value, query} = getSearchqModelKeyValue(searchq);
 	console.log("# search : ", model, key, value, query)
 	let matchCnd = {}, posts = [], QuestionsP;
+	self.searchDescription = ''
 	switch(model) {
 		case 'question':
 			self.searchTitle = `Results for Query '${value}' : questions`;
@@ -144,6 +145,7 @@ async function getRawPosts(searchq = '', filter, inputTagIds = []) {
 			self.searchTitle = `Results for Query '${query}' tagged with '${value}'`;
 			matchCnd[key] = { $regex: `^${value}$`, $options: 'i'};
 			let tags = await getTagsOnMatch(key, value) 
+			self.searchDescription = _.get(tags, '0.descr')
 			let tagIds = _.map(tags, '_id')
 			QuestionsP = QuestionsModel.find({title: { $regex: query, $options: 'i'}, tags: { $in: tagIds }})
 			addSortFilter(QuestionsP, filter)
