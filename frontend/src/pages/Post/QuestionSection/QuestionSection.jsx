@@ -25,10 +25,12 @@ import {addPostToBookmark, addVoteToPost} from '../../../redux/posts/posts.actio
 const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth}) => {
   
   let {id} = useParams();
-
+  console.log("Question Section is",id);
   // useEffect(() => {
   //   // let {id} = useParams()
   // }, [])
+
+  // console.log(isQuestionAuthor, "from question section")
 
   let questionActivityUrl = `/questions/timeline/${id}` ;
 
@@ -44,7 +46,7 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
       console.log("type is",type);
       console.log("vote clicked");
       addVoteToPost({
-        createdBy: post?.createdBy._id,
+        createdBy: auth?.user?._id,
         resourceType:"ques",
         resourceId: id,
         score:type == "up" ? 10 : -10,
@@ -121,8 +123,8 @@ const QuestionSection = ({addPostToBookmark,addVoteToPost,  post: {post}, auth})
             commentCount={comment_count}
             tagCount={tags ? tags.length : 0}
           /> */}
-          <PostCell/>
-          <CommentCell/>
+          <PostCell />
+          <CommentCell />
         </div>
       </div>
     </Fragment>

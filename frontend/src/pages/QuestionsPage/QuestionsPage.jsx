@@ -39,31 +39,6 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
 
   console.log(posts)
 
-// const posts = [
-//   {
-//       id:"1212",
-//       title:"asasasas",
-//       body:"asasasasasas",
-//       username:"qwqwqw",
-//       gravatar:"121212",
-//       user_id:"1212",
-//       answer_count:1212,
-//       comment_count:9877,
-//       views:909,
-//       created_at:"2020-11-11",
-//       tags:[
-//         {
-//         tagname:"python"
-//         },
-//         {
-//           tagname:"python"
-//         }
-//     ]
-  
-//   }
-  
-// ]
-
   const [page, setPage] = useState(1);
   const [sortType, setSortType] = useState('Score');
   let searchQuery = "";
@@ -120,8 +95,7 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
         </div>
           <div className='questions'>
             {/* {searchQuery ? () : ()} */}
-          {posts
-            .filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))
+          {posts?.filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))
             ?.sort(handleSorting(sortType))
             .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
             .map((post, index) => (

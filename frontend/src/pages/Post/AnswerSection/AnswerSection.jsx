@@ -19,11 +19,11 @@ import AnswerCommentCell from '../QuestionSection/CommentCell/AnswerCommentCell'
 // {getAnswers, answer, post: {post}}
 const AnswerSection = ({getAnswers, answer, post: {post}}) => {
   useEffect(() => {
-    getAnswers(post._id);
+    getAnswers(post?._id);
     // eslint-disable-next-line
   }, [getAnswers]);
 
-console.log("Answer section is", answer, "post id is",post._id);
+console.log("Answer section is", answer, "post id is",post?._id);
 
   // const answer = {
   //   answers: [
@@ -54,7 +54,7 @@ console.log("Answer section is", answer, "post id is",post._id);
           <Spinner width='25px' height='25px' />
         ) : (
             answer?.answers?.sort(handleSorting(sortType)).map((answer, index) => (
-            (answer.questionId === post._id) ? (
+            (answer?.questionId === post?._id) ? (
             <div key={index} className='answers'>
               <AnswerItem answer={answer}/>
               <AnswerCommentCell answerId = {answer._id}/>

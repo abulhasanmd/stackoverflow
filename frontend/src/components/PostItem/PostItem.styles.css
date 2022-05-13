@@ -7,7 +7,7 @@
 }
 .posts .stats-container {
   margin-right: 16px;
-  width: 58px;
+  width: 100px;
   color: #6a737c;
   margin-left: 8px;
   font-size: 11px;
@@ -15,13 +15,14 @@
 .posts .stats-container .vote {
   padding: 0;
   margin-bottom: 8px;
-  text-align: center;
 }
 .posts .stats-container .vote .vote-count {
-  font-size: 20px;
+  font-size: 15px;
+  justify-self: start;
 }
 .posts .stats-container .vote .count-text {
   font-size: 12px;
+  /* margin-left: 10px; */
 }
 .posts .stats-container .answer {
   color: #63b47c;

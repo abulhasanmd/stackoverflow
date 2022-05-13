@@ -22,7 +22,7 @@ export const getPosts =
   (searchQuery = "") =>
   async (dispatch) => {
     try {
-      dispatch({ type: LOADING_POST })
+      // dispatch({ type: LOADING_POST })
       const res = await axios.post(config.BASE_URL + "/posts/get-posts", {
         searchq: searchQuery,
       })
@@ -32,12 +32,12 @@ export const getPosts =
         payload: res.data.data,
       })
     } catch (err) {
-      dispatch(setAlert(err.response.data.message, "danger"))
-
-      dispatch({
-        type: POST_ERROR,
-        payload: { msg: err.response.statusText, status: err.response.status },
-      })
+      // dispatch(setAlert(err.response.data.message, "danger"))
+      // dispatch({
+      //   type: POST_ERROR,
+      //   payload: { msg: err.response.statusText, status: err.response.status },
+      // })
+      console.log(err)
     }
   }
 

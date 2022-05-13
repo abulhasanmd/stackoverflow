@@ -54,3 +54,6 @@
 .post-cell .post-actions .post-actions-extended .post-btns .post-menu .post-links:hover {
   color: #cfd2d6;
 }
+.admin-usercard{
+  align-self: flex-end;
+}

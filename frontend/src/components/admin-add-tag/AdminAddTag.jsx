@@ -51,7 +51,7 @@ export default function AdminAddTag({ handleModalClose }) {
           setMsgClass("modal__sucess");
           setErrorMsg(jsonresp.data.message);
           setTimeout(() => {
-            handleModalClose();
+            handleModalClose(true);
           }, 3000);
         } else {
           console.log(

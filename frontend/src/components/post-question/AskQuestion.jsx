@@ -118,7 +118,10 @@ const AskQuestion = ({ auth }) => {
 											.querySelector('#editor-container')
 											.querySelector('.js-editor')
 											.innerHTML.toString(),
-										reviewStatus: 'pending',
+										reviewStatus: document
+										.querySelector('#editor-container')
+										.querySelector('.js-editor')
+										.innerHTML.toString().includes('<img')?'pending':'approved',
 										tags: values.tags,
 										createdBy: {
 											_id:

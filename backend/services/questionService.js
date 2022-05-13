@@ -4,6 +4,7 @@ const {
 const _ = require('lodash');
 const Question = require('../models/Question');
 const Tag = require('../models/Tag');
+const Vote = require('../models/Vote');
 const User = require('../models/User');
 const utils = require('../utils');
 
@@ -77,6 +78,7 @@ function addSortFunc(que, filter) {
 	}
 }
 
+
 const getAllQuestions = async (data) => {
 	const {
 		body,
@@ -130,7 +132,7 @@ const updateQuestion = async ({
 		}).exec();
 		console.log(`update question response :${questionResponse}`);
 		if (questionResponse) {
-			await utils.log('edited', 'question', userId, questionId);
+			await utils.log('question', 'edited', userId, questionId);
 			return {
 				data: {
 					message: 'Question updated Successfully',
@@ -152,12 +154,20 @@ const updateQuestion = async ({
 	}
 };
 
+
+let getUserVote = async (questionId, userId) => {
+	let userVote = await Vote.findOne({resourceId: questionId, createdBy: userId }).lean()
+	let result = _.get(userVote, 'votes')
+	return result? `${result}`: '0'
+}
+
 const getQuestionById = async (msg) => {
 	const {
 		body,
 		query,
 		params,
 	} = msg;
+	let authUserId = _.get(query, 'userId');
 	const {
 		questionId,
 	} = params;
@@ -182,6 +192,7 @@ const getQuestionById = async (msg) => {
 		const userDetails = await User.findById(userId).lean();
 		Object.assign(queDetails.createdBy, userDetails);
 		// end
+		queDetails.voted = await getUserVote(questionId, authUserId)
 		return queDetails;
 	} catch (e) {
 		console.error('Exception occurred while while getting question by ID', e);

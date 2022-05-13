@@ -15,7 +15,7 @@ import PostItem from "../../components/PostItem/PostItem.component";
 import Pagination from "../../components/Pagination/Pagination.component";
 import { KAFKA_MIDDLEWARE_URL } from "../../config/configBackend";
 import "../QuestionsPage/QuestionsPage.styles.css";
-
+import "./AllPendingQuestions.css";
 const itemsPerPage = 10;
 
 export default function AllPendingQuestions() {
@@ -44,9 +44,9 @@ export default function AllPendingQuestions() {
       .then((jsonresp) => {
         console.log(jsonresp);
         if (jsonresp.data) {
-            console.log(jsonresp.data);
-            setPosts(jsonresp.data)
-;        } else {
+          console.log(jsonresp.data);
+          setPosts(jsonresp.data);
+        } else {
           console.log(
             "error occurred while adding tag",
             jsonresp.error.message
@@ -65,30 +65,33 @@ export default function AllPendingQuestions() {
   // loading || posts === null ? (
   //   <Spinner type='page' width='75px' height='200px' />
   // ) :
-  return (<Fragment>
+  return (
+    <Fragment>
       <div id="mainbar" className="questions-page fc-black-800">
         <div className="questions-grid">
-          <h3 className="questions-headline">All Questions</h3>
+          <h3 className="questions-headline">Review Questions</h3>
         </div>
         <div className="questions">
           {/* {searchQuery ? () : ()} */}
+          {posts.length<1 && <h1 className="noquestions">No Questions to be Reviewed</h1>}
           {posts
             .slice(
               (page - 1) * itemsPerPage,
               (page - 1) * itemsPerPage + itemsPerPage
             )
             .map((post, index) => (
-              <PostItem key={index} post={post} />
+              <PostItem key={index} post={{ ...post, isAdmin: true }} />
             ))}
         </div>
-        <Pagination
+        {posts.length>0 &&  <Pagination
           page={page}
           itemList={posts}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
-        />
+        />}
       </div>
-    </Fragment>)
+    </Fragment>
+  );
 }
 
 // const mapStateToProps = (state) => ({

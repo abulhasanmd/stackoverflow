@@ -46,7 +46,7 @@ const addComment = async (body) => {
 		const commentResponse = await Comment.create(comment);
 		console.log(`add comment response :${commentResponse}`);
 		if (commentResponse) {
-			await utils.log('comment', comment, userId, resourceId)
+			await utils.log('comment', "added", userId, resourceId)
 			return {
 				data: {
 					message: 'Comment created Successfully',

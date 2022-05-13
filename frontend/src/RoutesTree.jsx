@@ -18,6 +18,7 @@ import AllUsersPage from './pages/AllUsersPage/AllUsersPage.component';
 import ProfilePage from './pages/ProfilePage/ProfilePage.component';
 import AllPendingQuestions from './pages/AllPendingQuestionsPage/AllPendingQuestions';
 import UserActivityTabTags from './components/user-activity-tab-tags/UserActivityTabTags';
+import AdminPost from './pages/Admin-Post/AdminPost';
 import UserReputationActivity from './components/user-activity-tab-reputation/UserReputationActivity';
 
 //import AskQuestionPage from './pages/AskQuestionPage/AskQuestionPage';
@@ -66,6 +67,11 @@ const AllPendingQuestionsComponent = withPageTitle({
 	title: 'Admin Analytics',
 });
 
+const PendingIndividualPost = withPageTitle({
+	component: LayoutWrapper({ component: AdminPost }),
+	title: 'Post - Stack Overflow',
+});
+
 const RoutesTree = () => {
 	return (
 		<Routes>
@@ -76,11 +82,6 @@ const RoutesTree = () => {
 				element={<QuestionsPageComponent />}
 			/>
 			<Route exact path="/add/question" element={<AskQuestionPage />} />
-			<Route
-				exact
-				path="/questions"
-				element={<QuestionsPageComponent />}
-			/>
 			{/* <Route exact path='/tags/:tagname' component={TagPageComponent} /> */}
 			<Route exact path="/questions/:id" element={<IndividualPost />} />
 			<Route
@@ -100,9 +101,15 @@ const RoutesTree = () => {
 			/>
 			<Route
 				exact
-				path="/admin/pendingquestions"
+				path="/admin/pending-questions"
 				element={<AllPendingQuestionsComponent />}
 			/>
+			<Route
+				exact
+				path="/admin/pending-questions/:id"
+				element={<PendingIndividualPost />}
+			/>
+
 			<Route path="*" element={<NotFoundPage />} />
 			<Route path="/messages" element={<ChatBody />} />
 			<Route path="/tags-activity" element={<UserActivityTabTags />} />

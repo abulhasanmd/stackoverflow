@@ -1,10 +1,10 @@
 import React from 'react';
-//import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import htmlSubstring from '../../services/htmlSubstring'
-import injectEllipsis from '../../services/injectEllipsis'
+// import htmlSubstring from '../../services/htmlSubstring'
+// import injectEllipsis from '../../services/injectEllipsis'
 
 import UserCard from '../UserCard/UserCard.component';
 import TagBadge from '../TagBadge/TagBadge.component';
@@ -15,13 +15,14 @@ const PostItem = ({
   post: {
     _id,
     title,
-    descr,
+    // descr,
     createdBy,
     answer_count,
     // comment_count,
     views,
     createdOn,
     tags,
+    isAdmin
   },
 }) => {
   const answerVoteUp = (
@@ -44,7 +45,7 @@ const PostItem = ({
         <div className='stats'>
           <div className='vote'>
             <span className='vote-count'>{views}</span>
-            <div className='count-text'>views</div>
+            <span className='count-text'>views</span>
           </div>
           {answer_count > 0 ? answerVoteUp : answerVoteDown}
           <div className='vote'>
@@ -58,9 +59,9 @@ const PostItem = ({
       </div>
       <div className='summary'>
         <h3>
-          <Link to={`/questions/${_id}`}>{title}</Link>
+          {isAdmin?<Link to={`/admin/pending-questions/${_id}`}>{title}</Link>:<Link to={`/questions/${_id}`}>{title}</Link>}
         </h3>
-        <div className='brief' dangerouslySetInnerHTML={{__html: injectEllipsis(htmlSubstring(descr, 200))}}></div>
+        {/* <div className='brief' dangerouslySetInnerHTML={{__html: injectEllipsis(htmlSubstring(descr, 200))}}></div> */}
         {tags.map((tag, index) => (
           <TagBadge key={index} tag_name={tag.name} size={'s-tag'} float={'left'} />
         ))}
@@ -82,4 +83,4 @@ PostItem.propTypes = {
 };
 
 //export default connect(null)(PostItem);
-export default PostItem;
+export default connect(null)(PostItem);

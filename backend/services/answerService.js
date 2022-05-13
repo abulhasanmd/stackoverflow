@@ -44,16 +44,7 @@ const addAnswer = async (body) => {
 		};
 		const answerResponse = await Answer.create(answer);
 		console.log(`add answer response :${answerResponse}`);
-		await utils.log('answer', body.answer, body.createdBy._id, body.questionId)
-		// let event = {
-		//   type: upvote/downvote/marked-as-best,
-		//   outcome: 10,
-		//   createdBy: "User who upvotes or downvotes",
-		//   affectedUser: "Questioner or the one who answered",
-		//   articleType: "answer",
-		//   articleId: "Id of the question/answer"
-		//   }
-		// const eventResponse = await Event.create(event);
+		await utils.log('answer', 'created', body.createdBy._id, body.questionId)
 		const question = await Question.findById(body.questionId).lean();
 		question.answers.push(answerResponse._id);
 		const questionResponse = await Question.updateOne({
@@ -62,11 +53,7 @@ const addAnswer = async (body) => {
 			$set: body,
 		}).exec();
 		if (answerResponse && questionResponse) {
-			return {
-				data: {
-					message: 'Answer created Successfully',
-				},
-			};
+			return answerResponse
 		}
 		return {
 			error: {
