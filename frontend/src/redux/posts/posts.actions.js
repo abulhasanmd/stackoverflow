@@ -13,16 +13,16 @@ import {
   ADD_POST_TO_BOOKMARK,
   ADD_POST_TO_BOOKMARK_ERROR,
   ADD_VOTE_TO_POST,
-  ADD_VOTE_TO_POST_ERROR
+  ADD_VOTE_TO_POST_ERROR,
+  LOADING_POST,
 } from "./posts.types"
-
-
 
 // Get posts
 export const getPosts =
   (searchQuery = "") =>
   async (dispatch) => {
     try {
+      dispatch({ type: LOADING_POST })
       const res = await axios.post(config.BASE_URL + "/posts/get-posts", {
         searchq: searchQuery,
       })
@@ -45,9 +45,9 @@ export const addPostToBookmark = (body) => async (dispatch) => {
   try {
     const res = await axios.post(
       config.BASE_URL + "/questions/add-bookmark",
-      body,
+      body
     )
-    console.log("question add to bookmark", res);
+    console.log("question add to bookmark", res)
     dispatch({
       type: ADD_POST_TO_BOOKMARK,
       payload: res.data.data,
@@ -60,33 +60,30 @@ export const addPostToBookmark = (body) => async (dispatch) => {
   }
 }
 
-
 export const addVoteToPost = (body) => async (dispatch) => {
   try {
-    console.log("vote body is", body);
-    const res = await axios.post(
-      config.BASE_URL + "/vote/create-vote",
-      body,
-    )
-    console.log("vote response", res);
+    console.log("vote body is", body)
+    const res = await axios.post(config.BASE_URL + "/vote/create-vote", body)
+    console.log("vote response", res)
     dispatch({
       type: ADD_VOTE_TO_POST,
       payload: res.data.data,
     })
   } catch (err) {
     dispatch({
-      type:  ADD_VOTE_TO_POST_ERROR,
+      type: ADD_VOTE_TO_POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     })
   }
 }
 
-
-
 // Get post
 export const getPost = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(config.BASE_URL + `/questions/get-questionbyid/${id}`)
+    dispatch({ type: LOADING_POST })
+    const res = await axios.get(
+      config.BASE_URL + `/questions/get-questionbyid/${id}`
+    )
 
     dispatch({
       type: GET_POST,

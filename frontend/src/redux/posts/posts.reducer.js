@@ -9,7 +9,8 @@ import {
   ADD_POST_TO_BOOKMARK,
   ADD_POST_TO_BOOKMARK_ERROR,
   ADD_VOTE_TO_POST,
-  ADD_VOTE_TO_POST_ERROR
+  ADD_VOTE_TO_POST_ERROR,
+  LOADING_POST,
 } from "./posts.types"
 
 const initialState = {
@@ -21,6 +22,12 @@ const initialState = {
 
 export default function posts(state = initialState, action) {
   switch (action.type) {
+    case LOADING_POST:
+      return {
+        ...state,
+        loading: true,
+      }
+
     case GET_POSTS:
     case ADD_POST_TO_BOOKMARK:
     case ADD_POST_TO_BOOKMARK_ERROR:
